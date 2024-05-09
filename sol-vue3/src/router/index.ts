@@ -37,9 +37,18 @@ const router = createRouter({
 router.beforeEach((to :any,from:any,next:any)=>{
 	
 	const user = useUserStore();
+
+
+	console.log(" token -> "+user.value)
+	console.log(" tokenHead -> " +user)
+
+	console.log(user.isAuthenticated.value )
+
 	console.log("路由"+user);
 	if (to.path === '/login') return next();
-	if(user.token === null && user.tokenHead === null){
+	console.log(" token -> "+user.token == undefined )
+	console.log(" tokenHead -> " +user.tokenHead == null)
+	if(user.token === undefined && user.tokenHead === null){
 		return next({path:'/login'})
 		console.log("开始拦截");
 	}else{

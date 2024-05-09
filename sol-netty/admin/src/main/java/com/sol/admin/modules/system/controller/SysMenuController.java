@@ -44,5 +44,11 @@ public class SysMenuController {
         return new ResponseEntity<>(sysMenuService.removeById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/getRootMenu")
+    @Operation(summary ="获得根节点")
+    public ResponseEntity<Object> getRootMenu(){
+        return new ResponseEntity<>(sysMenuService.getRootMenu(), HttpStatus.OK);
+    }
+
 
 }

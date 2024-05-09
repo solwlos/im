@@ -5,8 +5,8 @@ import { ref } from 'vue'
 /* 用户的仓库 */
 
 export const useUserStore = defineStore('user', () => {
-  const tokenHead = ref<string>('')
-  const token = ref<string>('')
+  const tokenHead = ref<string>()
+  const token = ref<string>()
   const userInfo = ref<any>({})
   /* 存储token */
   function setToken(storage: string) {
@@ -20,6 +20,8 @@ export const useUserStore = defineStore('user', () => {
     userInfo.value = userInfo;
   }
   function isAuthenticated(){
+    console.log("isAuthenticated ->" + token.value !== null)
+    console.log("isAuthenticated ->" + tokenHead.value !== null)
     return (token.value !== null && tokenHead.value !== null) ? true : false;
   }
   function resetAll() {

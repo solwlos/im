@@ -1,4 +1,4 @@
-package com.sol.admin.nettyWebsocket;
+package com.sol.admin.util;
 
 import java.util.HashMap;
 import java.util.Map;
