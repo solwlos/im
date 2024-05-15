@@ -6,7 +6,7 @@ import { ElMessage, ElLoading } from 'element-plus';
 // 创建axios实例
 const service = axios.create({
     // 服务接口请求
-    baseURL: '/api',
+    baseURL: '/api/getRootMenu',
     // 超时设置
     // timeout: 15000,
     headers:{'Content-Type':'application/json;charset=utf-8'}
@@ -24,29 +24,32 @@ service.interceptors.request.use(function (config) {
   });
 
 // 添加响应拦截器
-service.interceptors.response.use(function (response) {
-    // 2xx 范围内的状态码都会触发该函数。
-    // 对响应数据做点什么
-    return response;
-  }, function (error) {
-    console.log('err' + error)
-    hideLoading()
-    let { message } = error;
-    if (message == "Network Error") {
-        message = "后端接口连接异常";
+service.interceptors.response.use(
+    function (response) {
+        // 2xx 范围内的状态码都会触发该函数。
+        // 对响应数据做点什么
+        return response;
+    }, 
+    function (error) {
+        // console.log('err' + error)
+        hideLoading()
+        let { message } = error;
+        if (message == "Network Error") {
+            message = "后端接口连接异常";
+        }
+        else if (message.includes("timeout")) {
+            message = "系统接口请求超时";
+        }
+        else if (message.includes("Request failed with status code")) {
+            message = "系统接口" + message.substr(message.length - 3) + "异常";
+        }
+        ElMessage.error({
+            message: message,
+            duration: 5 * 1000
+        })
+        return Promise.reject(error)
     }
-    else if (message.includes("timeout")) {
-        message = "系统接口请求超时";
-    }
-    else if (message.includes("Request failed with status code")) {
-        message = "系统接口" + message.substr(message.length - 3) + "异常";
-    }
-    ElMessage.error({
-        message: message,
-        duration: 5 * 1000
-    })
-    return Promise.reject(error)
-  });
+);
 
 // // 创建axios实例
 // const service = axios.create({
@@ -57,9 +60,9 @@ service.interceptors.response.use(function (response) {
 //     headers:{'Content-Type':'application/json;charset=utf-8'}
 // })
 
-// let loading:any;
+let loading:any;
 // //正在请求的数量
-// let requestCount:number = 0
+let requestCount:number = 0
 // //显示loading
 const showLoading = () => {
     if (requestCount === 0 && !loading) {

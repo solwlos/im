@@ -20,14 +20,8 @@
 //   routes
 // })
 import {useUserStore} from '@/stores/user'
-// export default router
 import { createRouter, createWebHashHistory } from 'vue-router';
-// import { setupLayouts } from 'virtual:generated-layouts';//将route里面的路由变成嵌套路由
-// import generatedRoutes from 'virtual:generated-pages';
 import routes from '~pages'
- 
-// const routes = setupLayouts(generatedRoutes);
-
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -37,20 +31,9 @@ const router = createRouter({
 router.beforeEach((to :any,from:any,next:any)=>{
 	
 	const user = useUserStore();
-
-
-	console.log(" token -> "+user.value)
-	console.log(" tokenHead -> " +user)
-
-	console.log(user.isAuthenticated.value )
-
-	console.log("路由"+user);
 	if (to.path === '/login') return next();
-	console.log(" token -> "+user.token == undefined )
-	console.log(" tokenHead -> " +user.tokenHead == null)
-	if(user.token === undefined && user.tokenHead === null){
+	if(user.isAuthenticated()){
 		return next({path:'/login'})
-		console.log("开始拦截");
 	}else{
 		return next()  
 	}
