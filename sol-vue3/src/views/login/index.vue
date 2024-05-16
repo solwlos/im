@@ -81,12 +81,9 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     .then((res) => {
       user.resetAll()
       console.log('开始重置')
-      console.log(user)
-      // user.setToken(res.data.token);
-      // user.setTokenHead(res.data.tokenHead);
+
       user.token = res.data.token
       user.tokenHead = res.data.tokenHead
-      console.log(user)
       router.push('/home')
       ElMessage({ message: '登录成功', type: 'success' })
     })

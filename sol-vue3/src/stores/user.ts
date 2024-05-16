@@ -26,6 +26,8 @@ export  const useUserStore = defineStore('user', {
       this.userInfo = userInfo;
     },
     isAuthenticated(){
+      console.log("this.token -> " +this.token)
+      console.log("this.tokenHead -> " +this.tokenHead)
       return (this.token === '' && this.tokenHead === '') ? true : false;
     },
     resetAll() {

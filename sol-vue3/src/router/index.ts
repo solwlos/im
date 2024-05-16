@@ -31,8 +31,12 @@ const router = createRouter({
 router.beforeEach((to :any,from:any,next:any)=>{
 	
 	const user = useUserStore();
+
+	console.log(to.path + " -> " + user.isAuthenticated())
+
 	if (to.path === '/login') return next();
 	if(user.isAuthenticated()){
+
 		return next({path:'/login'})
 	}else{
 		return next()  
