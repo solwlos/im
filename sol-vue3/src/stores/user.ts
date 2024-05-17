@@ -35,7 +35,10 @@ export  const useUserStore = defineStore('user', {
       this.token = '',
       this.userInfo = {} //用户信息
     }
-  }
+  },
+  persist: {
+    storage: sessionStorage,
+  },
 });
 
 // export const useUserStore = defineStore('user', () => {
