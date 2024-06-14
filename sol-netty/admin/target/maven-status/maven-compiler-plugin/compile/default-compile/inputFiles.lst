@@ -1,91 +1,55 @@
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\nettyWebsocket\NioWebSocketServer.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\nettyWebsocket\NioWebSocketChannelInitializer.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\service\impl\PermissionServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\ISysRoleMenuService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\controller\RolePermissionController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\mapper\RoleMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\controller\SysRoleMenuController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\controller\SysRoleMenuController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\service\impl\MessageServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\controller\MessageController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\service\IUserService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\controller\UserController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\service\impl\SysRoleServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\entity\SysRoleMenu.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\service\ISysRoleMenuService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\security\config\WebSecurityConfig.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\controller\MenuController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\ISysUserService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\config\WebConfig.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\mapper\MessageMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\mapper\PermissionMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\entity\Message.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\controller\PermissionController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\nettyWebsocket\NioWebSocketChannelPool.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\mapper\SysRoleMenuMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\service\impl\SysMenuServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\impl\SysUserServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\service\impl\RoleServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\security\filter\JwtTokenFilter.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\service\IRolePermissionService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\service\ISysMenuService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\service\impl\UserServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\ISysRoleService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\service\IMessageService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\controller\RoleController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\mapper\MenuMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\service\ISysUserService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\mapper\SysUserMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\service\impl\SysRoleMenuServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\security\service\AuthenticationProviderImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\service\IMenuService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\config\MybatisPlusConfig.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\entity\RolePermission.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\controller\SysMenuController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\nettyWebsocket\NioWebSocketHandler.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\nettyWebsocket\RequestUriUtils.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\entity\Menu.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\entity\Permission.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\ISysMenuService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\entity\SysMenu.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\mapper\SysRoleMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\entity\SysUser.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\service\impl\RolePermissionServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\impl\SysRoleServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\util\RedisUtil.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\security\handler\MyAuthenticationHandler.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\controller\SysRoleController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\mapper\SysMenuMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\security\util\JwtUtil.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\controller\SysMenuController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\service\IPermissionService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\service\IRoleService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\service\ISysRoleService.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\mapper\RolePermissionMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\config\RedisConfig.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\controller\SysUserController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\service\impl\MenuServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\security\service\MenuAccessDecisionManager.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\mapper\SysRoleMenuMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\entity\SysRole.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\entity\SysUser.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\entity\UserRole.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\entity\SysRoleMenu.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\entity\SysMenu.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\security\service\MailAuthenticationImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\entity\SysRole.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\mapper\SysRoleMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\service\impl\SysUserServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\mapper\UserMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\AdminApplication.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\mapper\SysMenuMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\impl\SysMenuServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\util\Result.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\entity\User.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\security\filter\MenuFilterInvocationSecurityMetadataSource.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\controller\SysUserController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\old\entity\Role.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\impl\SysRoleMenuServiceImpl.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\controller\SysRoleController.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\modules\system\test\mapper\SysUserMapper.java
-D:\workspace\old-file\sol-netty\admin\src\main\java\com\sol\admin\nettyWebsocket\WebSocketProperties.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\security\config\WebSecurityConfig.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\nettyWebsocket\WebSocketProperties.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\controller\SysRoleController.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\util\Result.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\impl\SysRoleMenuServiceImpl.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\controller\SysMenuController.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\controller\ChatMessageController.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\SysMenuService.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\controller\SysUserController.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\mapper\SysMenuMapper.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\entity\SysMenu.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\entity\ChatUserLink.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\security\filter\MenuFilterInvocationSecurityMetadataSource.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\config\MybatisPlusConfig.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\security\service\MenuAccessDecisionManager.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\controller\ChatUserLinkController.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\impl\SysUserServiceImpl.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\config\RedisConfig.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\util\RequestUriUtils.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\SysRoleService.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\constants\HttpConstants.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\IChatMessageService.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\security\handler\MyAuthenticationHandler.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\SysRoleMenuService.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\SysUserService.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\mapper\SysRoleMapper.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\constants\MenuType.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\impl\SysRoleServiceImpl.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\IChatUserLinkService.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\entity\ChatMessage.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\config\WebConfig.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\security\util\JwtUtil.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\security\service\AccountAuthenticationImpl.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\nettyWebsocket\NioWebSocketServer.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\security\service\AuthorizationManagerImpl.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\security\filter\JwtTokenFilter.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\entity\SysUser.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\mapper\ChatUserLinkMapper.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\mapper\SysRoleMenuMapper.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\impl\ChatUserLinkServiceImpl.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\entity\SysRole.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\entity\UserRole.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\security\service\MailAuthenticationImpl.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\nettyWebsocket\NioWebSocketChannelInitializer.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\constants\StatusType.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\nettyWebsocket\NioWebSocketHandler.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\AdminApplication.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\impl\ChatMessageServiceImpl.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\mapper\ChatMessageMapper.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\util\RedisUtil.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\controller\SysRoleMenuController.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\nettyWebsocket\NioWebSocketChannelPool.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\entity\SysRoleMenu.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\service\impl\SysMenuServiceImpl.java
+D:\software engineering\sol\sol-netty\admin\src\main\java\com\sol\admin\modules\system\mapper\SysUserMapper.java

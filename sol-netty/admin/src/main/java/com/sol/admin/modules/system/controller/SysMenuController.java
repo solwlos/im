@@ -2,7 +2,6 @@ package com.sol.admin.modules.system.controller;
 
 import com.sol.admin.modules.system.entity.SysMenu;
 import com.sol.admin.modules.system.service.SysMenuService;
-import com.sol.admin.util.Result;
 import io.swagger.v3.oas.annotations.Operation;
 
 import jakarta.annotation.Resource;
@@ -49,6 +48,5 @@ public class SysMenuController {
     public ResponseEntity<Object> getRootMenu(){
         return new ResponseEntity<>(sysMenuService.getRootMenu(), HttpStatus.OK);
     }
-
 
 }
