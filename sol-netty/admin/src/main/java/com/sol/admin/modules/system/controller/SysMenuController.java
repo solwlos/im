@@ -5,6 +5,7 @@ import com.sol.admin.modules.system.service.SysMenuService;
 import io.swagger.v3.oas.annotations.Operation;
 
 import jakarta.annotation.Resource;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,25 +28,25 @@ public class SysMenuController {
 
     @PostMapping("/addMenu")
     @Operation(summary ="添加菜单")
-    public ResponseEntity<Object> addMenu(@RequestBody SysMenu sysMenu){
+    public ResponseEntity<Boolean> addMenu(@RequestBody SysMenu sysMenu){
         return new ResponseEntity<>(sysMenuService.save(sysMenu), HttpStatus.OK);
     }
 
-    @PostMapping("/updateMenu")
+    @PutMapping("/updateMenu")
     @Operation(summary ="修改菜单")
-    public ResponseEntity<Object> updateMenu(@RequestBody SysMenu sysMenu){
+    public ResponseEntity<Boolean> updateMenu(@RequestBody SysMenu sysMenu){
         return new ResponseEntity<>(sysMenuService.updateById(sysMenu), HttpStatus.OK);
     }
 
-    @GetMapping("/deletedMenu")
+    @DeleteMapping("/deletedMenu")
     @Operation(summary ="删除菜单")
-    public ResponseEntity<Object> deletedMenu(String id){
+    public ResponseEntity<Boolean> deletedMenu(String id){
         return new ResponseEntity<>(sysMenuService.removeById(id), HttpStatus.OK);
     }
 
     @GetMapping("/getRootMenu")
     @Operation(summary ="获得根节点")
-    public ResponseEntity<Object> getRootMenu(){
+    public ResponseEntity<List<SysMenu>> getRootMenu(){
         return new ResponseEntity<>(sysMenuService.getRootMenu(), HttpStatus.OK);
     }
 

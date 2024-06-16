@@ -51,7 +51,7 @@ public class SysUserController {
 
     @GetMapping("/login")
     @Operation(summary ="登录")
-    public  ResponseEntity<Object> userLogin(ServletRequest request , String username, String password){
+    public  ResponseEntity<?> userLogin(ServletRequest request , String username, String password){
         SecurityContextHolder.clearContext();
         System.out.println("username -> " + username);
         System.out.println("password -> " + password);
@@ -76,7 +76,7 @@ public class SysUserController {
         Map<String, String> claims = new HashMap<>();
         claims.put("token", jwtUtil.generateToken(username));
         claims.put("tokenHead", jwtUtil.getTokenHead());
-        return new ResponseEntity<>(claims, HttpStatus.OK);
+        return new ResponseEntity<Map>(claims, HttpStatus.OK);
 //        return Result.success(claims,"登陆成功");
 
     }

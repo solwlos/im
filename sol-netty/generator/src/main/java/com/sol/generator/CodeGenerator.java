@@ -18,7 +18,7 @@ public class CodeGenerator {
      * 数据源配置
      */
     public static final DataSourceConfig.Builder DATA_SOURCE_CONFIG = new DataSourceConfig
-            .Builder("jdbc:mysql://172.19.48.1:3306/netty_chat", "sol", "sol=root")
+            .Builder("jdbc:mysql://127.0.0.1:3306/netty_chat", "root", "")
             .dbQuery(new MySqlQuery());
 
     /**
@@ -40,7 +40,7 @@ public class CodeGenerator {
                     builder.parent("com.sol.admin.modules.system"); // 设置父包名
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("chat_user_link","chat_message") // 设置需要生成的表名
+                    builder.addInclude("chat_group","chat_group_user","chat_offline_message") // 设置需要生成的表名
                             .controllerBuilder().enableFileOverride().enableRestStyle()
                             .serviceBuilder().enableFileOverride()
                             .entityBuilder()
