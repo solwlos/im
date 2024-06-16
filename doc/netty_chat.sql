@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
 --
--- Host: 172.19.48.1    Database: netty_chat
+-- Host: localhost    Database: netty_chat
 -- ------------------------------------------------------
--- Server version	8.3.0
+-- Server version	8.0.21
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,13 +16,67 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `chat_message`
+-- Table structure for table `chat_group`
 --
 
-DROP TABLE IF EXISTS `chat_message`;
+DROP TABLE IF EXISTS `chat_group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `chat_message` (
+CREATE TABLE `chat_group` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) DEFAULT NULL COMMENT '群名字',
+  `description` varchar(64) DEFAULT NULL COMMENT '描述',
+  `number` int DEFAULT NULL COMMENT '群成员数量',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='群聊表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `chat_group`
+--
+
+LOCK TABLES `chat_group` WRITE;
+/*!40000 ALTER TABLE `chat_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `chat_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `chat_group_user`
+--
+
+DROP TABLE IF EXISTS `chat_group_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `chat_group_user` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '编号 id',
+  `group_id` int DEFAULT NULL COMMENT '群id',
+  `user_id` int DEFAULT NULL,
+  `is_deleted` tinyint DEFAULT NULL COMMENT '是否删除 0：没有、1：删除',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='群聊用户表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `chat_group_user`
+--
+
+LOCK TABLES `chat_group_user` WRITE;
+/*!40000 ALTER TABLE `chat_group_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `chat_group_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `chat_offline_message`
+--
+
+DROP TABLE IF EXISTS `chat_offline_message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `chat_offline_message` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `from_user_id` bigint NOT NULL COMMENT '发送用户id',
   `to_user_id` bigint NOT NULL COMMENT '接受用户id',
@@ -33,16 +87,16 @@ CREATE TABLE `chat_message` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='聊天消息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='离线消息表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `chat_message`
+-- Dumping data for table `chat_offline_message`
 --
 
-LOCK TABLES `chat_message` WRITE;
-/*!40000 ALTER TABLE `chat_message` DISABLE KEYS */;
-/*!40000 ALTER TABLE `chat_message` ENABLE KEYS */;
+LOCK TABLES `chat_offline_message` WRITE;
+/*!40000 ALTER TABLE `chat_offline_message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `chat_offline_message` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -53,9 +107,9 @@ DROP TABLE IF EXISTS `chat_user_link`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `chat_user_link` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `user_id` bigint DEFAULT NULL COMMENT '用户id',
-  `friend_id` bigint DEFAULT NULL COMMENT '朋友id',
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `user_id` int DEFAULT NULL COMMENT '用户id',
+  `friend_id` int DEFAULT NULL COMMENT '朋友id',
   `type` int DEFAULT NULL COMMENT '类型0、普通，1、亲密',
   `is_deleted` tinyint DEFAULT '0' COMMENT '是否删除，0未删除、1删除',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -209,4 +263,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-11 13:17:06
+-- Dump completed on 2024-06-16 19:55:15
