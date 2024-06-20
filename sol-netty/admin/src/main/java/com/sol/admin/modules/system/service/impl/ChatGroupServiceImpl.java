@@ -1,9 +1,13 @@
 package com.sol.admin.modules.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sol.admin.modules.system.entity.ChatGroup;
+import com.sol.admin.modules.system.entity.ChatGroupUser;
 import com.sol.admin.modules.system.mapper.ChatGroupMapper;
 import com.sol.admin.modules.system.service.IChatGroupService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +21,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ChatGroupServiceImpl extends ServiceImpl<ChatGroupMapper, ChatGroup> implements IChatGroupService {
 
+    @Resource
+    ChatGroupMapper mapper;
+
+    @Override
+    public List<ChatGroup> selectGroupByUserID(String userId) {
+        QueryWrapper<ChatGroup> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda()
+            .eq(ChatGroup::getId,userId)
+            .eq(ChatGroup::getIsDeleted,0);
+        return mapper.selectList(queryWrapper);
+    }
 }

@@ -2,6 +2,7 @@ package com.sol.admin.modules.system.service;
 
 import com.sol.admin.modules.system.entity.ChatGroup;
 import com.baomidou.mybatisplus.extension.service.IService;
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IChatGroupService extends IService<ChatGroup> {
 
+    List<ChatGroup> selectGroupByUserID(String userId);
 }

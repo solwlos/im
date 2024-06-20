@@ -1,5 +1,8 @@
 package com.sol.admin.modules.system.controller;
 
+import com.sol.admin.modules.system.service.IChatGroupUserService;
+import com.sol.admin.modules.system.service.IChatUserLinkService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +21,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/chatUserLink")
 public class ChatUserLinkController {
 
+//    @Autowired
+//    IChatGroupUserService service;
 
+    @Autowired
+    IChatUserLinkService service;
+
+
+    /**
+     * 查看某个用户的好友
+     * @param id
+     * @return
+     */
     @GetMapping("/selectChatUserLink")
-    public ResponseEntity<Object> getChatUserLink(){
-
-
-        return new ResponseEntity<>("", HttpStatus.OK);
+    public ResponseEntity<Object> getChatUserLink(String id){
+        return new ResponseEntity<>(service.getChatUserLink(id), HttpStatus.OK);
     }
 
 }

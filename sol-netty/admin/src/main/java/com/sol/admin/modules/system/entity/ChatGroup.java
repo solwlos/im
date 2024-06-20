@@ -37,6 +37,9 @@ public class ChatGroup implements Serializable {
     @Schema(description = "群成员数量")
     private Integer number;
 
+    @Schema(description = "是否删除 0：没有、1：删除")
+    private Byte isDeleted;
+
     @Schema(description = "创建时间")
     private LocalDateTime createTime;
 
