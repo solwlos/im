@@ -14,5 +14,11 @@ import java.util.List;
  */
 public interface IChatUserLinkService extends IService<ChatUserLink> {
 
-    List<ChatUserLink> getChatUserLink(String id);
+    List<ChatUserLink> getChatUserLink(String userId);
+
+    Boolean addChatUserLink(ChatUserLink link);
+
+    Boolean updateChatUserLink(ChatUserLink link);
+
+    Boolean deleteChatUserLink(String userId);
 }

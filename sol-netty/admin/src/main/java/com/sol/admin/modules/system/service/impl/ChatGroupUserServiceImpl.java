@@ -24,10 +24,10 @@ public class ChatGroupUserServiceImpl extends ServiceImpl<ChatGroupUserMapper, C
     ChatGroupUserMapper mapper;
 
     @Override
-    public List<ChatGroupUser> selectGroupUser(String id) {
+    public List<ChatGroupUser> getGroupUser(String id) {
         QueryWrapper<ChatGroupUser> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda()
-            .eq(ChatGroupUser::getId,id)
+            .eq(ChatGroupUser::getGroupId,id)
             .eq(ChatGroupUser::getIsDeleted,0);
         return mapper.selectList(queryWrapper);
     }

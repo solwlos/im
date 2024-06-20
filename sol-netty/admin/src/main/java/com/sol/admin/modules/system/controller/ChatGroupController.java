@@ -3,11 +3,16 @@ package com.sol.admin.modules.system.controller;
 import com.sol.admin.modules.system.entity.ChatGroup;
 import com.sol.admin.modules.system.service.IChatGroupService;
 import com.sol.admin.modules.system.service.IChatGroupUserService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,9 +36,28 @@ public class ChatGroupController {
      * @param userId
      * @return
      */
-    @GetMapping("/selectGroupByUserID")
-    public ResponseEntity<List<ChatGroup>> selectGroupByUserID(String userId){
-        return new ResponseEntity<List<ChatGroup>>(service.selectGroupByUserID(userId), HttpStatus.OK);
+    @GetMapping("/getGroupByUserID")
+    @Operation(summary ="根据 用户id 查询某个用户的所有群聊")
+    public ResponseEntity<List<ChatGroup>> getGroupByUserID(String userId){
+        return new ResponseEntity<List<ChatGroup>>(service.getGroupByUserID(userId), HttpStatus.OK);
+    }
+
+    @PostMapping("/addChatGroup")
+    @Operation(summary ="创建群聊")
+    public ResponseEntity<Boolean> addChatGroup(@RequestBody ChatGroup chatGroup){
+        return new ResponseEntity<>(service.addChatGroup(chatGroup), HttpStatus.OK);
+    }
+
+    @PutMapping("/updateChatGroup")
+    @Operation(summary ="修改群聊")
+    public ResponseEntity<Boolean> updateChatGroup(@RequestBody ChatGroup chatGroup){
+        return new ResponseEntity<>(service.updateChatGroup(chatGroup), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteChatGroup")
+    @Operation(summary ="删除群聊")
+    public ResponseEntity<Boolean> deleteChatGroup(String id){
+        return new ResponseEntity<>(service.deleteChatGroup(id), HttpStatus.OK);
     }
 
 }

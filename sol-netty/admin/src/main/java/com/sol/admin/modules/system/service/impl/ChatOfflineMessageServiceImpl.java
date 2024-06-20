@@ -1,9 +1,12 @@
 package com.sol.admin.modules.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sol.admin.modules.system.entity.ChatOfflineMessage;
 import com.sol.admin.modules.system.mapper.ChatOfflineMessageMapper;
 import com.sol.admin.modules.system.service.IChatOfflineMessageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +20,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ChatOfflineMessageServiceImpl extends ServiceImpl<ChatOfflineMessageMapper, ChatOfflineMessage> implements IChatOfflineMessageService {
 
+    @Resource
+    ChatOfflineMessageMapper mapper;
+
+    @Override
+    public List<ChatOfflineMessage> getChatOfflineMessage(String userId) {
+        QueryWrapper<ChatOfflineMessage> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda()
+            .eq(ChatOfflineMessage::getToUserId,userId)
+            .eq(ChatOfflineMessage::getIsDeleted,0);
+        return mapper.selectList(queryWrapper);
+    }
 }

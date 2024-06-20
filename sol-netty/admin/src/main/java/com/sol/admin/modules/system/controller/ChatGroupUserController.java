@@ -3,6 +3,7 @@ package com.sol.admin.modules.system.controller;
 import com.sol.admin.modules.system.entity.ChatGroupUser;
 
 import com.sol.admin.modules.system.service.IChatGroupUserService;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,9 +28,15 @@ public class ChatGroupUserController {
     @Autowired
     IChatGroupUserService service;
 
-    @GetMapping("/selectGroupUser")
-    public ResponseEntity<List<ChatGroupUser>> selectGroupUser(String id){
-        return new ResponseEntity<List<ChatGroupUser>>(service.selectGroupUser(id), HttpStatus.OK);
+    /**
+     * 根据群聊 id查询群聊成员
+     * @param groupId
+     * @return
+     */
+    @GetMapping("/getGroupUser")
+    @Operation(summary ="根据群聊 id查询群聊成员")
+    public ResponseEntity<List<ChatGroupUser>> getGroupUser(String groupId){
+        return new ResponseEntity<>(service.getGroupUser(groupId), HttpStatus.OK);
     }
 
 

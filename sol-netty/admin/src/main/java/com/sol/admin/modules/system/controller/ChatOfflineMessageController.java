@@ -1,5 +1,15 @@
 package com.sol.admin.modules.system.controller;
 
+import com.sol.admin.modules.system.entity.ChatOfflineMessage;
+import com.sol.admin.modules.system.entity.ChatUserLink;
+import com.sol.admin.modules.system.service.IChatGroupService;
+import com.sol.admin.modules.system.service.IChatOfflineMessageService;
+import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,5 +26,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatOfflineMessageController {
 
 
+    @Autowired
+    IChatOfflineMessageService service;
 
+    /**
+     * 根据用户 id 获取某个用户离线消息
+     * @param userId
+     * @return
+     */
+    @GetMapping("/getChatUserLink")
+    @Operation(summary ="根据用户 id 获取某个用户离线消息")
+    public ResponseEntity<List<ChatOfflineMessage>> getChatOfflineMessage(String userId){
+        return new ResponseEntity<>(service.getChatOfflineMessage(userId), HttpStatus.OK);
+    }
 }

@@ -2,6 +2,8 @@ package com.sol.admin.modules.system.service;
 
 import com.sol.admin.modules.system.entity.ChatOfflineMessage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sol.admin.modules.system.entity.ChatUserLink;
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IChatOfflineMessageService extends IService<ChatOfflineMessage> {
 
+    List<ChatOfflineMessage> getChatOfflineMessage(String userId);
 }

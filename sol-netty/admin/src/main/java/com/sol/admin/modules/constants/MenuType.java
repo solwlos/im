@@ -1,5 +1,9 @@
 package com.sol.admin.modules.constants;
 
+/**
+ * @author sol
+ * @since 2024/6/20
+ */
 public enum MenuType {
     CATALOG(0, "目录"),
     MENU(1, "菜单"),

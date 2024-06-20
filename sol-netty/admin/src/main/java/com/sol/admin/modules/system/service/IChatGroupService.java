@@ -14,5 +14,11 @@ import java.util.List;
  */
 public interface IChatGroupService extends IService<ChatGroup> {
 
-    List<ChatGroup> selectGroupByUserID(String userId);
+    List<ChatGroup> getGroupByUserID(String userId);
+
+    Boolean addChatGroup(ChatGroup chatGroup);
+
+    Boolean deleteChatGroup(String id);
+
+    Boolean updateChatGroup(ChatGroup chatGroup);
 }

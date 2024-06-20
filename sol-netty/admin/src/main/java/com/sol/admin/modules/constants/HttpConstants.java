@@ -3,9 +3,8 @@ package com.sol.admin.modules.constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * date: 2024/2/23
- *
  * @author sol
+ * @since: 2024/2/23
  */
 public class HttpConstants {
 

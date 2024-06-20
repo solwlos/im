@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -45,7 +46,7 @@ public class ChatOfflineMessage implements Serializable {
 
     private Byte isDeleted;
 
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
-    private LocalDateTime updateTime;
+    private Timestamp updateTime;
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -42,8 +43,8 @@ public class ChatUserLink implements Serializable {
     private Byte isDeleted;
 
     @Schema(description = "创建时间")
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     @Schema(description = "修改时间")
-    private LocalDateTime updateTime;
+    private Timestamp updateTime;
 }
