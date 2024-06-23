@@ -1,5 +1,6 @@
 package com.sol.admin.modules.system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -34,6 +35,7 @@ public class SysRole implements Serializable {
     private Integer version;
 
     @Schema(description = "是否删除，0未删除、1删除")
+    @TableLogic(delval = "0", value = "1")
     private Byte isDeleted;
 
     @Schema(description = "创建时间")

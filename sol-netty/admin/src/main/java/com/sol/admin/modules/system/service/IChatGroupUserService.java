@@ -16,5 +16,7 @@ import org.springframework.http.HttpStatusCode;
 public interface IChatGroupUserService extends IService<ChatGroupUser> {
 
 
-      List<ChatGroupUser> getGroupUser(String groupId);
+    List<ChatGroupUser> getGroupUser(String groupId);
+
+    Boolean delGroupUser(String groupId,String userId);
 }
