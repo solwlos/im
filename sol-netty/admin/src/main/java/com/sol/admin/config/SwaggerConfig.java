@@ -17,7 +17,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
-            .info(new Info().title("yangs图库Api")
+            .info(new Info().title("sol-netty-Api")
                 .description("yangs统一接口")
                 .version("1.0")
                 .contact(new Contact().name("sol").url("").email(""))

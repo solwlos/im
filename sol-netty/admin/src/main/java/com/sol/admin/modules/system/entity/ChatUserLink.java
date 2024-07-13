@@ -42,7 +42,7 @@ public class ChatUserLink implements Serializable {
 
     @Schema(description = "是否删除，0未删除、1删除")
     @TableLogic(delval = "0", value = "1")
-    private Byte isDeleted;
+    private Integer isDeleted;
 
     @Schema(description = "创建时间")
     private Timestamp createTime;
