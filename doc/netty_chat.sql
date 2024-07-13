@@ -23,10 +23,11 @@ DROP TABLE IF EXISTS `chat_group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `chat_group` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT NULL COMMENT '群名字',
   `description` varchar(64) DEFAULT NULL COMMENT '描述',
   `number` int DEFAULT NULL COMMENT '群成员数量',
+  `is_deleted` tinyint DEFAULT '0' COMMENT '是否删除 0：没有、1：删除',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
@@ -50,10 +51,11 @@ DROP TABLE IF EXISTS `chat_group_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `chat_group_user` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '编号 id',
-  `group_id` int DEFAULT NULL COMMENT '群id',
-  `user_id` int DEFAULT NULL,
-  `is_deleted` tinyint DEFAULT NULL COMMENT '是否删除 0：没有、1：删除',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '编号 id',
+  `group_id` bigint DEFAULT NULL COMMENT '群id',
+  `user_id` bigint DEFAULT NULL,
+  `last_ack_msgid` int DEFAULT '0',
+  `is_deleted` tinyint DEFAULT '0' COMMENT '是否删除 0：没有、1：删除',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
@@ -83,7 +85,7 @@ CREATE TABLE `chat_offline_message` (
   `type` int DEFAULT NULL COMMENT '类型',
   `status` int DEFAULT NULL COMMENT '状态',
   `content` varchar(1024) DEFAULT NULL COMMENT '内容',
-  `is_deleted` tinyint DEFAULT NULL,
+  `is_deleted` tinyint DEFAULT '0',
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -107,10 +109,10 @@ DROP TABLE IF EXISTS `chat_user_link`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `chat_user_link` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `user_id` int DEFAULT NULL COMMENT '用户id',
-  `friend_id` int DEFAULT NULL COMMENT '朋友id',
-  `type` int DEFAULT NULL COMMENT '类型0、普通，1、亲密',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `user_id` bigint DEFAULT NULL COMMENT '用户id',
+  `friend_id` bigint DEFAULT NULL COMMENT '朋友id',
+  `type` int DEFAULT '0' COMMENT '类型0、普通，1、亲密',
   `is_deleted` tinyint DEFAULT '0' COMMENT '是否删除，0未删除、1删除',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
@@ -263,4 +265,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-16 19:55:15
+-- Dump completed on 2024-06-20 22:55:17
