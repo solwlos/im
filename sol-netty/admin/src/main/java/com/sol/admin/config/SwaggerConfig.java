@@ -18,9 +18,9 @@ public class SwaggerConfig {
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
             .info(new Info().title("sol-netty-Api")
-                .description("yangs统一接口")
+                .description("sol_netty 统一接口")
                 .version("1.0")
-                .contact(new Contact().name("sol").url("").email(""))
+                .contact(new Contact().name("sol").url("").email("solwlos@qq.com"))
                 .license(new License().name("Apache 2.0").url("http://springdoc.org")))
 
             .schemaRequirement(HttpHeaders.AUTHORIZATION, this.securityScheme())

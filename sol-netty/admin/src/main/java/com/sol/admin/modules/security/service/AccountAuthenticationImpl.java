@@ -3,7 +3,7 @@ package com.sol.admin.modules.security.service;
 
 
 import com.sol.admin.modules.system.entity.SysUser;
-import com.sol.admin.modules.system.entity.UserRole;
+import com.sol.admin.modules.system.dto.UserRole;
 import com.sol.admin.modules.system.mapper.SysUserMapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +16,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Service

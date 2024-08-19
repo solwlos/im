@@ -1,4 +1,4 @@
-package com.sol.admin.modules.system.entity;
+package com.sol.admin.modules.system.dto;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+
 public class UserRole implements Authentication {
 
     List<GrantedAuthority> authorities = new ArrayList<>();
@@ -14,13 +15,9 @@ public class UserRole implements Authentication {
     String password;
     String role_id;
     boolean isAuthenticated = false;
-
     String id;
 
-    public UserRole() {
-
-    }
-
+    public UserRole() {}
 
     public UserRole(String name, String password) {
         this.username = name;

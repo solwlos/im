@@ -1,6 +1,6 @@
 package com.sol.admin.modules.security.handler;
 
-import com.sol.admin.modules.constants.HttpConstants;
+import com.sol.admin.modules.common.constants.HttpConstants;
 import com.sol.admin.util.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

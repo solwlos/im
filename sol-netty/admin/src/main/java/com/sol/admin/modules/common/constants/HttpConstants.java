@@ -1,4 +1,4 @@
-package com.sol.admin.modules.constants;
+package com.sol.admin.modules.common.constants;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

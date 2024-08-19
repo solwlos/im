@@ -1,6 +1,6 @@
 package com.sol.admin.modules.security.filter;
 
-import com.sol.admin.modules.system.entity.UserRole;
+import com.sol.admin.modules.system.dto.UserRole;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.security.access.ConfigAttribute;

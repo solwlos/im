@@ -38,47 +38,18 @@ public class SysUserController {
 
 
 
-    @Autowired
-    RedisUtil redisUtil;
-    @Autowired
-    JwtUtil jwtUtil;
-    @Autowired
-    AuthenticationManager authenticationManager;
+
+
 
     @Autowired
     SysUserService sysUserService;
 
 
-    @GetMapping("/login")
+    @GetMapping("/sysUserLogin")
     @Operation(summary ="登录")
-    public  ResponseEntity<?> userLogin(ServletRequest request , String username, String password){
-        SecurityContextHolder.clearContext();
-        System.out.println("username -> " + username);
-        System.out.println("password -> " + password);
-        try {
-            if(request instanceof StandardMultipartHttpServletRequest) {
-                SecurityContextHolderAwareRequestWrapper request1;
-                request1 = (SecurityContextHolderAwareRequestWrapper)
-                        ((StandardMultipartHttpServletRequest) request).getRequest();
-
-                request1.login(username, password);
-            } else if (request instanceof HttpServletRequestWrapper){
-                ((HttpServletRequestWrapper) request).login(username, password);
-            }
-        } catch (ServletException e) {
-            redisUtil.incr(username,1);
-            redisUtil.expire(username,60*30);
-            System.out.println("error message: " + e.getMessage());
-            return new ResponseEntity<>("error message: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-//        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        //生成token
-        Map<String, String> claims = new HashMap<>();
-        claims.put("token", jwtUtil.generateToken(username));
-        claims.put("tokenHead", jwtUtil.getTokenHead());
-        return new ResponseEntity<Map>(claims, HttpStatus.OK);
+    public  ResponseEntity<?> sysUserLogin(ServletRequest request , String username, String password){
+        return new ResponseEntity<>(sysUserService.sysUserLogin(request,username,password), HttpStatus.OK);
 //        return Result.success(claims,"登陆成功");
-
     }
 
 

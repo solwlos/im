@@ -2,8 +2,9 @@ package com.sol.admin.modules.security.util;
 
 import cn.hutool.core.date.DateUtil;
 
-import com.sol.admin.modules.system.entity.UserRole;
+import com.sol.admin.modules.system.dto.UserRole;
 import io.jsonwebtoken.*;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 @Component
 public class JwtUtil {
 
@@ -23,32 +25,6 @@ public class JwtUtil {
     private Long expiration;
     @Value("${myapp.jwt.tokenHead}")
     private String tokenHead;
-
-
-
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
-
-    public Long getExpiration() {
-        return expiration;
-    }
-
-    public void setExpiration(Long expiration) {
-        this.expiration = expiration;
-    }
-
-    public String getTokenHead() {
-        return tokenHead;
-    }
-
-    public void setTokenHead(String tokenHead) {
-        this.tokenHead = tokenHead;
-    }
 
     /**
      * 根据负责生成JWT的token
@@ -94,14 +70,9 @@ public class JwtUtil {
 
     /**
      * 验证token是否还有效
-     *
      * @param token       客户端传入的token
-     * @param userDetails 从数据库中查询出来的用户信息
+     * @param userRole 从数据库中查询出来的用户信息
      */
-    public boolean validateToken(String token, UserDetails userDetails) {
-        String username = getUserNameFromToken(token);
-        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
-    }
     public boolean validateToken(String token, UserRole userRole) {
         String username = getUserNameFromToken(token);
         return username.equals(userRole.getName()) && !isTokenExpired(token);
@@ -132,7 +103,7 @@ public class JwtUtil {
      */
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
+        claims.put(CLAIM_KEY_USERNAME, userDetails);
         claims.put(CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);
     }

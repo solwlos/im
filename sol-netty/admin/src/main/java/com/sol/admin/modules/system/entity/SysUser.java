@@ -34,11 +34,24 @@ public class SysUser implements Serializable {
     @Schema(description = "角色id")
     private Long roleId;
 
-    @Schema(description = "名字")
+//    @Schema(description = "昵称")
+//    private String nickname;
+//
+//    @Schema(description = "真实名字")
+//    private String realname;
+//
+//    @Schema(description = "邮箱")
+//    private String email;
+//
+//    @Schema(description = "手机号")
+//    private String phone;
+
+    @Schema(description = "用户名")
     private String username;
 
     @Schema(description = "密码")
     private String password;
+
 
     @Schema(description = "性别 null 未知，0男，1女")
     private Byte sex;

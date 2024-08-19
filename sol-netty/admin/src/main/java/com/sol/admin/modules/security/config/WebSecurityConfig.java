@@ -10,7 +10,6 @@ import com.sol.admin.modules.security.filter.JwtTokenFilter;
 import com.sol.admin.modules.security.handler.MyAuthenticationHandler;
 import com.sol.admin.modules.security.service.AccountAuthenticationImpl;
 import com.sol.admin.modules.security.service.AuthorizationManagerImpl;
-import com.sol.admin.modules.security.service.MailAuthenticationImpl;
 import com.sol.admin.modules.security.filter.MenuFilterInvocationSecurityMetadataSource;
 import com.sol.admin.modules.security.service.MenuAccessDecisionManager;
 import lombok.extern.slf4j.Slf4j;
@@ -100,8 +99,8 @@ public class WebSecurityConfig {
     @Bean
     public AuthenticationManagerBuilder authenticationProvider(AuthenticationManagerBuilder auth){
         return auth
-                .authenticationProvider(accountAuthentication())
-                .authenticationProvider(mailAuthentication());
+                .authenticationProvider(accountAuthentication());
+//                .authenticationProvider(mailAuthentication());
     }
 
 
@@ -129,10 +128,10 @@ public class WebSecurityConfig {
         return new AccountAuthenticationImpl();
     }
 
-    @Bean
-    public MailAuthenticationImpl mailAuthentication(){
-        return new MailAuthenticationImpl();
-    }
+//    @Bean
+//    public MailAuthenticationImpl mailAuthentication(){
+//        return new MailAuthenticationImpl();
+//    }
 
     @Bean
     public JwtTokenFilter jwtTokenFilter(){
