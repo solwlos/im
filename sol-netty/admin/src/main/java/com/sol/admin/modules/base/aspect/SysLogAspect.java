@@ -42,10 +42,9 @@ public class SysLogAspect {
         long time = SystemClock.now() - beginTime;
 
         SysLog sysLog = new SysLog();
-        if (apiLog != null) {
-            //注解上的描述
-            sysLog.setOperation(apiLog.value());
-        }
+        //注解上的描述
+        if (apiLog != null) sysLog.setOperation(apiLog.value());
+
         //请求的方法名
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
@@ -66,7 +65,6 @@ public class SysLogAspect {
         // 从Spring 的上下文获取用户名
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         sysLog.setUsername(authentication.getName());
-
         sysLog.setTime(time);
         sysLog.setCreatedTime(new Timestamp(System.currentTimeMillis()));
         //保存系统日志

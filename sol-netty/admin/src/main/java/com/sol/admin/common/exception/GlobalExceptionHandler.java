@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,7 +44,7 @@ public class GlobalExceptionHandler {
         log.error("发生业务异常！原因是：" + e);
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         response.setStatus(HttpStatus.OK.value());
-        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(Result.error("发生业务异常！原因是: "+e.getMsg())));
+        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(new ResponseEntity<>("发生业务异常！原因是: "+e.getMsg(), HttpStatus.OK)));
     }
 
     /**
@@ -57,7 +58,7 @@ public class GlobalExceptionHandler {
         log.error("发生空指针异常！原因是:" + e);
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         response.setStatus(HttpStatus.OK.value());
-        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(Result.error("发生空指针异常！原因是:" + e.getMessage())));
+        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(new ResponseEntity<>("发生空指针异常！原因是:" + e.getMessage(), HttpStatus.OK)));
     }
 
 
@@ -72,7 +73,7 @@ public class GlobalExceptionHandler {
         log.error("未知异常！原因是:" + e);
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         response.setStatus(HttpStatus.OK.value());
-        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(Result.error("未知异常！原因是:" + e.getMessage())));
+        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(new ResponseEntity<>("未知异常！原因是:" + e.getMessage(), HttpStatus.OK)));
     }
 
     /**
@@ -86,6 +87,6 @@ public class GlobalExceptionHandler {
         log.error("未登录!" + e);
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(Result.error("未登录！" + e.getMessage())));
+        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(new ResponseEntity<>("未登录！" + e.getMessage(), HttpStatus.OK)));
     }
 }

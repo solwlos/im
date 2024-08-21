@@ -2,31 +2,18 @@ package com.sol.admin.modules.security.service;
 
 import com.sol.admin.common.util.RedisUtil;
 import com.sol.admin.modules.security.util.JwtUtil;
-import com.sol.admin.modules.system.dto.UserRole;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.FilterInvocation;
-import org.springframework.util.AntPathMatcher;
-import org.springframework.util.CollectionUtils;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.function.Supplier;
-
-import static org.springframework.security.access.AccessDecisionVoter.ACCESS_DENIED;
-import static org.springframework.security.access.AccessDecisionVoter.ACCESS_GRANTED;
 
 /**
  * date: 2024/2/23
@@ -49,12 +36,12 @@ public class AuthorizationManagerImpl implements AuthorizationManager<FilterInvo
     private JwtUtil jwtUtil;
     @Override
     public AuthorizationDecision check(Supplier<Authentication> authentication, FilterInvocation object){
-        // 当前请求路径
+        // 当前请求路径, 去掉参数
         String requestUrl = object.getRequestUrl();
         int index = requestUrl.lastIndexOf("?");
-        if (index != -1) {
-            requestUrl = requestUrl.substring(0, index);
-        }
+
+        if (index != -1) requestUrl = requestUrl.substring(0, index);
+
         log.info("requestUrl:{}", requestUrl);
 
         // sse 连接
@@ -93,7 +80,8 @@ public class AuthorizationManagerImpl implements AuthorizationManager<FilterInvo
 //        checkAllowIfAllAbstainDecisions();
 //        throw new AccessDeniedException(roleId + " > "+ requestUrl + " 403 not authentication");
 
-        return null;
+        // 允许访问
+        return new AuthorizationDecision(true);
     }
 
     /**

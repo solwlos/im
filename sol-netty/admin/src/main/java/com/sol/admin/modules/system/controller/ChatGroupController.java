@@ -32,8 +32,6 @@ public class ChatGroupController {
 
     /**
      * 根据 用户id 查询某个用户的所有群聊
-     * @param userId
-     * @return
      */
     @GetMapping("/getGroupByUserID")
     @Operation(summary ="根据 用户id 查询某个用户的所有群聊")

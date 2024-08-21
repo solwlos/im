@@ -1,5 +1,8 @@
 package com.sol.admin.modules.system.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,4 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/sysLog")
 public class SysLogController {
 
+
+    @PostMapping("/searchQuery")
+    @Operation(summary ="添加用户")
+    public ResponseEntity<?> searchQuery(){
+
+        return null;
+    }
 }
