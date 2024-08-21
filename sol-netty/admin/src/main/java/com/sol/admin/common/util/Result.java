@@ -1,4 +1,4 @@
-package com.sol.admin.util;
+package com.sol.admin.common.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

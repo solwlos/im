@@ -1,17 +1,16 @@
 package com.sol.admin.modules.security.filter;
 
-import com.sol.admin.modules.common.constants.HttpConstants;
-import com.sol.admin.modules.common.constants.RedisKeys;
+import com.sol.admin.common.constants.HttpConstants;
+import com.sol.admin.common.constants.RedisKeys;
 import com.sol.admin.modules.security.util.JwtUtil;
 import com.sol.admin.modules.system.dto.UserRole;
 import com.sol.admin.modules.system.mapper.SysUserMapper;
-import com.sol.admin.util.RedisUtil;
+import com.sol.admin.common.util.RedisUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 package com.sol.admin.modules.security.service;
 
-import com.sol.admin.util.RedisUtil;
+import com.sol.admin.common.util.RedisUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

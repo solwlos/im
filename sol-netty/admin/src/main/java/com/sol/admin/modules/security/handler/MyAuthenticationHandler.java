@@ -1,7 +1,7 @@
 package com.sol.admin.modules.security.handler;
 
-import com.sol.admin.modules.common.constants.HttpConstants;
-import com.sol.admin.util.Result;
+import com.sol.admin.common.constants.HttpConstants;
+import com.sol.admin.common.util.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;

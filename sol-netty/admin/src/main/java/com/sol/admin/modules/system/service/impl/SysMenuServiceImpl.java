@@ -1,7 +1,7 @@
 package com.sol.admin.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.sol.admin.modules.common.constants.StatusType;
+import com.sol.admin.common.constants.StatusType;
 import com.sol.admin.modules.system.entity.SysMenu;
 import com.sol.admin.modules.system.mapper.SysMenuMapper;
 import com.sol.admin.modules.system.service.SysMenuService;

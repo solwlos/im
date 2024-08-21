@@ -1,13 +1,12 @@
 package com.sol.admin.modules.system.service.impl;
 
-import com.sol.admin.modules.common.constants.RedisKeys;
+import com.sol.admin.common.constants.RedisKeys;
 import com.sol.admin.modules.security.util.JwtUtil;
-import com.sol.admin.modules.system.dto.UserRole;
 import com.sol.admin.modules.system.entity.SysUser;
 import com.sol.admin.modules.system.mapper.SysUserMapper;
 import com.sol.admin.modules.system.service.SysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.sol.admin.util.RedisUtil;
+import com.sol.admin.common.util.RedisUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -49,7 +48,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     AuthenticationManager authenticationManager;
 
     @Override
-    public ResponseEntity<?> sysUserLogin(ServletRequest request , String username, String password) {
+    public ResponseEntity<Map<String,Object>> sysUserLogin(ServletRequest request , String username, String password) {
         // TODO 是否要单点登录
         // 清除SecurityContextHolder中的认证信息
         SecurityContextHolder.clearContext();
@@ -67,18 +66,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             redisUtil.incr(username,1);
             redisUtil.expire(username,60*30);
             log.error("登录错误： error message: " + e);
-            return new ResponseEntity<>("error message: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+//            return new ResponseEntity<>("error message: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 //        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         // 生成token
-        Map<String, String> claims = new HashMap<>();
+        SysUser user = mapper.getLoginName(username);
+        Map<String, Object> claims = new HashMap<>();
         claims.put("token", jwtUtil.generateToken(username));
         claims.put("tokenHead", jwtUtil.getTokenHead());
+        claims.put("userInfo", user);
         // 将用户信息存入 redis
-        Map<String,Object> map = new HashMap<>();
-//        map.put(username,mapper.getLoginName(username));
-        map.put(username,mapper.getUserRole(username));
-        redisUtil.hmset(RedisKeys.SYS_USER_INFO, map);
+        redisUtil.hset(RedisKeys.SYS_USER_INFO, username,user);
 
         return new ResponseEntity<>(claims, HttpStatus.OK);
     }

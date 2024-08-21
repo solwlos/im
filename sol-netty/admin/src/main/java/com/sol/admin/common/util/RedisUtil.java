@@ -1,4 +1,4 @@
-package com.sol.admin.util;
+package com.sol.admin.common.util;
 
 import org.springframework.stereotype.Component;
 

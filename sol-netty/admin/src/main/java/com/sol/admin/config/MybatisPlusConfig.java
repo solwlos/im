@@ -1,5 +1,8 @@
 package com.sol.admin.config;
 
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.IllegalSQLInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -19,16 +22,29 @@ public class MybatisPlusConfig {
     private String mapperLocations;
 
     @Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource)
-            throws Exception {
+    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         final MybatisSqlSessionFactoryBean sessionFactory = new MybatisSqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocations));
-//        //关闭驼峰
-//        MybatisConfiguration configuration = new MybatisConfiguration();
+        MybatisConfiguration configuration = new MybatisConfiguration();
+        // 关闭驼峰
 //        configuration.setMapUnderscoreToCamelCase(false);
-//        sessionFactory.setConfiguration(configuration);
+        // 缓存
+        configuration.setCacheEnabled(true);
+        // 懒加载
+        configuration.setLazyLoadingEnabled(true);
+        // 日志
+//        configuration.setLogImpl(org.apache.ibatis.logging.stdout.StdOutImpl.class);
+        sessionFactory.setConfiguration(configuration);
         return sessionFactory.getObject();
+    }
+
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // 添加非法SQL拦截器
+        interceptor.addInnerInterceptor(new IllegalSQLInnerInterceptor());
+        return interceptor;
     }
 }
 
