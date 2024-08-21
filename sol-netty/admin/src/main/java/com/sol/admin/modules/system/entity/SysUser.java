@@ -40,8 +40,8 @@ public class SysUser implements Serializable {
 //    @Schema(description = "真实名字")
 //    private String realname;
 //
-//    @Schema(description = "邮箱")
-//    private String email;
+    @Schema(description = "邮箱")
+    private String email;
 //
 //    @Schema(description = "手机号")
 //    private String phone;

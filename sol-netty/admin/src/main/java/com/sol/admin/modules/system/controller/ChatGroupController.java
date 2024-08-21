@@ -1,8 +1,7 @@
 package com.sol.admin.modules.system.controller;
 
 import com.sol.admin.modules.system.entity.ChatGroup;
-import com.sol.admin.modules.system.service.IChatGroupService;
-import com.sol.admin.modules.system.service.IChatGroupUserService;
+import com.sol.admin.modules.system.service.ChatGroupService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import java.util.List;
@@ -29,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatGroupController {
 
     @Resource
-    IChatGroupService service;
+    ChatGroupService service;
 
     /**
      * 根据 用户id 查询某个用户的所有群聊

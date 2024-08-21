@@ -3,7 +3,6 @@ package com.sol.admin.modules.system.service;
 import com.sol.admin.modules.system.entity.ChatGroupUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
-import org.springframework.http.HttpStatusCode;
 
 /**
  * <p>
@@ -13,7 +12,7 @@ import org.springframework.http.HttpStatusCode;
  * @author sol
  * @since 2024-06-16
  */
-public interface IChatGroupUserService extends IService<ChatGroupUser> {
+public interface ChatGroupUserService extends IService<ChatGroupUser> {
 
 
     List<ChatGroupUser> getGroupUser(String groupId);

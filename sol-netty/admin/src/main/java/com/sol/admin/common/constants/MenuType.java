@@ -1,9 +1,12 @@
 package com.sol.admin.common.constants;
 
+import lombok.Getter;
+
 /**
  * @author sol
  * @since 2024/6/20
  */
+@Getter
 public enum MenuType {
     CATALOG(0, "目录"),
     MENU(1, "菜单"),
@@ -17,11 +20,4 @@ public enum MenuType {
         this.desc = desc;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
 }

@@ -12,7 +12,7 @@ import java.util.List;
  * @author sol
  * @since 2024-02-22
  */
-public interface IChatUserLinkService extends IService<ChatUserLink> {
+public interface ChatUserLinkService extends IService<ChatUserLink> {
 
     List<ChatUserLink> getChatUserLink(String userId);
 

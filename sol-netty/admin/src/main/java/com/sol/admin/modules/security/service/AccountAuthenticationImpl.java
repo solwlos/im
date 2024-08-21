@@ -1,7 +1,5 @@
 package com.sol.admin.modules.security.service;
 
-
-
 import com.sol.admin.modules.system.entity.SysUser;
 import com.sol.admin.modules.system.dto.UserRole;
 import com.sol.admin.modules.system.mapper.SysUserMapper;
@@ -36,8 +34,6 @@ public class AccountAuthenticationImpl implements AuthenticationProvider {
     /**
      * 账号 登录
      * @param authentication the authentication request object.
-     * @return
-     * @throws AuthenticationException
      */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -47,11 +43,10 @@ public class AccountAuthenticationImpl implements AuthenticationProvider {
                 (String) authentication.getCredentials());//密码
 
         //通过用户名获取用户信息
-        SysUser user = userMapper.getLoginName(userRole.getName());//查询数据库中是否有该用户
+        SysUser user = userMapper.getLoginName(userRole.getName());
+        //查询数据库中是否有该用户
+        if (user == null) throw new UsernameNotFoundException("username not found exception");
 
-        if (user == null) {
-            throw new UsernameNotFoundException("username not found exception");
-        }
         String password = user.getPassword();//查询数据库中该用户密码
         if(!passwordEncoder.matches((String) authentication.getCredentials(),password)){//比较密码
             throw new UsernameNotFoundException("password not right exception");
@@ -69,8 +64,6 @@ public class AccountAuthenticationImpl implements AuthenticationProvider {
      * AuthenticationManager获取所有AuthenticationProvider的实现
      * 通过该方法判断是否支持当前方式的认证
      * 这里支持验证UsernamePasswordAuthenticationToken
-     * @param authentication
-     * @return
      */
     @Override
     public boolean supports(Class<?> authentication) {

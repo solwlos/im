@@ -1,26 +1,20 @@
 package com.sol.admin.common.constants;
 
+import lombok.Getter;
+
+@Getter
 public enum StatusType {
 
     NORMAL(0, "正常"),
 
     DELETE(1, "删除");
 
-    private int value;
-    private String desc;
+    private final int value;
+    private final String desc;
 
-    StatusType(int value, String desc)
-    {
+    StatusType(int value, String desc) {
         this.value = value;
         this.desc = desc;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public String getDesc() {
-        return desc;
     }
 
 }

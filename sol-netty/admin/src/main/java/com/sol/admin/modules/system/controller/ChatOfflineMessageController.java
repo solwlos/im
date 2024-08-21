@@ -1,9 +1,7 @@
 package com.sol.admin.modules.system.controller;
 
 import com.sol.admin.modules.system.entity.ChatOfflineMessage;
-import com.sol.admin.modules.system.entity.ChatUserLink;
-import com.sol.admin.modules.system.service.IChatGroupService;
-import com.sol.admin.modules.system.service.IChatOfflineMessageService;
+import com.sol.admin.modules.system.service.ChatOfflineMessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,7 @@ public class ChatOfflineMessageController {
 
 
     @Autowired
-    IChatOfflineMessageService service;
+    ChatOfflineMessageService service;
 
     /**
      * 根据用户 id 获取某个用户离线消息

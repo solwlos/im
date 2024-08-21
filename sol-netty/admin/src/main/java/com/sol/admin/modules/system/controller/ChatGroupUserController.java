@@ -2,10 +2,10 @@ package com.sol.admin.modules.system.controller;
 
 import com.sol.admin.modules.system.entity.ChatGroupUser;
 
-import com.sol.admin.modules.system.service.IChatGroupUserService;
+import com.sol.admin.modules.system.service.ChatGroupUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
-import org.apache.ibatis.annotations.Delete;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class ChatGroupUserController {
 
 
     @Autowired
-    IChatGroupUserService service;
+    ChatGroupUserService service;
 
     /**
      * 根据群聊 id查询群聊成员

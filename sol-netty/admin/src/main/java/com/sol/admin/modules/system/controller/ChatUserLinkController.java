@@ -1,8 +1,7 @@
 package com.sol.admin.modules.system.controller;
 
 import com.sol.admin.modules.system.entity.ChatUserLink;
-import com.sol.admin.modules.system.service.IChatGroupUserService;
-import com.sol.admin.modules.system.service.IChatUserLinkService;
+import com.sol.admin.modules.system.service.ChatUserLinkService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatUserLinkController {
 
     @Autowired
-    IChatUserLinkService service;
+    ChatUserLinkService service;
 
 
     /**

@@ -13,7 +13,6 @@ import com.sol.admin.modules.security.service.AuthorizationManagerImpl;
 import com.sol.admin.modules.security.filter.MenuFilterInvocationSecurityMetadataSource;
 import com.sol.admin.modules.security.service.MenuAccessDecisionManager;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerJwtAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -26,19 +25,12 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Collections;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -50,9 +42,8 @@ public class WebSecurityConfig {
 
         http
                 .addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                //                .authenticationProvider(authenticationProvider(new AuthenticationConfiguration()))
+//                .authenticationProvider(authenticationProvider(authenticationProvider()))
 //                .authenticationManager(authenticationManager(new AuthenticationConfiguration()))
-
                 // security 6.0 之后的写法
                 .authorizeHttpRequests(authorize -> {
                     authorize
@@ -70,7 +61,7 @@ public class WebSecurityConfig {
                             .authenticationEntryPoint(new MyAuthenticationHandler())
                             .accessDeniedHandler(new MyAuthenticationHandler())
                 )
-//                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+//              .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
@@ -90,11 +81,17 @@ public class WebSecurityConfig {
         };
     }
 
+    // 授权管理器，判断用户是否有权限访问其需要访问的资源（当前用户是否有访问该接口的权限）
     public AuthorizationManager authorizationManager(){
         return new AuthorizationManagerImpl();
     }
 
-
+    /**
+     *  身份验证管理器，登录时验证其身份
+     *  authenticationProvider: 身份验证提供者,根据需要实现不同的身份验证逻辑（账号-密码、邮箱-密码、邮箱-验证码等）
+     * @param auth 链式构建器，符合条件（登录成功）的身份验证提供者将返回一个Authentication对象，否则将返回null
+     * @return AuthenticationManagerBuilder
+     */
     @Primary
     @Bean
     public AuthenticationManagerBuilder authenticationProvider(AuthenticationManagerBuilder auth){
@@ -102,8 +99,6 @@ public class WebSecurityConfig {
                 .authenticationProvider(accountAuthentication());
 //                .authenticationProvider(mailAuthentication());
     }
-
-
 
 
     @Bean
@@ -116,6 +111,8 @@ public class WebSecurityConfig {
     public FilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource(){
         return new MenuFilterInvocationSecurityMetadataSource();
     }
+
+    // 决策管理器
     @Bean
     @Primary
     public AccessDecisionManager accessDecisionManager(){

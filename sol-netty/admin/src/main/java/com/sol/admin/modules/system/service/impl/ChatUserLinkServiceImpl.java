@@ -3,12 +3,12 @@ package com.sol.admin.modules.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sol.admin.modules.system.entity.ChatUserLink;
 import com.sol.admin.modules.system.mapper.ChatUserLinkMapper;
-import com.sol.admin.modules.system.service.IChatUserLinkService;
+import com.sol.admin.modules.system.service.ChatUserLinkService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @since 2024-02-22
  */
 @Service
-public class ChatUserLinkServiceImpl extends ServiceImpl<ChatUserLinkMapper, ChatUserLink> implements IChatUserLinkService {
+public class ChatUserLinkServiceImpl extends ServiceImpl<ChatUserLinkMapper, ChatUserLink> implements ChatUserLinkService {
 
     @Resource
     ChatUserLinkMapper mapper;

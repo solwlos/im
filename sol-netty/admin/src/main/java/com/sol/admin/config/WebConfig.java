@@ -20,16 +20,18 @@ import java.util.List;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${static.image}")
+    @Value("${static.path.image}")
     private String imagePath;
 
     /**
      * 配置静态资源
-     * @param registry
+     * @param registry 注册器
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**")
+        registry
+                .addResourceHandler("/**")
+//                .addResourceHandler("/image/*")
                 .addResourceLocations("file:" + imagePath);
     }
 
@@ -61,7 +63,6 @@ public class WebConfig implements WebMvcConfigurer {
         ObjectMapper mapper = new ObjectMapper();
         // 关键代码
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(mapper);
-        return converter;
+        return new MappingJackson2HttpMessageConverter(mapper);
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
  * @author sol
  * @since 2024-06-16
  */
-public interface IChatGroupService extends IService<ChatGroup> {
+public interface ChatGroupService extends IService<ChatGroup> {
 
     List<ChatGroup> getGroupByUserID(String userId);
 

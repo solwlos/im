@@ -50,14 +50,13 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             if (authHeader != null && authHeader.startsWith(this.tokenHead)) {
                 String authToken = authHeader.substring(this.tokenHead.length());
                 String username = jwtUtil.getUserNameFromToken(authToken);
-                // 从redis中获取用户信息
-                Map<Object,Object> map = redisUtil.hmget(RedisKeys.SYS_USER_INFO);
-                if (map == null || !map.containsKey(username)){
+                // 从redis中获取用户信息。没有，需要重新登录
+                if (!redisUtil.hHasKey(RedisKeys.SYS_USER_INFO,username)){
                     throw new ServletException("请重新登录 ！！！");
                 }
                 // 检测时间是否到期
                 if (!jwtUtil.isTokenExpired(authToken)) {
-                    UserRole user = (UserRole)map.get(username);
+                    UserRole user = (UserRole)redisUtil.hget(RedisKeys.SYS_USER_INFO,username);
                     user.setAuthenticated(true);
                     user.setAuthority(user.getRole());
                     UsernamePasswordAuthenticationToken
