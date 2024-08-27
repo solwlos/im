@@ -36,6 +36,8 @@ public class AuthorizationManagerImpl implements AuthorizationManager<FilterInvo
     private JwtUtil jwtUtil;
     @Override
     public AuthorizationDecision check(Supplier<Authentication> authentication, FilterInvocation object){
+
+        System.out.println("================");
         // 当前请求路径, 去掉参数
         String requestUrl = object.getRequestUrl();
         int index = requestUrl.lastIndexOf("?");

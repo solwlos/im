@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author sol
  * @since 2024-02-20
  */
-public interface SysRoleMenuService extends IService<SysRoleMenu> {
+public interface SysRoleMenuService {
 
 }

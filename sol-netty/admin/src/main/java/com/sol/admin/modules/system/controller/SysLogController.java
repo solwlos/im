@@ -1,6 +1,11 @@
 package com.sol.admin.modules.system.controller;
 
+import com.sol.admin.modules.base.EntitySearchQuery;
+import com.sol.admin.modules.system.entity.SysLog;
+import com.sol.admin.modules.system.service.SysLogService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/sysLog")
 public class SysLogController {
 
+    @Autowired
+    private SysLogService sysLogService;
 
     @PostMapping("/searchQuery")
-    @Operation(summary ="添加用户")
-    public ResponseEntity<?> searchQuery(){
+    @Operation(summary ="分页搜索")
+    public ResponseEntity<?> searchQuery(EntitySearchQuery<SysLog> query){
 
-        return null;
+
+        return ResponseEntity.status(HttpStatus.OK).body(sysLogService.searchQuery());
     }
 }

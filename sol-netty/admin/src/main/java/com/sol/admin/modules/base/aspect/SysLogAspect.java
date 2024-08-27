@@ -68,7 +68,7 @@ public class SysLogAspect {
         sysLog.setTime(time);
         sysLog.setCreatedTime(new Timestamp(System.currentTimeMillis()));
         //保存系统日志
-        sysLogService.save(sysLog);
+        sysLogService.addSysLog(sysLog);
         return result;
     }
 }

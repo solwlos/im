@@ -29,19 +29,19 @@ public class SysMenuController {
     @PostMapping("/addMenu")
     @Operation(summary ="添加菜单")
     public ResponseEntity<Boolean> addMenu(@RequestBody SysMenu sysMenu){
-        return new ResponseEntity<>(sysMenuService.save(sysMenu), HttpStatus.OK);
+        return new ResponseEntity<>(sysMenuService.addMenu(sysMenu), HttpStatus.OK);
     }
 
     @PutMapping("/updateMenu")
     @Operation(summary ="修改菜单")
     public ResponseEntity<Boolean> updateMenu(@RequestBody SysMenu sysMenu){
-        return new ResponseEntity<>(sysMenuService.updateById(sysMenu), HttpStatus.OK);
+        return new ResponseEntity<>(sysMenuService.updateMenu(sysMenu), HttpStatus.OK);
     }
 
     @DeleteMapping("/deletedMenu")
     @Operation(summary ="删除菜单")
     public ResponseEntity<Boolean> deletedMenu(String id){
-        return new ResponseEntity<>(sysMenuService.removeById(id), HttpStatus.OK);
+        return new ResponseEntity<>(sysMenuService.deletedMenu(id), HttpStatus.OK);
     }
 
     @GetMapping("/getRootMenu")

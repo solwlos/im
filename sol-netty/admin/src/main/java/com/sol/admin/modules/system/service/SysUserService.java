@@ -15,7 +15,9 @@ import java.util.Map;
  * @author sol
  * @since 2024-02-20
  */
-public interface SysUserService extends IService<SysUser> {
+public interface SysUserService {
 
     ResponseEntity<Map<String,Object>> sysUserLogin(ServletRequest request , String username, String password);
+
+    Boolean addUser(SysUser sysUser);
 }

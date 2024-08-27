@@ -12,9 +12,13 @@ import java.util.List;
  * @author sol
  * @since 2024-02-20
  */
-public interface SysMenuService extends IService<SysMenu> {
+public interface SysMenuService {
 
     Boolean addMenu(SysMenu sysMenu);
 
     List<SysMenu> getRootMenu();
+
+    Boolean deletedMenu(String id);
+
+    Boolean updateMenu(SysMenu sysMenu);
 }

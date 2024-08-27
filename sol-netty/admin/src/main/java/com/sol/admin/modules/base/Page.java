@@ -17,5 +17,8 @@ public class Page {
         this.pageSize = pageSize;
         this.start = (pageNum - 1) * pageSize;
     }
+//    public Integer getStart(){
+//        return (pageNum - 1) * pageSize;
+//    }
 
 }

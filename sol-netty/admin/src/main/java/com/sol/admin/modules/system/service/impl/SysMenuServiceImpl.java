@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @since 2024-02-20
  */
 @Service
-public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
+public class SysMenuServiceImpl  implements SysMenuService {
 
     @Resource
     SysMenuMapper sysMenuMapper;
@@ -40,5 +40,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             .eq(SysMenu::getIsDeleted, 0);
         return sysMenuMapper.selectList(queryWrapper);
 
+    }
+
+    @Override
+    public Boolean deletedMenu(String id) {
+        return sysMenuMapper.deleteById(id) == 1;
+    }
+
+    @Override
+    public Boolean updateMenu(SysMenu sysMenu) {
+        return sysMenuMapper.updateById(sysMenu) == 1;
     }
 }

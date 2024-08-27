@@ -3,6 +3,7 @@ package com.sol.admin.config;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.IllegalSQLInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -27,7 +28,7 @@ public class MybatisPlusConfig {
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocations));
         MybatisConfiguration configuration = new MybatisConfiguration();
-        // 关闭驼峰
+        // 关闭驼峰, 默认为 true
 //        configuration.setMapUnderscoreToCamelCase(false);
         // 缓存
         configuration.setCacheEnabled(true);
@@ -44,6 +45,17 @@ public class MybatisPlusConfig {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         // 添加非法SQL拦截器
         interceptor.addInnerInterceptor(new IllegalSQLInnerInterceptor());
+        return interceptor;
+    }
+
+    /**
+     * 分页插件
+     */
+    @Bean
+    public PaginationInnerInterceptor paginationInnerInterceptor() {
+        PaginationInnerInterceptor interceptor = new PaginationInnerInterceptor();
+        // 你的最大单页限制数量，默认 500 条，小于 0 如 -1 不受限制
+        interceptor.setMaxLimit(-1L);
         return interceptor;
     }
 }

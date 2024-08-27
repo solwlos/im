@@ -34,7 +34,7 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
+public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     RedisUtil redisUtil;
@@ -79,5 +79,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         redisUtil.hset(RedisKeys.SYS_USER_INFO, username,user);
 
         return new ResponseEntity<>(claims, HttpStatus.OK);
+    }
+
+    @Override
+    public Boolean addUser(SysUser sysUser) {
+        return mapper.insert(sysUser) == 1;
     }
 }

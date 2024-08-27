@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author sol
  * @since 2024-08-21
  */
-public interface SysRolePermissionService extends IService<SysRolePermission> {
+public interface SysRolePermissionService {
 
 }

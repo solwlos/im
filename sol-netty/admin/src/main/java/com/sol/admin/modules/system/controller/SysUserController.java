@@ -32,6 +32,7 @@ public class SysUserController {
     @PostMapping("/login")
     @Operation(summary ="登录")
     public  ResponseEntity<?> sysUserLogin(ServletRequest request,@RequestBody UserDTO userDTO){
+        System.out.println("userDTO=====:"+userDTO);
         return sysUserService.sysUserLogin(request,userDTO.getUsername(),userDTO.getPassword());
 //        return Result.success(claims,"登陆成功");
     }
@@ -42,7 +43,7 @@ public class SysUserController {
     @Operation(summary ="添加用户")
     public ResponseEntity<Object> addUser(@RequestBody SysUser sysUser){
 //        return new ResponseEntity<>(sysUserService.save(sysUser), HttpStatus.OK);
-        return ResponseEntity.status(HttpStatus.OK).body(sysUserService.save(sysUser));
+        return ResponseEntity.status(HttpStatus.OK).body(sysUserService.addUser(sysUser));
     }
 
 }
