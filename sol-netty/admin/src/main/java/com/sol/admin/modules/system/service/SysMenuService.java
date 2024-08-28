@@ -21,4 +21,6 @@ public interface SysMenuService {
     Boolean deletedMenu(String id);
 
     Boolean updateMenu(SysMenu sysMenu);
+
+    List<SysMenu> getSonMenu(String pid);
 }

@@ -50,4 +50,10 @@ public class SysMenuController {
         return new ResponseEntity<>(sysMenuService.getRootMenu(), HttpStatus.OK);
     }
 
+    @GetMapping("/getSonMenu")
+    @Operation(summary ="获得根节点")
+    public ResponseEntity<List<SysMenu>> getSonMenu(String pid){
+        return new ResponseEntity<>(sysMenuService.getSonMenu(pid), HttpStatus.OK);
+    }
+
 }

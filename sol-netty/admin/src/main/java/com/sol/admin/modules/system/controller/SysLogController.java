@@ -29,8 +29,6 @@ public class SysLogController {
     @PostMapping("/searchQuery")
     @Operation(summary ="分页搜索")
     public ResponseEntity<?> searchQuery(EntitySearchQuery<SysLog> query){
-
-
-        return ResponseEntity.status(HttpStatus.OK).body(sysLogService.searchQuery());
+        return ResponseEntity.status(HttpStatus.OK).body(sysLogService.searchQuery(query));
     }
 }

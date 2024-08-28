@@ -23,32 +23,30 @@ import org.springframework.stereotype.Service;
 public class SysMenuServiceImpl  implements SysMenuService {
 
     @Resource
-    SysMenuMapper sysMenuMapper;
+    SysMenuMapper mapper;
 
     @Override
     public Boolean addMenu(SysMenu sysMenu) {
-        return sysMenuMapper.insert(sysMenu) == 1;
+        return mapper.insert(sysMenu) == 1;
     }
 
     @Override
     public List<SysMenu> getRootMenu() {
-        QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>();
-        queryWrapper
-            .lambda()
-            .eq(SysMenu::getPid, 0)
-            .eq(SysMenu::getStatus, StatusType.NORMAL)
-            .eq(SysMenu::getIsDeleted, 0);
-        return sysMenuMapper.selectList(queryWrapper);
-
+        return mapper.getRootMenu();
     }
 
     @Override
     public Boolean deletedMenu(String id) {
-        return sysMenuMapper.deleteById(id) == 1;
+        return mapper.deleteById(id) == 1;
     }
 
     @Override
     public Boolean updateMenu(SysMenu sysMenu) {
-        return sysMenuMapper.updateById(sysMenu) == 1;
+        return mapper.updateById(sysMenu) == 1;
+    }
+
+    @Override
+    public List<SysMenu> getSonMenu(String pid) {
+        return mapper.getSonMenu(pid);
     }
 }
