@@ -1,4 +1,4 @@
-package com.sol.admin.modules.security.service;
+package com.sol.admin.modules.security.util.service;
 
 import com.sol.admin.common.util.RedisUtil;
 import com.sol.admin.modules.security.util.JwtUtil;

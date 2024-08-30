@@ -1,5 +1,7 @@
-package com.sol.admin.modules.security.service;
+package com.sol.admin.modules.security.util.service;
 
+import com.sol.admin.common.constants.RedisKeys;
+import com.sol.admin.common.util.RedisUtil;
 import com.sol.admin.modules.system.entity.SysUser;
 import com.sol.admin.modules.system.dto.UserRole;
 import com.sol.admin.modules.system.mapper.SysUserMapper;
@@ -27,7 +29,6 @@ public class AccountAuthenticationImpl implements AuthenticationProvider {
     SysUserMapper userMapper;
     @Autowired
     PasswordEncoder passwordEncoder;
-
     @Autowired
     HttpServletRequest request;
 

@@ -1,5 +1,6 @@
 package com.sol.admin.modules.system.dto;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,4 @@ import lombok.Setter;
 public class UserDTO {
     String username;
     String password;
-
-
 }

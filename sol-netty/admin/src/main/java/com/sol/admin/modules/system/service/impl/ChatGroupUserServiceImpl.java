@@ -25,21 +25,12 @@ public class ChatGroupUserServiceImpl extends ServiceImpl<ChatGroupUserMapper, C
 
     @Override
     public List<ChatGroupUser> getGroupUser(String id) {
-        QueryWrapper<ChatGroupUser> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda()
-            .eq(ChatGroupUser::getGroupId,id)
-            .eq(ChatGroupUser::getIsDeleted,0);
-        return mapper.selectList(queryWrapper);
+        return mapper.getGroupUser(id);
     }
 
     @Override
     public Boolean delGroupUser(String groupId, String userId) {
-        QueryWrapper<ChatGroupUser> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda()
-            .eq(ChatGroupUser::getGroupId,groupId)
-            .eq(ChatGroupUser::getUserId,userId)
-            .eq(ChatGroupUser::getIsDeleted,0);
-        return mapper.delete(queryWrapper) == 1;
+        return mapper.delGroupUser(groupId,userId);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.sol.admin.modules.system.mapper;
 
+import com.sol.admin.modules.system.dto.UserInfo;
 import com.sol.admin.modules.system.entity.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sol.admin.modules.system.dto.UserRole;
@@ -17,8 +18,9 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     /**
      *  查询 email 和 username 其中有一个相同就返回该用户
      */
-    SysUser getLoginName(@Param("loginName")String loginName);
+    SysUser getLoginName(@Param("username")String username);
 
-    UserRole getUserRole(@Param("loginName")String loginName);
+    UserRole getUserRole(@Param("username")String username);
 
+    UserInfo getUserInfo(@Param("username")String username);
 }

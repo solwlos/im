@@ -8,10 +8,10 @@ package com.sol.admin.modules.security.config;
 
 import com.sol.admin.modules.security.filter.JwtTokenFilter;
 import com.sol.admin.modules.security.handler.MyAuthenticationHandler;
-import com.sol.admin.modules.security.service.AccountAuthenticationImpl;
-import com.sol.admin.modules.security.service.AuthorizationManagerImpl;
+import com.sol.admin.modules.security.util.service.AccountAuthenticationImpl;
+import com.sol.admin.modules.security.util.service.AuthorizationManagerImpl;
 import com.sol.admin.modules.security.filter.MenuFilterInvocationSecurityMetadataSource;
-import com.sol.admin.modules.security.service.MenuAccessDecisionManager;
+import com.sol.admin.modules.security.util.service.MenuAccessDecisionManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,14 +25,12 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
 @EnableWebSecurity
@@ -40,16 +38,16 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class WebSecurityConfig {
 
 
-    @Bean
-    SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        http
-                .authorizeExchange(exchanges -> exchanges
-                        .anyExchange().authenticated()
-                );
-//                .httpBasic(withDefaults())
-//                .formLogin(withDefaults());
-        return http.build();
-    }
+//    @Bean
+//    SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+//        http
+//                .authorizeExchange(exchanges -> exchanges
+//                        .anyExchange().authenticated()
+//                );
+////                .httpBasic(withDefaults())
+////                .formLogin(withDefaults());
+//        return http.build();
+//    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 

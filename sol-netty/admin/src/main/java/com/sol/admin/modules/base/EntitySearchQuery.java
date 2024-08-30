@@ -1,11 +1,13 @@
 package com.sol.admin.modules.base;
 
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@Schema(name = "EntitySearchQuery", description = "实体搜索条件查询")
 public class EntitySearchQuery<T> {
 
     public EntitySearchQuery(T entity){

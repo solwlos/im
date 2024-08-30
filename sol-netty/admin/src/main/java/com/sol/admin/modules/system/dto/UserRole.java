@@ -1,13 +1,20 @@
 package com.sol.admin.modules.system.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class UserRole implements Authentication {
 
     List<GrantedAuthority> authorities = new ArrayList<>();
@@ -17,12 +24,18 @@ public class UserRole implements Authentication {
     boolean isAuthenticated = false;
     String id;
 
-    public UserRole() {}
-
     public UserRole(String name, String password) {
         this.username = name;
         this.password = password;
     }
+
+    public String getId() {
+        return id;
+    }
+    public String setId(String id) {
+        return id;
+    }
+
     public String getRole() {
         return role_id;
     }
@@ -69,22 +82,13 @@ public class UserRole implements Authentication {
      * 返回权限，这个权限是前缀"ROLE_"+role
      * @param role
      */
+//    public void setAuthority(String role) {
+//        authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+//    }
     public void setAuthority(String role) {
         GrantedAuthority auth = () -> {
             return "ROLE_" + role;
         };
         authorities.add(auth);
-    }
-
-    @Override
-    public String toString() {
-        return "UserRole{" +
-                "authorities=" + authorities +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role_id + '\'' +
-                ", isAuthenticated=" + isAuthenticated +
-                ", id=" + id +
-                '}';
     }
 }

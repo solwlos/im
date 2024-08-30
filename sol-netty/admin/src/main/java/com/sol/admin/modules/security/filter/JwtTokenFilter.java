@@ -1,8 +1,10 @@
 package com.sol.admin.modules.security.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.sol.admin.common.constants.HttpConstants;
 import com.sol.admin.common.constants.RedisKeys;
 import com.sol.admin.modules.security.util.JwtUtil;
+import com.sol.admin.modules.system.dto.UserInfo;
 import com.sol.admin.modules.system.dto.UserRole;
 import com.sol.admin.modules.system.mapper.SysUserMapper;
 import com.sol.admin.common.util.RedisUtil;
@@ -11,15 +13,18 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -27,6 +32,7 @@ import java.util.Map;
  * @date 2024/1/10 14:28
  * @Version 1.0
  */
+@Slf4j
 public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Resource
@@ -46,21 +52,26 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         // 线程在线程池中重复利用，需要清楚当前线程的安全上下文
         SecurityContextHolder.clearContext();
         String authHeader = request.getHeader(this.tokenHeader);
+        log.info("authHeader:"+authHeader);
         try {
             if (authHeader != null && authHeader.startsWith(this.tokenHead)) {
                 String authToken = authHeader.substring(this.tokenHead.length());
                 String username = jwtUtil.getUserNameFromToken(authToken);
+                log.info("从redis中获取用户信息 username:"+username);
                 // 从redis中获取用户信息。没有，需要重新登录
                 if (!redisUtil.hHasKey(RedisKeys.SYS_USER_INFO,username)){
                     throw new ServletException("请重新登录 ！！！");
                 }
                 // 检测时间是否到期
                 if (!jwtUtil.isTokenExpired(authToken)) {
-                    UserRole user = (UserRole)redisUtil.hget(RedisKeys.SYS_USER_INFO,username);
-                    user.setAuthenticated(true);
-                    user.setAuthority(user.getRole());
-                    UsernamePasswordAuthenticationToken
-                            authentication = new UsernamePasswordAuthenticationToken(user.getName(), user.getCredentials(), user.getAuthorities());
+                    // 获取redis中用户已登录信息
+                    UserInfo user = (UserInfo) redisUtil.hget(RedisKeys.SYS_USER_INFO,username);
+                    // 设置线程上下文（当前线程调用者信息）
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                            user.getUsername(), authToken,
+                            // 如果有多个角色的话，这里需要设置多个角色
+                            Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRoleName())));
+                    // 设置用户信息
                     authentication.setDetails(user);
                     // 设置当前线程的安全上下文
                     SecurityContextHolder.getContext().setAuthentication(authentication);

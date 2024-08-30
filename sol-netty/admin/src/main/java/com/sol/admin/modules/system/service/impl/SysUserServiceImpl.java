@@ -2,10 +2,10 @@ package com.sol.admin.modules.system.service.impl;
 
 import com.sol.admin.common.constants.RedisKeys;
 import com.sol.admin.modules.security.util.JwtUtil;
+import com.sol.admin.modules.system.dto.UserInfo;
 import com.sol.admin.modules.system.entity.SysUser;
 import com.sol.admin.modules.system.mapper.SysUserMapper;
 import com.sol.admin.modules.system.service.SysUserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sol.admin.common.util.RedisUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
@@ -70,7 +70,7 @@ public class SysUserServiceImpl implements SysUserService {
         }
 //        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         // 生成token
-        SysUser user = mapper.getLoginName(username);
+        UserInfo user = mapper.getUserInfo(username);
         Map<String, Object> claims = new HashMap<>();
         claims.put("token", jwtUtil.generateToken(username));
         claims.put("tokenHead", jwtUtil.getTokenHead());
