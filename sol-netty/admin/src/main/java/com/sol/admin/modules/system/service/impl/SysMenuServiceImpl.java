@@ -2,12 +2,19 @@ package com.sol.admin.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sol.admin.common.constants.StatusType;
+import com.sol.admin.modules.system.dto.MenuDTO;
 import com.sol.admin.modules.system.entity.SysMenu;
 import com.sol.admin.modules.system.mapper.SysMenuMapper;
 import com.sol.admin.modules.system.service.SysMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -49,4 +56,42 @@ public class SysMenuServiceImpl  implements SysMenuService {
     public List<SysMenu> getSonMenu(String pid) {
         return mapper.getSonMenu(pid);
     }
+
+    @Override
+    public List<MenuDTO> getMenuTree() {
+        // 获取所有菜单
+        List<SysMenu> allMenus = mapper.selectList(null);
+        // 将所有菜单放入Map中，以id作为键
+        Map<Long, MenuDTO> menuMap = allMenus.stream()
+                .map(this::convertToMenuDTO)
+                .collect(Collectors.toMap(MenuDTO::getId, Function.identity()));
+        // 构建菜单树
+        List<MenuDTO> rootMenus = new ArrayList<>();
+        menuMap.forEach((id, menuDTO) -> {
+            if (menuDTO.getPid() == 0) {
+                rootMenus.add(menuDTO);
+            } else {
+                MenuDTO parentMenu = menuMap.get(menuDTO.getPid());
+                if (parentMenu != null) {
+                    if (parentMenu.getChildren() == null) {
+                        parentMenu.setChildren(new ArrayList<>());
+                    }
+                    parentMenu.getChildren().add(menuDTO);
+                }
+            }
+        });
+
+        return rootMenus;
+    }
+
+    // 将SysMenu转换为MenuDTO
+    private MenuDTO convertToMenuDTO(SysMenu menu) {
+        MenuDTO menuDTO = new MenuDTO();
+        menuDTO.setId(menu.getId());
+        menuDTO.setName(menu.getName());
+        menuDTO.setPath(menu.getPath());
+        menuDTO.setChildren(new ArrayList<>()); // Initialize an empty list for children
+        return menuDTO;
+    }
+
 }

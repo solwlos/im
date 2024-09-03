@@ -20,7 +20,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
         queryWrapper
                 .lambda()
                 .eq(SysMenu::getPid, pid)
-                .eq(SysMenu::getStatus, StatusType.NORMAL)
+//                .eq(SysMenu::getStatus, StatusType.NORMAL)
                 .eq(SysMenu::getIsDeleted, 0);
         return selectList(queryWrapper);
     }
@@ -30,7 +30,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
         queryWrapper
                 .lambda()
                 .eq(SysMenu::getPid, 0)
-                .eq(SysMenu::getStatus, StatusType.NORMAL)
+//                .eq(SysMenu::getStatus, StatusType.NORMAL)
                 .eq(SysMenu::getIsDeleted, 0);
         return selectList(queryWrapper);
     }

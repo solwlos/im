@@ -1,10 +1,13 @@
 package com.sol.admin.modules.system.controller;
 
+import com.sol.admin.modules.system.dto.MenuDTO;
 import com.sol.admin.modules.system.entity.SysMenu;
 import com.sol.admin.modules.system.service.SysMenuService;
 import io.swagger.v3.oas.annotations.Operation;
 
 import jakarta.annotation.Resource;
+
+import java.awt.*;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,9 +54,15 @@ public class SysMenuController {
     }
 
     @GetMapping("/getSonMenu")
-    @Operation(summary ="获得根节点")
+    @Operation(summary ="获得子节点")
     public ResponseEntity<List<SysMenu>> getSonMenu(String pid){
         return new ResponseEntity<>(sysMenuService.getSonMenu(pid), HttpStatus.OK);
+    }
+
+    @GetMapping("/getMenuTree")
+    @Operation(summary ="获得菜单树")
+    public ResponseEntity<List<MenuDTO>> getMenuTree(){
+        return new ResponseEntity<>(sysMenuService.getMenuTree(), HttpStatus.OK);
     }
 
 }

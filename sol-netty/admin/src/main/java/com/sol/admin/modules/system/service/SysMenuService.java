@@ -1,5 +1,6 @@
 package com.sol.admin.modules.system.service;
 
+import com.sol.admin.modules.system.dto.MenuDTO;
 import com.sol.admin.modules.system.entity.SysMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
@@ -23,4 +24,6 @@ public interface SysMenuService {
     Boolean updateMenu(SysMenu sysMenu);
 
     List<SysMenu> getSonMenu(String pid);
+
+    List<MenuDTO> getMenuTree();
 }
