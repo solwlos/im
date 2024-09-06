@@ -2,6 +2,7 @@ package com.sol.admin.modules.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -37,6 +38,7 @@ public class SysRolePermission implements Serializable {
     private Long permissionId;
 
     @Schema(description = "是否删除")
+    @TableLogic(value = "0", delval = "1")
     private Byte isDeleted;
 
     @Schema(description = "乐观锁")

@@ -35,8 +35,6 @@ import java.util.Map;
 @Slf4j
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-    @Resource
-    private SysUserMapper userMapper;
     @Autowired
     private JwtUtil jwtUtil;
     @Value("${myapp.jwt.tokenHeader}")
@@ -52,7 +50,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         // 线程在线程池中重复利用，需要清楚当前线程的安全上下文
         SecurityContextHolder.clearContext();
         String authHeader = request.getHeader(this.tokenHeader);
-        log.info("authHeader:"+authHeader);
+        log.info("========= 当前authHeader ========="+authHeader);
         try {
             if (authHeader != null && authHeader.startsWith(this.tokenHead)) {
                 String authToken = authHeader.substring(this.tokenHead.length());

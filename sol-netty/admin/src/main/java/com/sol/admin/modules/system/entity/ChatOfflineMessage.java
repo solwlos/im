@@ -46,7 +46,7 @@ public class ChatOfflineMessage implements Serializable {
     private String content;
 
     @Schema(description = "是否删除 0：没有、1：删除")
-    @TableLogic(delval = "0", value = "1")
+    @TableLogic(value = "0", delval = "1")
     private Byte isDeleted;
 
     @Schema(description = "创建时间")

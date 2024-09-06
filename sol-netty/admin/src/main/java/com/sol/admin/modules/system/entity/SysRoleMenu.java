@@ -27,6 +27,7 @@ public class SysRoleMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Schema(description = "主键id")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -40,7 +41,7 @@ public class SysRoleMenu implements Serializable {
     private String description;
 
     @Schema(description = "是否删除，0未删除、1删除")
-    @TableLogic(delval = "0", value = "1")
+    @TableLogic(value = "0", delval = "1")
     private Byte idDeleted;
 
     @Schema(description = "创建时间")

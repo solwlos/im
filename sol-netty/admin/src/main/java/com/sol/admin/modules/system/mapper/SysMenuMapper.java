@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sol.admin.common.constants.StatusType;
 import com.sol.admin.modules.system.entity.SysMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+
 import java.util.List;
 
 /**
@@ -14,6 +16,7 @@ import java.util.List;
  * @author sol
  * @since 2024-02-20
  */
+@Mapper
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
     default List<SysMenu> getSonMenu(String pid){
         QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>();
