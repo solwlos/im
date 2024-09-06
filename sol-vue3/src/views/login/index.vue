@@ -69,28 +69,52 @@ const rules = reactive<FormRules<typeof ruleForm>>({
 
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-
-  await instance({
-    method: 'get',
+try {
+  const response = await instance({
+    method: 'post',
     url: '/sysUser/login',
-    params: {
+    data: {
       username: ruleForm.username,
       password: ruleForm.password
     }
-  })
-    .then((res) => {
-      user.resetAll()
-      console.log('开始重置')
+  });
+  // 成功处理
+  user.resetAll();
+  console.log(response);
 
-      user.token = res.data.token
-      user.tokenHead = res.data.tokenHead
-      router.push('/home')
-      ElMessage({ message: '登录成功', type: 'success' })
-    })
-    .catch((res) => {
-      console.log(res.response)
-      ElMessage({ message: res.response.data, type: 'error' })
-    })
+  // 保存登录后的信息
+  user.token = response.data.token;
+  user.tokenHead = response.data.tokenHead;
+  user.userInfo = response.data.userInfo;
+  router.push('/home');
+  ElMessage({ message: '登录成功', type: 'success' });
+
+} catch (error) {
+  // 错误处理
+  console.log(error);
+  // ElMessage({ message: error == null || '登录失败', type: 'error' });
+}
+  // await instance({
+  //   method: 'post',
+  //   url: '/sysUser/login',
+  //   params: {
+  //     username: ruleForm.username,
+  //     password: ruleForm.password
+  //   }
+  // })
+  //   .then((res) => {
+  //     user.resetAll()
+  //     console.log('开始重置')
+
+  //     user.token = res.data.token
+  //     user.tokenHead = res.data.tokenHead
+  //     router.push('/home')
+  //     ElMessage({ message: '登录成功', type: 'success' })
+  //   })
+  //   .catch((res) => {
+  //     console.log(res.response)
+  //     ElMessage({ message: res.response.data, type: 'error' })
+  //   })
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {

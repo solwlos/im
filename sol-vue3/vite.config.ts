@@ -46,7 +46,7 @@ export default defineConfig({
   base: "./",
   server: { 
     host: true, 
-    port: 9090, //自己服务器的端口号
+    port: 9090, // 前端自己服务器的端口号
     headers: {
       'Access-Control-Allow-Origin': '*',
     },

@@ -32,6 +32,7 @@ public class SysUserController {
     @PostMapping("/login")
     @Operation(summary ="登录")
     public  ResponseEntity<?> sysUserLogin(ServletRequest request,@RequestBody UserDTO userDTO){
+        log.info("用户名:{},密码:{}",userDTO.getUsername(),userDTO.getPassword());
         return sysUserService.sysUserLogin(request, userDTO.getUsername(),userDTO.getPassword());
 //        return Result.success(claims,"登陆成功");
     }

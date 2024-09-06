@@ -34,4 +34,6 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
                 .eq(SysMenu::getIsDeleted, 0);
         return selectList(queryWrapper);
     }
+
+    List<SysMenu> getList();
 }
