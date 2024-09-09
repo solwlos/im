@@ -4,8 +4,14 @@ import com.sol.admin.modules.system.entity.ChatGroupUser;
 
 import com.sol.admin.modules.system.service.ChatGroupUserService;
 import io.swagger.v3.oas.annotations.Operation;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import net.coobird.thumbnailator.Thumbnailator;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author sol
  * @since 2024-06-16
  */
+@Tag(name = "/chatGroupUser", description = "群聊成员管理")
 @RestController
 @RequestMapping("/chatGroupUser")
 public class ChatGroupUserController {

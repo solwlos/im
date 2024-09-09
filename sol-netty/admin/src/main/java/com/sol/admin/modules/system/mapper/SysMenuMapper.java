@@ -38,5 +38,4 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
         return selectList(queryWrapper);
     }
 
-    List<SysMenu> getList();
 }

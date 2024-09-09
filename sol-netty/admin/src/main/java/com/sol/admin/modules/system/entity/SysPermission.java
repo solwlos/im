@@ -8,8 +8,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * <p>
@@ -21,6 +20,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("sys_permission")
 @Schema(name = "SysPermission", description = "权限表")
 public class SysPermission implements Serializable {
@@ -34,24 +36,18 @@ public class SysPermission implements Serializable {
     @Schema(description = "权限名")
     private String name;
 
-    @Schema(description = "权限路径")
-    private String interfacePath;
+    @Schema(description = "root:0 是、1不是")
+    private Integer isRoot;
 
     @Schema(description = "描述")
     private String description;
-
-    @Schema(description = "类型")
-    private Integer type;
 
     @Schema(description = "状态：0 正常、1 已下架")
     private Integer status;
 
     @Schema(description = "是否删除")
     @TableLogic(value = "0", delval = "1")
-    private Byte isDeleted;
-
-    @Schema(description = "乐观锁")
-    private Integer version;
+    private Integer isDeleted;
 
     @Schema(description = "创建时间")
     private Timestamp createdTime;

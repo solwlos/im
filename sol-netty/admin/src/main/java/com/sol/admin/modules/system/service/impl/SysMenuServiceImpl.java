@@ -56,11 +56,8 @@ public class SysMenuServiceImpl  implements SysMenuService {
 
     @Override
     public List<MenuDTO> getMenuTree() {
-//        QueryWrapper<SysMenu> queryWrapper =  new QueryWrapper<>();
-//        queryWrapper.lambda().eq(SysMenu::getIsDeleted,0);
         // 获取所有菜单
         List<SysMenu> allMenus = mapper.selectList(null);
-//        List<SysMenu> allMenus = mapper.getList();
         // 将所有菜单放入Map中，以id作为键
         Map<Long, MenuDTO> menuMap = allMenus.stream()
                 .map(menu -> MenuDTO.builder()    // 将SysMenu转换为MenuDTO
