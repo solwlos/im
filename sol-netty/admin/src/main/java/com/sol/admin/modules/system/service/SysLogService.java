@@ -3,9 +3,6 @@ package com.sol.admin.modules.system.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sol.admin.modules.base.EntitySearchQuery;
 import com.sol.admin.modules.system.entity.SysLog;
-import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
 
 /**
  * <p>

@@ -29,9 +29,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @author sol
  * @since 2024-06-16
  */
-@Tag(name = "/chatGroupUser", description = "群聊成员管理")
 @RestController
 @RequestMapping("/chatGroupUser")
+@Tag(name = "/chatGroupUser", description = "群聊成员管理")
 public class ChatGroupUserController {
 
 

@@ -1,8 +1,6 @@
 package com.severnetty.sever;
 
-import com.severnetty.sever.handler.BaseSocketServer;
 import com.severnetty.sever.handler.MessageHandler;
-import com.severnetty.sever.handler.MyServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -69,7 +67,7 @@ public class SeverApplication {
             workerGroup.shutdownGracefully();
         }
 
-//        SpringApplication.run(SeverApplication.class, args);
+        SpringApplication.run(SeverApplication.class, args);
     }
 
 }

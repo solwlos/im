@@ -5,6 +5,7 @@ import com.sol.admin.modules.system.entity.SysMenu;
 import com.sol.admin.modules.system.service.SysMenuService;
 import io.swagger.v3.oas.annotations.Operation;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 
 import java.awt.*;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/sysMenu")
+@Tag(name = "/sysMenu", description = "菜单")
 public class SysMenuController {
 
     @Resource

@@ -3,6 +3,7 @@ package com.sol.admin.modules.system.controller;
 import com.sol.admin.modules.system.entity.ChatGroup;
 import com.sol.admin.modules.system.service.ChatGroupService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/chatGroup")
+@Tag(name = "/chatGroup", description = "群聊管理")
 public class ChatGroupController {
 
     @Resource

@@ -1,10 +1,12 @@
 package com.sol.admin.modules.system.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sol.admin.modules.base.EntitySearchQuery;
 import com.sol.admin.modules.system.entity.SysLog;
 import com.sol.admin.modules.system.service.SysLogService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/sysLog")
+@Tag(name = "/sysLog", description = "日志")
 public class SysLogController {
 
     @Autowired
@@ -30,7 +33,7 @@ public class SysLogController {
 
     @PostMapping("/searchQuery")
     @Operation(summary ="分页搜索")
-    public ResponseEntity<?> searchQuery(@RequestBody EntitySearchQuery<SysLog> query){
+    public ResponseEntity<Page<SysLog>> searchQuery(@RequestBody EntitySearchQuery<SysLog> query){
         return ResponseEntity.status(HttpStatus.OK).body(sysLogService.searchQuery(query));
     }
 }
