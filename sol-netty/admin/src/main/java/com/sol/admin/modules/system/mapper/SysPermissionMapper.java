@@ -1,10 +1,12 @@
 package com.sol.admin.modules.system.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sol.admin.modules.system.entity.SysPermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.swagger.v3.oas.models.tags.Tag;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -18,7 +20,14 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
 
     List<Tag> getTags();
 
-    void delAll(List<String> list);
+    default List<SysPermission> getIsNotRoot(){
+        QueryWrapper<SysPermission> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(SysPermission::getIsRoot,1);
+        return selectList(queryWrapper);
+    }
 
-//    void insertBatch(List<SysPermission> newPermissions);
+    default void delAll(List<String> list){
+        Map<String, Object> map = Map.of("name", list);
+        deleteByMap(map);
+    }
 }

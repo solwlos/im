@@ -1,4 +1,4 @@
-package com.sol.admin.modules.security.util.service;
+package com.sol.admin.modules.security.service;
 
 import com.sol.admin.common.util.RedisUtil;
 import com.sol.admin.modules.security.util.JwtUtil;
@@ -10,6 +10,8 @@ import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
+import org.springframework.security.web.util.UrlUtils;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -21,7 +23,7 @@ import java.util.function.Supplier;
  * @author sol
  */
 @Slf4j
-public class AuthorizationManagerImpl implements AuthorizationManager<FilterInvocation> {
+public class AuthorizationManagerImpl implements AuthorizationManager<RequestAuthorizationContext> { //RequestAuthorizationContext
 
 //    @Resource
 //    RolePermissionDao rolePermissionDao;
@@ -34,12 +36,13 @@ public class AuthorizationManagerImpl implements AuthorizationManager<FilterInvo
 //    private UserDao userDao;
     @Autowired
     private JwtUtil jwtUtil;
-    @Override
-    public AuthorizationDecision check(Supplier<Authentication> authentication, FilterInvocation object){
+    @Override // FilterInvocation
+    public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext context){
 
-        System.out.println("================");
+        System.out.println("======= 权限判断  =========");
         // 当前请求路径, 去掉参数
-        String requestUrl = object.getRequestUrl();
+//        String requestUrl = ((FilterInvocation) object).getRequestUrl();
+        String requestUrl = context.getRequest().getRequestURI();
         int index = requestUrl.lastIndexOf("?");
 
         if (index != -1) requestUrl = requestUrl.substring(0, index);
@@ -84,6 +87,7 @@ public class AuthorizationManagerImpl implements AuthorizationManager<FilterInvo
 
         // 允许访问
         return new AuthorizationDecision(true);
+//        return null;
     }
 
     /**

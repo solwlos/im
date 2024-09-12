@@ -1,5 +1,6 @@
 package com.sol.admin.modules.system.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.sol.admin.modules.system.entity.SysPermission;
 import com.sol.admin.modules.system.mapper.SysPermissionMapper;
 import com.sol.admin.modules.system.service.SysPermissionService;
@@ -9,6 +10,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -19,7 +21,7 @@ import java.util.List;
  * @since 2024-08-21
  */
 @Service
-public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysPermission> implements SysPermissionService{
+public class SysPermissionServiceImpl implements SysPermissionService{
 
 
     @Resource
@@ -38,5 +40,19 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     @Override
     public void delAll(List<String> list) {
         mapper.delAll(list);
+    }
+    @Override
+    public List<SysPermission> getIsNotRoot() {
+        return mapper.getIsNotRoot();
+    }
+
+    @Override
+    public void insertBatch(List<SysPermission> list) {
+        mapper.insert(list,1000);
+    }
+
+    @Override
+    public void removeByIds(List<Long> ids) {
+        mapper.deleteByIds(ids);
     }
 }

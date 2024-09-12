@@ -35,7 +35,7 @@ public class MybatisPlusConfig {
         // 懒加载
         configuration.setLazyLoadingEnabled(true);
         // 日志
-        configuration.setLogImpl(org.apache.ibatis.logging.stdout.StdOutImpl.class);
+//        configuration.setLogImpl(org.apache.ibatis.logging.stdout.StdOutImpl.class);
         sessionFactory.setConfiguration(configuration);
         return sessionFactory.getObject();
     }

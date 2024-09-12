@@ -1,4 +1,4 @@
-package com.sol.admin.modules.security.util.service;
+package com.sol.admin.modules.security.service;
 
 import com.sol.admin.common.constants.RedisKeys;
 import com.sol.admin.common.util.RedisUtil;
@@ -38,6 +38,7 @@ public class AccountAuthenticationImpl implements AuthenticationProvider {
      */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        log.info("=========== 用户账号登录 ============");
         //用户传入的信息
         UserRole userRole = new UserRole(
                 authentication.getName(), //登录名

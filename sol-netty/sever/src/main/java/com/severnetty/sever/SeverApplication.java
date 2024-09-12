@@ -67,7 +67,7 @@ public class SeverApplication {
             workerGroup.shutdownGracefully();
         }
 
-        SpringApplication.run(SeverApplication.class, args);
+//        SpringApplication.run(SeverApplication.class, args);
     }
 
 }

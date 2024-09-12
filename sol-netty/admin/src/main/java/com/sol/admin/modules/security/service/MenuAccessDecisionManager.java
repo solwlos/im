@@ -1,4 +1,4 @@
-package com.sol.admin.modules.security.util.service;
+package com.sol.admin.modules.security.service;
 
 import com.sol.admin.common.util.RedisUtil;
 import jakarta.annotation.Resource;

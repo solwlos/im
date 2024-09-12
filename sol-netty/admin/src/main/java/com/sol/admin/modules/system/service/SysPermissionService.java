@@ -16,11 +16,16 @@ import java.util.List;
  * @author sol
  * @since 2024-08-21
  */
-public interface SysPermissionService extends IService<SysPermission> {
+public interface SysPermissionService {
 
     Boolean add(SysPermission permission);
 
     List<Tag> getTags();
 
-    void delAll(List<String> list);
+    List<SysPermission> getIsNotRoot();
+    void insertBatch(List<SysPermission> list);
+
+    void removeByIds(List<Long> ids);
+
+    void delAll(List<String> delPermissions);
 }

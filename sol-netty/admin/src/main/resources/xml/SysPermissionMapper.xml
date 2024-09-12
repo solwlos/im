@@ -12,7 +12,7 @@
     </update>
 
     <select id="getTags" resultType="io.swagger.v3.oas.models.tags.Tag">
-        select name ,description from sys_permission
+        select name ,description from sys_permission where is_root = 0
 --             where is_deleted = 0
     </select>
 </mapper>

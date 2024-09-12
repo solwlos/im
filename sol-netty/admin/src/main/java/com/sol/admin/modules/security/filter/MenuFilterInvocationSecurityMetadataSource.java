@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
@@ -22,7 +23,7 @@ import java.util.Set;
 
 @Slf4j
 @Service
-public class MenuFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+public class MenuFilterInvocationSecurityMetadataSource implements SecurityMetadataSource {
 
 
     /**

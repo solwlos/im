@@ -44,8 +44,8 @@ public class SysUserServiceImpl implements SysUserService {
     @Resource
     SysUserMapper mapper;
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+//    @Autowired
+//    AuthenticationManager authenticationManager;
 
     @Override
     public ResponseEntity<Map<String,Object>> sysUserLogin(ServletRequest request , String username, String password) {

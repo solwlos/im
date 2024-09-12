@@ -1,16 +1,12 @@
 package com.sol.admin.modules.system.config;
 
-
 import com.sol.admin.modules.system.entity.SysPermission;
-import com.sol.admin.modules.system.mapper.SysPermissionMapper;
 import com.sol.admin.modules.system.service.SysPermissionService;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
-import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.tags.Tag;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -123,12 +119,12 @@ public class ApiConfig extends OpenApiResource {
                 .collect(Collectors.toList());
         // 批量插入新权限到数据库
         if (!newPermissions.isEmpty()) {
-            service.saveOrUpdateBatch(newPermissions, 1000);
+            service.insertBatch(newPermissions);
         }
         // 将需要删除的 api
         List<String> delPermissions = tagsToRemove.stream().map(Tag::getName).toList();
         // 批量插入新权限到数据库
-        if (!newPermissions.isEmpty()) {
+        if (!delPermissions.isEmpty()) {
             service.delAll(delPermissions);
         }
     }
@@ -137,9 +133,9 @@ public class ApiConfig extends OpenApiResource {
         // swagger 接口路径列表
         Map<String, PathItem> map = openApi.getPaths(); // PathItem
         // 数据库中保存的接口路径列表
-        List<SysPermission> dbPaths = service.list();
-        List<String> paths = dbPaths.stream().map(SysPermission::getName).toList();
+        List<SysPermission> dbPaths = service.getIsNotRoot();
 
+        List<String> paths = dbPaths.stream().map(SysPermission::getName).toList();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         List<SysPermission> newPaths = new ArrayList<>();
         // 增加 新接口
@@ -174,13 +170,15 @@ public class ApiConfig extends OpenApiResource {
                 newPaths.add(sysPermission);
             }
         }
-        service.saveOrUpdateBatch(newPaths, 1000);
+        // 批量保存新的接口路径
+        if (!newPaths.isEmpty()) {
+            service.insertBatch(newPaths);
+        }
 
+        List<Long> ids = dbPaths.stream().filter(sysPermission -> !paths.contains(sysPermission.getName())).map(SysPermission::getId).toList();
         // 删除 系统中不存在的接口 (接口路径改变，或者删除)
-        for (SysPermission dbPath : dbPaths){
-            if (!map.containsKey(dbPath.getName())){
-                service.removeById(dbPath.getId());
-            }
+        if (!ids.isEmpty()) {
+            service.removeByIds(ids);
         }
     }
 }
