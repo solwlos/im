@@ -22,7 +22,7 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
 
     default List<SysPermission> getIsNotRoot(){
         QueryWrapper<SysPermission> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(SysPermission::getIsRoot,1);
+        queryWrapper.lambda().eq(SysPermission::getType,1);
         return selectList(queryWrapper);
     }
 
@@ -30,4 +30,6 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
         Map<String, Object> map = Map.of("name", list);
         deleteByMap(map);
     }
+
+    List<SysPermission> getPermissionByRoleId(Long roleId);
 }

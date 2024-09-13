@@ -1,6 +1,5 @@
 package com.sol.admin.modules.system.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sol.admin.modules.base.EntitySearchQuery;
 import com.sol.admin.modules.system.entity.SysLog;

@@ -111,7 +111,7 @@ public class ApiConfig extends OpenApiResource {
         List<SysPermission> newPermissions = tagsToInsert.stream()
                 .map(tag -> SysPermission.builder()
                         .name(tag.getName())
-                        .isRoot(0)
+                        .type(0)
                         .description(tag.getDescription())
                         .createdTime(timestamp)
                         .updatedTime(timestamp)
@@ -162,7 +162,7 @@ public class ApiConfig extends OpenApiResource {
                         .orElse("No summary");
                 SysPermission sysPermission = SysPermission.builder()
                         .name(path)
-                        .isRoot(1)
+                        .type(1)
                         .description(summary)
                         .createdTime(timestamp)
                         .updatedTime(timestamp)

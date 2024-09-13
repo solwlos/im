@@ -6,6 +6,8 @@ import com.sol.admin.modules.system.service.SysRolePermissionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 角色权限表 服务实现类
@@ -17,4 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysRolePermissionServiceImpl implements SysRolePermissionService {
 
+    @Override
+    public List<SysRolePermission> getRolePermission(Long roleId) {
+        return null;
+    }
 }

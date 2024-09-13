@@ -3,6 +3,8 @@ package com.sol.admin.modules.system.service;
 import com.sol.admin.modules.system.entity.SysRolePermission;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 角色权限表 服务类
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysRolePermissionService {
 
+    List<SysRolePermission> getRolePermission(Long roleId);
 }

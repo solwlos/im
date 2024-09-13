@@ -20,4 +20,6 @@ public interface SysUserService {
     ResponseEntity<Map<String,Object>> sysUserLogin(ServletRequest request , String username, String password);
 
     Boolean addUser(SysUser sysUser);
+
+    Boolean updateUser(SysUser sysUser);
 }

@@ -12,7 +12,10 @@
     </update>
 
     <select id="getTags" resultType="io.swagger.v3.oas.models.tags.Tag">
-        select name ,description from sys_permission where is_root = 0
+        select name ,description from sys_permission where type = 0
 --             where is_deleted = 0
+    </select>
+    <select id="getPermissionByRoleId" resultType="com.sol.admin.modules.system.entity.SysPermission">
+        select sy.* from sys_permission sy left join sys_role_permission srp on sy.id = srp.permission_id where srp.role_id = #{roleId}
     </select>
 </mapper>

@@ -85,4 +85,9 @@ public class SysUserServiceImpl implements SysUserService {
     public Boolean addUser(SysUser sysUser) {
         return mapper.insert(sysUser) == 1;
     }
+
+    @Override
+    public Boolean updateUser(SysUser sysUser) {
+        return mapper.updateById(sysUser) == 1;
+    }
 }

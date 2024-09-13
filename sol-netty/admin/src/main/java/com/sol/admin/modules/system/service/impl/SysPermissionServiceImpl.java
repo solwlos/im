@@ -41,6 +41,27 @@ public class SysPermissionServiceImpl implements SysPermissionService{
     public void delAll(List<String> list) {
         mapper.delAll(list);
     }
+
+    @Override
+    public List<SysPermission> getPermissionByRoleId(Long roleId) {
+        return mapper.getPermissionByRoleId(roleId);
+    }
+
+    @Override
+    public List<SysPermission> getRoot() {
+        return null;
+    }
+
+    @Override
+    public List<SysPermission> getSonMenu(String pid) {
+        return null;
+    }
+
+    @Override
+    public List<SysPermission> getMenuTree() {
+        return null;
+    }
+
     @Override
     public List<SysPermission> getIsNotRoot() {
         return mapper.getIsNotRoot();

@@ -34,8 +34,8 @@ public class SysRole implements Serializable {
     @Schema(description = "名字")
     private String name;
 
-    @Schema(description = "乐观锁")
-    private Integer version;
+    @Schema(description = "描述")
+    private String description;
 
     @Schema(description = "是否删除，0未删除、1删除")
     @TableLogic(value = "0", delval = "1")

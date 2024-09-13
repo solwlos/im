@@ -28,4 +28,12 @@ public interface SysPermissionService {
     void removeByIds(List<Long> ids);
 
     void delAll(List<String> delPermissions);
+
+    List<SysPermission> getPermissionByRoleId(Long roleId);
+
+    List<SysPermission> getRoot();
+
+    List<SysPermission> getSonMenu(String pid);
+
+    List<SysPermission> getMenuTree();
 }

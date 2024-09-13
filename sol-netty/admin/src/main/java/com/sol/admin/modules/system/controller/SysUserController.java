@@ -47,4 +47,10 @@ public class SysUserController {
         return ResponseEntity.status(HttpStatus.OK).body(sysUserService.addUser(sysUser));
     }
 
+    @PutMapping("/update")
+    @Operation(summary ="修改用户")
+    public ResponseEntity<Object> updateUser(@RequestBody SysUser sysUser){
+        return ResponseEntity.status(HttpStatus.OK).body(sysUserService.updateUser(sysUser));
+    }
+
 }

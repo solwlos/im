@@ -9,7 +9,14 @@
         select * from sys_user where (username = #{username} or email = #{username}) and is_deleted = 0
     </select>
     <select id="getUserInfo" resultType="com.sol.admin.modules.system.dto.UserInfo">
-        select id,role_id,email,username,sex,image,description,create_time,update_time
-            from sys_user where (username = #{username} or email = #{username}) and is_deleted = 0
+        select su.*,sr.name as roleName
+        from
+            sys_user su
+        left join
+            sys_role sr on sr.id = su.role_id
+        where
+            (su.username = #{username} or su.email = #{username})
+          and
+            su.is_deleted = 0
     </select>
 </mapper>

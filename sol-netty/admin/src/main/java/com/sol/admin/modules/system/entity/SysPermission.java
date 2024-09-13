@@ -36,8 +36,8 @@ public class SysPermission implements Serializable {
     @Schema(description = "权限名")
     private String name;
 
-    @Schema(description = "root:0 是、1不是")
-    private Integer isRoot;
+    @Schema(description = "类型：0-接口 api 分类，1-具体的 api，3-自定义 路径 （可以是图片等）")
+    private Integer type;
 
     @Schema(description = "描述")
     private String description;

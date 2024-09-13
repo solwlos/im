@@ -46,7 +46,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     RedisUtil redisUtil;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException{
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         // 线程在线程池中重复利用，需要清楚当前线程的安全上下文
         SecurityContextHolder.clearContext();
         String authHeader = request.getHeader(this.tokenHeader);
@@ -75,13 +75,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
-            filterChain.doFilter(request, response);
+
         }catch (Exception e){
             log.error("========= 登录异常 ========="+e);
             response.setContentType(HttpConstants.APPLICATION_JSON_CHARSET_UTF_8);
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getWriter().println(HttpConstants.OBJECT_MAPPER.writeValueAsString(new ResponseEntity<>(e.getMessage(),HttpStatus.UNAUTHORIZED)));
         }
+        filterChain.doFilter(request, response);
     }
 
 //    @Override

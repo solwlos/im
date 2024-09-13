@@ -1,5 +1,9 @@
 package com.sol.admin.modules.system.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sol.admin.modules.base.EntitySearchQuery;
+import com.sol.admin.modules.system.entity.SysLog;
 import com.sol.admin.modules.system.entity.SysRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -13,4 +17,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
+    default Page<SysRole> searchQuery(EntitySearchQuery<SysRole> query){
+        Page<SysRole> page = new Page<>(query.getPage().getPageNum(),query.getPage().getPageSize());
+        QueryWrapper<SysRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda()
+                .like(SysRole::getName,query.getEntity().getName());
+        return selectPage(page,queryWrapper);
+    }
 }

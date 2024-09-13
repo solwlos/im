@@ -1,7 +1,11 @@
 package com.sol.admin.modules.security.service;
 
+import com.sol.admin.common.constants.RedisKeys;
 import com.sol.admin.common.util.RedisUtil;
 import com.sol.admin.modules.security.util.JwtUtil;
+import com.sol.admin.modules.system.dto.UserInfo;
+import com.sol.admin.modules.system.entity.SysPermission;
+import com.sol.admin.modules.system.service.SysPermissionService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -9,12 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
-import org.springframework.security.web.util.UrlUtils;
+import org.springframework.util.AntPathMatcher;;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.function.Supplier;
 
 /**
@@ -25,8 +29,10 @@ import java.util.function.Supplier;
 @Slf4j
 public class AuthorizationManagerImpl implements AuthorizationManager<RequestAuthorizationContext> { //RequestAuthorizationContext
 
-//    @Resource
-//    RolePermissionDao rolePermissionDao;
+
+    @Autowired
+    SysPermissionService sysPermissionService;
+
     @Autowired
     HttpServletResponse response;
     @Resource
@@ -36,58 +42,48 @@ public class AuthorizationManagerImpl implements AuthorizationManager<RequestAut
 //    private UserDao userDao;
     @Autowired
     private JwtUtil jwtUtil;
-    @Override // FilterInvocation
+
+    /**
+     * 判断用户是否拥有访问该资源的权限
+     * 当有一些资源不需要认证，例如：登录、注册、验证码等，可以配置在白名单中，直接放行，不需要认证，但需要记录访问日志。
+     * 这里设置一个 角色id为0，角色名字为 anonymous，控制不需要授权的 api
+     * @param authentication the {@link Supplier} of the {@link Authentication} to check
+     * @param context the {@link // T} object to check
+     * @return
+     */
+    @Override
+    @SuppressWarnings("unchecked")
     public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext context){
 
-        System.out.println("======= 权限判断  =========");
         // 当前请求路径, 去掉参数
-//        String requestUrl = ((FilterInvocation) object).getRequestUrl();
         String requestUrl = context.getRequest().getRequestURI();
-        int index = requestUrl.lastIndexOf("?");
+        // 获取当前用户信息
+        Authentication auth = authentication.get();
+//        log.info("当前用户信息:{}", Json.pretty(auth));
+        AntPathMatcher antPathMatcher = new AntPathMatcher();
+        // 获取对应用户对应角色  角色id：0 、角色名称 anonymous，代表未登录 （验证不需要授权的 api）
+        Long roleId = auth.getDetails() instanceof UserInfo ? ((UserInfo)auth.getDetails()).getRoleId() : 0L;
+        String roleName = auth.getDetails() instanceof UserInfo ? ((UserInfo)auth.getDetails()).getRoleName() : "anonymous";
 
-        if (index != -1) requestUrl = requestUrl.substring(0, index);
+        // 从 redis 中获取角色具有访问权限的 api
+        List<SysPermission> list = null;
+        if (!redisUtil.hHasKey(RedisKeys.SYS_ROLE_API,roleName)){  // 没有缓存，从数据库查询
+            list = sysPermissionService.getPermissionByRoleId(roleId);
+            redisUtil.hset(RedisKeys.SYS_ROLE_API,roleName,list);
+        }
+        // 有缓存，从redis获取
+        list = (List<SysPermission>) redisUtil.hget(RedisKeys.SYS_ROLE_API,roleName);
 
-        log.info("requestUrl:{}", requestUrl);
+//        log.info("当前角色：{}，角色权限：{}",roleName,Json.pretty(list));
+        // 判断该角色是否具有 该api 访问权限
+        for (SysPermission item : list){
+            if (antPathMatcher.match(item.getName(),requestUrl)){
+                return new AuthorizationDecision(true);
+            }
+        }
+        // 不允许访问
+        return new AuthorizationDecision(false);
 
-        // sse 连接
-//        if (requestUrl.equals("/sse/connect")){
-//            try {
-//                // 判断 token 是否有效
-//                checkAllowIfAllAbstainDecisions(((FilterInvocation) object).getRequestUrl());
-//                return;
-//            }catch (Exception e){
-//                throw new AccessDeniedException(e + "");
-//            }
-//        }
-//        Object temp = SecurityContextHolder.getContext().getAuthentication().getDetails();
-//        AntPathMatcher antPathMatcher = new AntPathMatcher();
-//        //确定角色id、根据角色id查询该角色对应的 api 接口然后判断当前访问是否具有权限
-//        String roleId = temp instanceof Authentication ? ((UserRole)temp).getRole() : "0";
-//        List<Object> api = new ArrayList<>();
-//        String redisKey = roleId + "RoleApi";
-//        if (redisUtil.hasKey(redisKey)){
-//            api = redisUtil.lGet(redisKey,0,-1);
-//        }else {
-////            List<Permission> list = rolePermissionDao.getRoleApi(roleId);
-////            for (Permission item : list){
-////                String path = item.getInterface_path();
-////                if (path != null && !api.contains(path))  api.add(path) ;
-////            }
-//            redisUtil.lSet(redisKey,api);
-//        }
-//        if(!CollectionUtils.isEmpty(api)){
-//            for (Object item : api){
-//                if (antPathMatcher.match(item.toString(),requestUrl)){
-////                    return;
-//                }
-//            }
-//        }
-//        checkAllowIfAllAbstainDecisions();
-//        throw new AccessDeniedException(roleId + " > "+ requestUrl + " 403 not authentication");
-
-        // 允许访问
-        return new AuthorizationDecision(true);
-//        return null;
     }
 
     /**
