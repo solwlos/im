@@ -1,9 +1,6 @@
 package com.sol.admin.modules.system.controller;
 
-import com.sol.admin.modules.system.dto.MenuDTO;
-import com.sol.admin.modules.system.entity.SysMenu;
 import com.sol.admin.modules.system.entity.SysPermission;
-import com.sol.admin.modules.system.entity.SysUser;
 import com.sol.admin.modules.system.service.SysPermissionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

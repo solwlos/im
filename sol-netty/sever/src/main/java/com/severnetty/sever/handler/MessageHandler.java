@@ -26,7 +26,6 @@ public class MessageHandler extends SimpleChannelInboundHandler<TextWebSocketFra
         System.out.println(text);
 
         clients.stream().forEach(s->s.writeAndFlush(new TextWebSocketFrame("[服务器接收到消息]"+ LocalDateTime.now()+"--"+msg)));
-
         //这个和上面的方法一致
 //        clients.writeAndFlush(new TextWebSocketFrame("[服务器接收到消息]"+ LocalDateTime.now()+"--"+msg));
     }

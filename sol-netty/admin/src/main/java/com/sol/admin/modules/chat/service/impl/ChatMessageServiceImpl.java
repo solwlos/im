@@ -1,6 +1,6 @@
-package com.sol.admin.modules.system.service.impl;
+package com.sol.admin.modules.chat.service.impl;
 
-import com.sol.admin.modules.system.service.ChatMessageService;
+import com.sol.admin.modules.chat.service.ChatMessageService;
 import org.springframework.stereotype.Service;
 
 

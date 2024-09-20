@@ -1,4 +1,4 @@
-package com.sol.admin.modules.system.service;
+package com.sol.admin.modules.chat.service;
 
 public interface ChatMessageService {
 }

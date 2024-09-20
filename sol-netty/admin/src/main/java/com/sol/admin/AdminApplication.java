@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication(scanBasePackages = {"com.sol.admin"})
-@MapperScan({"com.sol.admin.modules.system.mapper"})
+@MapperScan({"com.sol.admin.modules.system.mapper", "com.sol.admin.modules.chat.mapper"})
+//@MapperScan("com.sol.admin.modules.{system, chat}.mapper")
 public class AdminApplication {
 
     public static void main(String[] args) {

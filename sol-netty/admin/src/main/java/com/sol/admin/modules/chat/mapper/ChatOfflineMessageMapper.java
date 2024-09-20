@@ -1,6 +1,6 @@
-package com.sol.admin.modules.system.mapper;
+package com.sol.admin.modules.chat.mapper;
 
-import com.sol.admin.modules.system.entity.ChatOfflineMessage;
+import com.sol.admin.modules.chat.entity.ChatOfflineMessage;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

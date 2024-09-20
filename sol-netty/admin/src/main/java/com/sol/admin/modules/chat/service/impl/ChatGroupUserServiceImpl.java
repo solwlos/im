@@ -1,9 +1,8 @@
-package com.sol.admin.modules.system.service.impl;
+package com.sol.admin.modules.chat.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.sol.admin.modules.system.entity.ChatGroupUser;
-import com.sol.admin.modules.system.mapper.ChatGroupUserMapper;
-import com.sol.admin.modules.system.service.ChatGroupUserService;
+import com.sol.admin.modules.chat.entity.ChatGroupUser;
+import com.sol.admin.modules.chat.mapper.ChatGroupUserMapper;
+import com.sol.admin.modules.chat.service.ChatGroupUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import java.util.List;

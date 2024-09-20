@@ -1,9 +1,9 @@
-package com.sol.admin.modules.system.service.impl;
+package com.sol.admin.modules.chat.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.sol.admin.modules.system.entity.ChatUserLink;
-import com.sol.admin.modules.system.mapper.ChatUserLinkMapper;
-import com.sol.admin.modules.system.service.ChatUserLinkService;
+import com.sol.admin.modules.chat.entity.ChatUserLink;
+import com.sol.admin.modules.chat.mapper.ChatUserLinkMapper;
+import com.sol.admin.modules.chat.service.ChatUserLinkService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import java.sql.Timestamp;

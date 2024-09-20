@@ -1,7 +1,7 @@
-package com.sol.admin.modules.system.controller;
+package com.sol.admin.modules.chat.controller;
 
-import com.sol.admin.modules.system.entity.ChatGroup;
-import com.sol.admin.modules.system.service.ChatGroupService;
+import com.sol.admin.modules.chat.entity.ChatGroup;
+import com.sol.admin.modules.chat.service.ChatGroupService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;

@@ -1,6 +1,6 @@
-package com.sol.admin.modules.system.service;
+package com.sol.admin.modules.chat.service;
 
-import com.sol.admin.modules.system.entity.ChatOfflineMessage;
+import com.sol.admin.modules.chat.entity.ChatOfflineMessage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

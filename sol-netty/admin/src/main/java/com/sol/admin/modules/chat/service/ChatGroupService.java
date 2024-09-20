@@ -1,6 +1,6 @@
-package com.sol.admin.modules.system.service;
+package com.sol.admin.modules.chat.service;
 
-import com.sol.admin.modules.system.entity.ChatGroup;
+import com.sol.admin.modules.chat.entity.ChatGroup;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 

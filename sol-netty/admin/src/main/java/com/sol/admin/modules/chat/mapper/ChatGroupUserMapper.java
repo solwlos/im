@@ -1,7 +1,7 @@
-package com.sol.admin.modules.system.mapper;
+package com.sol.admin.modules.chat.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.sol.admin.modules.system.entity.ChatGroupUser;
+import com.sol.admin.modules.chat.entity.ChatGroupUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

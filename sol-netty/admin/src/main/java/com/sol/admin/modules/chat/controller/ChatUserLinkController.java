@@ -1,7 +1,7 @@
-package com.sol.admin.modules.system.controller;
+package com.sol.admin.modules.chat.controller;
 
-import com.sol.admin.modules.system.entity.ChatUserLink;
-import com.sol.admin.modules.system.service.ChatUserLinkService;
+import com.sol.admin.modules.chat.entity.ChatUserLink;
+import com.sol.admin.modules.chat.service.ChatUserLinkService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 

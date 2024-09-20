@@ -1,7 +1,7 @@
-package com.sol.admin.modules.system.controller;
+package com.sol.admin.modules.chat.controller;
 
-import com.sol.admin.modules.system.entity.ChatOfflineMessage;
-import com.sol.admin.modules.system.service.ChatOfflineMessageService;
+import com.sol.admin.modules.chat.entity.ChatOfflineMessage;
+import com.sol.admin.modules.chat.service.ChatOfflineMessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 

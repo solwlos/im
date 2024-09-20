@@ -1,4 +1,4 @@
-package com.sol.admin.modules.system.entity;
+package com.sol.admin.modules.chat.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

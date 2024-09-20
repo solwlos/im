@@ -1,9 +1,9 @@
-package com.sol.admin.modules.system.service.impl;
+package com.sol.admin.modules.chat.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.sol.admin.modules.system.entity.ChatOfflineMessage;
-import com.sol.admin.modules.system.mapper.ChatOfflineMessageMapper;
-import com.sol.admin.modules.system.service.ChatOfflineMessageService;
+import com.sol.admin.modules.chat.entity.ChatOfflineMessage;
+import com.sol.admin.modules.chat.mapper.ChatOfflineMessageMapper;
+import com.sol.admin.modules.chat.service.ChatOfflineMessageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import java.util.List;

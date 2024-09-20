@@ -1,6 +1,6 @@
-package com.sol.admin.modules.system.mapper;
+package com.sol.admin.modules.chat.mapper;
 
-import com.sol.admin.modules.system.entity.ChatUserLink;
+import com.sol.admin.modules.chat.entity.ChatUserLink;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

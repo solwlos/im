@@ -36,4 +36,11 @@ public class NioWebSocketChannelPool {
         channels.remove(channel);
     }
 
+
+    /**
+     * 移除一个客户端连接通道
+     */
+    public Integer count() {
+        return channels.size();
+    }
 }
