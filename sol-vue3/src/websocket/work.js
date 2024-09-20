@@ -8,6 +8,7 @@ onconnect = function (e) {
   portPool.push(port); // 将新连接的端口添加到池中
 
   const connectToWebSocket = (url) => {
+    console.log("ws 的地址 ");
     if (!websocket) {
       websocket = new WebSocket(url);
 
@@ -31,14 +32,22 @@ onconnect = function (e) {
   };
 
   port.onmessage = function (event) {
+    console.log("=========连接开始========");
     if (event.data.command === 'connect') {
       connectToWebSocket(event.data.url);
     } else if (event.data.command === 'disconnect') {
       if (websocket) {
         websocket.close();
       }
+    } else if (event.data.command === 'send') {
+      if (websocket) {
+        websocket.send(event.data.data); // 发送消息到 WebSocket
+      } else {
+        console.error('WebSocket is not connected.');
+      }
     }
   };
+
 
   port.start();
 
@@ -57,3 +66,4 @@ function broadcast(message) {
     port.postMessage(message);
   });
 }
+

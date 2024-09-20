@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 
-import { defineConfig, ProxyOptions } from 'vite'
+import { defineConfig, type ProxyOptions } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -32,6 +32,7 @@ export default defineConfig({
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '~': fileURLToPath(new URL('./src', import.meta.url)),
       // '~/': `${path.resolve(__dirname, 'src')}/`,
     },
     
@@ -55,7 +56,7 @@ export default defineConfig({
         target: 'http://127.0.0.1:8080', 
         // target: 'http://localhost:8080', 
         changeOrigin: true,       //是否跨域
-        ws: false,            //是否代理 websockets
+        ws: true,            //是否代理 websockets
         secure: false,          //是否https接口
         rewrite: (path: string) => path.replace(/^\/api/, ''), // 不可省略 
         bypass(req, res, options: ProxyOptions){

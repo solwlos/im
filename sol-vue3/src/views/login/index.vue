@@ -25,7 +25,8 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import { type FormInstance, type FormRules } from 'element-plus'
-import axios from 'axios'
+// import axios from 'axios'
+import api from '@/api'
 import { useUserStore } from '@/stores/user'
 import router from '@/router'
 import { ElMessage } from 'element-plus'
@@ -47,16 +48,10 @@ const validatePass = (rule: any, value: any, callback: any) => {
     callback(new Error('Please input the password'))
   }
 }
-const instance = axios.create({
-  baseURL: '/api',
-  timeout: 1000
-})
-
-// baseURL: '/api',
-// timeout: 1000,
-// responseType: 'json',
-// withCredentials: true,
-// headers: {'X-Custom-Header': 'foobar'}
+// const instance = axios.create({
+//   baseURL: '/api',
+//   timeout: 1000
+// })
 const ruleForm = reactive({
   password: '',
   username: ''
@@ -69,52 +64,28 @@ const rules = reactive<FormRules<typeof ruleForm>>({
 
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-try {
-  const response = await instance({
-    method: 'post',
-    url: '/sysUser/login',
-    data: {
-      username: ruleForm.username,
-      password: ruleForm.password
-    }
-  });
-  // 成功处理
-  user.resetAll();
-  console.log(response);
+  try {
+    const response = await api.request({
+      method: 'post',
+      url: '/sysUser/login',
+      data: {
+        username: ruleForm.username,
+        password: ruleForm.password
+      }
+    });
+    // 成功处理
+    user.resetAll();
+    // 保存登录后的信息
+    user.token = response.data.token;
+    user.tokenHead = response.data.tokenHead;
+    user.userInfo = response.data.userInfo;
+    router.push('/home');
+    ElMessage({ message: '登录成功', type: 'success' });
 
-  // 保存登录后的信息
-  user.token = response.data.token;
-  user.tokenHead = response.data.tokenHead;
-  user.userInfo = response.data.userInfo;
-  router.push('/home');
-  ElMessage({ message: '登录成功', type: 'success' });
-
-} catch (error) {
-  // 错误处理
-  console.log(error);
-  // ElMessage({ message: error == null || '登录失败', type: 'error' });
-}
-  // await instance({
-  //   method: 'post',
-  //   url: '/sysUser/login',
-  //   params: {
-  //     username: ruleForm.username,
-  //     password: ruleForm.password
-  //   }
-  // })
-  //   .then((res) => {
-  //     user.resetAll()
-  //     console.log('开始重置')
-
-  //     user.token = res.data.token
-  //     user.tokenHead = res.data.tokenHead
-  //     router.push('/home')
-  //     ElMessage({ message: '登录成功', type: 'success' })
-  //   })
-  //   .catch((res) => {
-  //     console.log(res.response)
-  //     ElMessage({ message: res.response.data, type: 'error' })
-  //   })
+  } catch (error) {
+    // 错误处理
+    console.log(error);
+  }
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {
