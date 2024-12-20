@@ -128,7 +128,6 @@ public class ApiConfig extends OpenApiResource {
             service.delAll(delPermissions);
         }
     }
-
     public void setApis(OpenAPI openApi){
         // swagger 接口路径列表
         Map<String, PathItem> map = openApi.getPaths(); // PathItem
@@ -144,29 +143,29 @@ public class ApiConfig extends OpenApiResource {
                 PathItem pathItem = map.get(path);
                 // 定义 HTTP 方法的所有可能
                 List<Operation> operations = Arrays.asList(
-                        pathItem.getGet(),
-                        pathItem.getPost(),
-                        pathItem.getPut(),
-                        pathItem.getDelete(),
-                        pathItem.getOptions(),
-                        pathItem.getHead(),
-                        pathItem.getPatch(),
-                        pathItem.getTrace()
+                    pathItem.getGet(),
+                    pathItem.getPost(),
+                    pathItem.getPut(),
+                    pathItem.getDelete(),
+                    pathItem.getOptions(),
+                    pathItem.getHead(),
+                    pathItem.getPatch(),
+                    pathItem.getTrace()
                 );
                 // 获取第一个非空的 Operation 对象的 summary
                 String summary = operations.stream()
-                        .filter(Objects::nonNull)
-                        .map(Operation::getSummary)
-                        .filter(Objects::nonNull) // 确保 summary 不为 null
-                        .findFirst()
-                        .orElse("No summary");
+                    .filter(Objects::nonNull)
+                    .map(Operation::getSummary)
+                    .filter(Objects::nonNull) // 确保 summary 不为 null
+                    .findFirst()
+                    .orElse("No summary");
                 SysPermission sysPermission = SysPermission.builder()
-                        .name(path)
-                        .type(1)
-                        .description(summary)
-                        .createdTime(timestamp)
-                        .updatedTime(timestamp)
-                        .build();
+                    .name(path)
+                    .type(1)
+                    .description(summary)
+                    .createdTime(timestamp)
+                    .updatedTime(timestamp)
+                    .build();
                 newPaths.add(sysPermission);
             }
         }
@@ -175,10 +174,13 @@ public class ApiConfig extends OpenApiResource {
             service.insertBatch(newPaths);
         }
 
-        List<Long> ids = dbPaths.stream().filter(sysPermission -> !paths.contains(sysPermission.getName())).map(SysPermission::getId).toList();
+        List<Long> ids = dbPaths.stream().filter(
+            sysPermission -> !paths.contains(sysPermission.getName())
+        ).map(SysPermission::getId).toList();
         // 删除 系统中不存在的接口 (接口路径改变，或者删除)
         if (!ids.isEmpty()) {
             service.removeByIds(ids);
         }
     }
+
 }

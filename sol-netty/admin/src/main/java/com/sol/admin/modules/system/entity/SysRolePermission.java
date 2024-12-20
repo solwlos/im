@@ -41,8 +41,8 @@ public class SysRolePermission implements Serializable {
     @TableLogic(value = "0", delval = "1")
     private Byte isDeleted;
 
-    @Schema(description = "乐观锁")
-    private Integer version;
+//    @Schema(description = "乐观锁")
+//    private Integer version;
 
     @Schema(description = "创建时间")
     private Timestamp createdTime;

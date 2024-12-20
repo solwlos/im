@@ -9,7 +9,7 @@ package com.sol.admin.modules.security.config;
 import com.sol.admin.modules.security.filter.JwtTokenFilter;
 import com.sol.admin.modules.security.handler.MyAuthenticationHandler;
 import com.sol.admin.modules.security.service.AccountAuthenticationImpl;
-import com.sol.admin.modules.security.service.AuthorizationManagerImpl;
+//import com.sol.admin.modules.security.service.AuthorizationManagerImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,10 +37,10 @@ public class WebSecurityConfig {
         http
                 .addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 // security 6.0 之后的写法
-                .authorizeHttpRequests(authorize -> {
-                    authorize
-                            .anyRequest().access(authorizationManager());
-                })
+//                .authorizeHttpRequests(authorize -> {
+//                    authorize
+//                            .anyRequest().access(authorizationManager());
+//                })
                 // security 6.0 之前的写法
 //                .authorizeRequests(authorize -> {
 //                    authorize
@@ -73,10 +73,10 @@ public class WebSecurityConfig {
 //    }
 
     // 授权管理器，判断用户是否有权限访问其需要访问的资源（当前用户是否有访问该接口的权限）
-    @Bean
-    public AuthorizationManager<RequestAuthorizationContext> authorizationManager(){
-        return new AuthorizationManagerImpl();
-    }
+//    @Bean
+//    public AuthorizationManager<RequestAuthorizationContext> authorizationManager(){
+//        return new AuthorizationManagerImpl();
+//    }
 
     /**
      *  身份验证管理器，登录时验证其身份
