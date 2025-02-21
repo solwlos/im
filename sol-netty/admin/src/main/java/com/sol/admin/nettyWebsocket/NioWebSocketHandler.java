@@ -57,7 +57,7 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<WebSocketFr
             log.info("客户端发送ping请求");
             pingWebSocketFrameHandler(ctx, (PingWebSocketFrame) frame);
         } else if (frame instanceof TextWebSocketFrame) {
-            log.info("客户端发送文本请求");
+            log.info("客户端发送文本请求 {}", ((TextWebSocketFrame) frame).text());
             textWebSocketFrameHandler(ctx, (TextWebSocketFrame) frame);
         } else if (frame instanceof CloseWebSocketFrame) {
             log.info("客户端发送关闭请求");
@@ -68,8 +68,8 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<WebSocketFr
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         log.info("客户端请求数据类型：{}", msg.getClass());
-        log.info("客户端请求数据：{}", Json.pretty(msg));
-        log.info("客户端请求数据：{}", Json.pretty(ctx));
+        log.info("客户端请求数据 msg：{}", Json.pretty(msg));
+        log.info("客户端请求数据 ctx：{}", Json.pretty(ctx));
         if (msg instanceof FullHttpRequest) {
             fullHttpRequestHandler(ctx, (FullHttpRequest) msg);
         }
