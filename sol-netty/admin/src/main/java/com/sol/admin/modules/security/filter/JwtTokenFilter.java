@@ -75,14 +75,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
-
+            filterChain.doFilter(request, response);
         }catch (Exception e){
             log.error("========= 登录异常 ========="+e);
             response.setContentType(HttpConstants.APPLICATION_JSON_CHARSET_UTF_8);
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getWriter().println(HttpConstants.OBJECT_MAPPER.writeValueAsString(new ResponseEntity<>(e.getMessage(),HttpStatus.UNAUTHORIZED)));
         }
-        filterChain.doFilter(request, response);
+
     }
 
 //    @Override

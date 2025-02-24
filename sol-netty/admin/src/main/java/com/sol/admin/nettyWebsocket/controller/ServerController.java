@@ -31,6 +31,7 @@ public class ServerController {
     @GetMapping("/count")
     @Operation(summary ="查看在线人数")
     public Integer count(){
+        System.out.println("在线人数："+nioWebSocketChannelPool.count());
         return nioWebSocketChannelPool.count();
     }
 }
