@@ -1,7 +1,12 @@
 package com.sol.admin.nettyWebsocket;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sol.admin.common.util.RequestUriUtils;
+import com.sol.admin.nettyWebsocket.msg.ChatMessage;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -12,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,13 +59,30 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<WebSocketFr
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WebSocketFrame frame) {
+        // 打印帧类型和原始数据
+        log.info("WebSocket 帧类型: {}", frame.getClass().getSimpleName());
         // 根据请求数据类型进行分发处理
         if (frame instanceof PingWebSocketFrame) {
             log.info("客户端发送ping请求");
             pingWebSocketFrameHandler(ctx, (PingWebSocketFrame) frame);
         } else if (frame instanceof TextWebSocketFrame) {
-            log.info("客户端发送文本请求 {}", ((TextWebSocketFrame) frame).text());
-            textWebSocketFrameHandler(ctx, (TextWebSocketFrame) frame);
+//            TextWebSocketFrame textWebSocketFrame = (TextWebSocketFrame) frame;
+//            log.info("客户端发送文本请求 {}", JSON.toJSONString(textWebSocketFrame.content()));
+//            log.info("客户端发送文本请求 {}", textWebSocketFrame.text());
+
+//            ByteBuf buffer = textWebSocketFrame.content();
+
+//            // 读取数据
+//            byte[] bytes = new byte[buffer.readableBytes()];
+//            buffer.readBytes(bytes);
+//            System.out.println(new String(bytes));
+
+//            textWebSocketFrameHandler(ctx, (TextWebSocketFrame) frame);
+            TextWebSocketFrame textWebSocketFrame = (TextWebSocketFrame) frame;
+            Object json = textWebSocketFrame.text();
+            log.info("客户端发送文本请求: {}", json.toString());
+
+            textWebSocketFrameHandler(ctx, textWebSocketFrame);
         } else if (frame instanceof CloseWebSocketFrame) {
             log.info("客户端发送关闭请求");
             closeWebSocketFrameHandler(ctx, (CloseWebSocketFrame) frame);
