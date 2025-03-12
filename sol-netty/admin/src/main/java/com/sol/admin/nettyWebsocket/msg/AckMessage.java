@@ -12,9 +12,7 @@ public class AckMessage {
     private String fromId;
     //接收者id
     private String destId;
-    //消息类型
-    private String msgType;
-    //确认的消息id
+    // 确认的消息id, 用于确认消息
     private String ackMsgId;
 
 }
