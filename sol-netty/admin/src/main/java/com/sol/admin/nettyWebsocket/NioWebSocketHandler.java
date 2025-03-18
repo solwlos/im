@@ -135,9 +135,7 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<WebSocketFr
     private void textWebSocketFrameHandler(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
 //            log.info("客户端发送文本请求 {}", JSON.toJSONString(textWebSocketFrame.content()));
 //            log.info("客户端发送文本请求 {}", textWebSocketFrame.text());
-
 //            ByteBuf buffer = textWebSocketFrame.content();
-
 //            // 读取数据
 //            byte[] bytes = new byte[buffer.readableBytes()];
 //            buffer.readBytes(bytes);
@@ -158,8 +156,6 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<WebSocketFr
                     channel.writeAndFlush(new TextWebSocketFrame(frame.text()));
                 }
             }else if (message.getMessageRange().equals(MessageRangeEnum.GROUP.getCode())){ // 群聊
-
-
 
 //                channel.writeAndFlush(new TextWebSocketFrame(message.getMsgBody()));
             }else if (message.getMessageRange().equals(MessageRangeEnum.SYSTEM.getCode())){ // 系统通知

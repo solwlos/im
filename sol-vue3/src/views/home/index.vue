@@ -1,13 +1,18 @@
 <template>
   <div class="chat-container">
     <el-row>
+            <!-- 这里设置 UserLink 组件占 6 份，比例为 3:1 -->
+      <el-col :span="1">
+        
+      </el-col>
       <!-- 这里设置 UserLink 组件占 6 份，比例为 3:1 -->
       <el-col :span="7">
         <UserLink />
       </el-col>
       <!-- 这里设置 Chat 组件占 18 份，比例为 3:1 -->
       <el-col :span="14">
-        <Chat />
+        <!-- <Chat /> -->
+        <Webrtc />
       </el-col>
     </el-row>
   </div>
@@ -19,8 +24,12 @@ import SharedWorker from '@/websocket/work.js?sharedworker'
 import { useUserStore } from '@/stores/user'
 import Chat from './chat.vue'
 import UserLink from './userLink.vue'
+import Webrtc from './webrtc.vue'
 // 引入 Element Plus 的 Row 和 Col 组件
 import { ElRow, ElCol } from 'element-plus'
+
+
+
 </script>
 
 <style scoped>
