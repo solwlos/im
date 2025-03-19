@@ -1,6 +1,7 @@
 
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import User from '@/types/User'
 
 /* 用户的仓库 */
 
@@ -9,7 +10,7 @@ export  const useUserStore = defineStore('user', {
     return {
       tokenHead: '',
       token: '',
-      userInfo: {} //用户信息
+      userInfo: User
     };
   },
   

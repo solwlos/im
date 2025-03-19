@@ -26,7 +26,6 @@
             </el-upload>
             
             <VideoCamera @Click="videoClick" style="width: 1.5em; height: 1.5em; margin-right: 8px" />
-            
         </div>
         <!-- 输入框和发送按钮区域 -->
         <div class="input-section">
@@ -44,41 +43,44 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { FolderOpened,VideoCamera } from '@element-plus/icons-vue'
-import { onMounted, onUnmounted, ref } from 'vue'
-import SharedWorker from '@/websocket/work.js?sharedworker'
+import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { msgStore } from '@/stores/msgStore'
+import { fa } from 'element-plus/es/locales.mjs'
+
+// 接收父组件传递的 worker
+const props  = defineProps({
+  worker: {
+    type: Object,
+    required: true
+  }
+})
+
+
+// 直接使用字符串字面量定义事件
+// 定义 sendData 事件，接受一个字符串参数
+const emits = defineEmits<{
+    (e: string, data: boolean): void;
+}>();
+
+// const isShowWebrtc = ref<boolean>(false)
+
 const user = useUserStore()
 const msgArray = msgStore().historymsg
-
 const textarea = ref('')
 // const msgArray = ref([])
 
-let worker = new SharedWorker()
-worker.port.start() // 启动消息通道
 
-worker.port.onmessage = function (event) {
-    const message = event.data
-    if (message.type === 'status') {
-        console.log('Status:', message.data)
-    } else if (message.type === 'message') {
-        console.log('WebSocket message:', message.data)
-
-        // 解析 msg.data 为 JavaScript 对象
-        const msgObj = JSON.parse(message.data)
-
-        // 添加接收到的消息到历史记录数组
-        msgArray.push({ type: 'received', data: msgObj })
-    } else if (message.type === 'error') {
-        console.error('WebSocket error:', message.data)
-    }
+function videoClick(){
+    // isShowWebrtc != isShowWebrtc 
+    emits('isShowWebrtc', true);
 }
 
 // 发送消息到 WebSocket
 const sendMessage = () => {
-    if (worker && textarea.value) {
+    if (props.worker && textarea.value) {
         // 组装消息
         const sendMsg = {
             msgBody: textarea.value,
@@ -88,34 +90,10 @@ const sendMessage = () => {
             messageRange: 1
         }
         console.log(sendMsg)
-        worker.port.postMessage({ command: 'send', data: JSON.stringify(sendMsg) })
+        props.worker.port.postMessage({ command: 'send', data: JSON.stringify(sendMsg) })
         // 添加消息到历史记录数组
         msgArray.push({ type: 'sent', data: sendMsg })
         textarea.value = '' // 清空输入框
-    }
-}
-function videoClick(){
-
-}
-
-onMounted(() => {
-    console.log('Attempting to connect to WebSocket...')
-    connectToWebSocket('ws://127.0.0.1:8081?token=' + user.token + '&userId=' + user.userInfo.id)
-})
-
-onUnmounted(() => {
-    console.log('Disconnecting from WebSocket...')
-    disconnectWebSocket()
-})
-const connectToWebSocket = (url) => {
-    if (worker) {
-        worker.port.postMessage({ command: 'connect', url: url })
-    }
-}
-
-const disconnectWebSocket = () => {
-    if (worker) {
-        worker.port.postMessage({ command: 'disconnect' })
     }
 }
 </script>

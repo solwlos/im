@@ -1,286 +1,313 @@
-<!-- src/views/VideoCall.vue -->
 <template>
     <el-container class="rtc-container">
-      <!-- 左侧用户列表 -->
-      <el-aside width="280px">
-        <el-card class="user-list-card">
-          <el-input
-            v-model="searchText"
-            placeholder="搜索用户"
-            clearable
-            class="mb-16"
-          />
-          <el-scrollbar class="user-scroll">
-            <div class="user-list">
-              <el-card
-                v-for="user in filteredUsers"
-                :key="user.id"
-                class="user-item"
-                @click="connectToUser(user)"
-                :shadow="user.id === remoteUserId ? 'always' : 'hover'"
-              >
-                <el-avatar :src="user.avatar" size="large" />
-                <div class="user-name">{{ user.name }}</div>
-                <div class="status">
-                  {{ user.connected ? '在线 · 通话中' : '在线' }}
+        <!-- 右侧通话区域 -->
+        <el-container>
+            <el-header class="call-header">
+                <h3 v-if="remoteUserId">
+                    正在与 {{ remoteUserName }} 通话
+                    <el-button
+                        type="danger"
+                        size="small"
+                        @click="hangUp"
+                        class="ml-16"
+                    >
+                        挂断
+                    </el-button>
+                </h3>
+            </el-header>
+            <el-main class="call-main">
+                <div class="video-container">
+                    <!-- 本地视频 -->
+                    <video 
+                        ref="localVideoRef" 
+                        autoplay 
+                        muted 
+                        class="local-video"
+                    ></video>
+                    <!-- 远程视频 -->
+                    <video 
+                        ref="remoteVideoRef" 
+                        autoplay 
+                        class="remote-video"
+                        v-if="remoteStream"
+                    ></video>
                 </div>
-              </el-card>
-            </div>
-          </el-scrollbar>
-        </el-card>
-      </el-aside>
-  
-      <!-- 右侧通话区域 -->
-      <el-container>
-        <el-header class="call-header">
-          <h3 v-if="remoteUserId">
-            正在与 {{ remoteUserName }} 通话
-            <el-button
-              type="danger"
-              size="small"
-              @click="hangUp"
-              class="ml-16"
-            >
-              挂断
-            </el-button>
-          </h3>
-        </el-header>
-        
-        <el-main class="call-main">
-          <div class="video-container">
-            <!-- 本地视频 -->
-            <video 
-              ref="localVideo" 
-              autoplay 
-              muted 
-              class="local-video"
-            ></video>
-            
-            <!-- 远程视频 -->
-            <video 
-              ref="remoteVideo" 
-              autoplay 
-              class="remote-video"
-              v-if="remoteStream"
-            ></video>
-          </div>
-        </el-main>
-      </el-container>
+            </el-main>
+        </el-container>
     </el-container>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted, onUnmounted, watch } from 'vue'
-//   import { io } from 'socket.io-client' // 信令服务器
-  
-  // 模拟用户列表（实际应从后端获取）
-  const users = ref([
-    { id: 1, name: 'Alice', avatar: 'https://via.placeholder.com/100', connected: false },
-    { id: 2, name: 'Bob', avatar: 'https://via.placeholder.com/100', connected: false },
-    { id: 3, name: 'Charlie', avatar: 'https://via.placeholder.com/100', connected: false }
-  ])
-  
-  const searchText = ref('')
-//   const filteredUsers = computed(() => 
-//     users.value.filter(user => 
-//       user.name.includes(searchText.value)
-//     )
-//   )
-  
-  // WebRTC 相关
-  const localStream = ref(null)
-  const remoteStream = ref(null)
-  const peerConnection = ref(null)
-  const remoteUserId = ref(null)
-  const remoteUserName = ref('')
-  
-  // 信令服务器连接
-  const socket = io('ws://localhost:3000')
-  
-  onMounted(async () => {
-    // 获取本地媒体流
+</template>
+
+<script setup>
+import { ref, onMounted, onUnmounted, watch } from 'vue';
+// import { io } from 'socket.io-client'; // 信令服务器
+
+// WebRTC 相关
+const localStream = ref(null);
+const remoteStream = ref(null);
+const peerConnection = ref(null);
+const remoteUserId = ref(null);
+const remoteUserName = ref('');
+
+// 视频元素引用
+const localVideoRef = ref(null);
+const remoteVideoRef = ref(null);
+
+// 信令服务器连接
+// const socket = io('ws://localhost:3000');
+
+// 获取本地媒体流
+const getLocalMediaStream = async () => {
     try {
-      localStream.value = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true
-      })
-      const localVideo = $refs.localVideo
-      localVideo.srcObject = localStream.value
+        localStream.value = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true
+        });
+        if (localVideoRef.value) {
+            localVideoRef.value.srcObject = localStream.value;
+        }
     } catch (err) {
-      console.error('媒体设备访问失败:', err)
+        console.error('媒体设备访问失败:', err);
     }
-  
-    // 监听信令事件
-    socket.on('offer', handleOffer)
-    socket.on('answer', handleAnswer)
-    socket.on('ice-candidate', handleIceCandidate)
-  })
-  
-  const connectToUser = async (user) => {
-    if (remoteUserId.value) return // 已有通话
-  
-    // 创建 PeerConnection
+};
+
+// 创建 PeerConnection
+const createPeerConnection = () => {
     peerConnection.value = new RTCPeerConnection({
-      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
-    })
-  
+        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+    });
+};
+
+// 处理 ICE 候选
+const handleIceCandidate = (event, userId) => {
+    if (event.candidate) {
+        // socket.emit('ice-candidate', {
+        //     to: userId,
+        //     candidate: event.candidate
+        // });
+    }
+};
+
+// 处理远程流
+const handleRemoteStream = (event) => {
+    remoteStream.value = event.streams[0];
+    if (remoteVideoRef.value) {
+        remoteVideoRef.value.srcObject = remoteStream.value;
+    }
+};
+
+// 连接到用户
+const connectToUser = async (user) => {
+    if (remoteUserId.value) return; // 已有通话
+
+    createPeerConnection();
+
     // 本地流添加到 PeerConnection
-    localStream.value.getTracks().forEach(track => {
-      peerConnection.value.addTrack(track, localStream.value)
-    })
-  
-    // 创建 Offer
-    const offer = await peerConnection.value.createOffer()
-    await peerConnection.value.setLocalDescription(offer)
-  
-    // 发送信令
-    socket.emit('offer', {
-      to: user.id,
-      from: 123, // 当前用户ID
-      sdp: offer
-    })
-  
-    remoteUserId.value = user.id
-    remoteUserName.value = user.name
-    user.connected = true
-  
-    // 监听 ICE 候选
-    peerConnection.value.onicecandidate = (event) => {
-      if (event.candidate) {
-        socket.emit('ice-candidate', {
-          to: user.id,
-          candidate: event.candidate
-        })
-      }
-    }
-  
-    // 监听远程流
-    peerConnection.value.ontrack = (event) => {
-      remoteStream.value = event.streams[0]
-      const remoteVideo = $refs.remoteVideo
-      remoteVideo.srcObject = remoteStream.value
-    }
-  }
-  
-  const handleOffer = async (data) => {
-    if (remoteUserId.value) return // 已有通话
-  
-    peerConnection.value = new RTCPeerConnection({
-      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
-    })
-  
-    localStream.value.getTracks().forEach(track => {
-      peerConnection.value.addTrack(track, localStream.value)
-    })
-  
-    await peerConnection.value.setRemoteDescription(data.sdp)
-    const answer = await peerConnection.value.createAnswer()
-    await peerConnection.value.setLocalDescription(answer)
-  
-    socket.emit('answer', {
-      to: data.from,
-      sdp: answer
-    })
-  
-    remoteUserId.value = data.from
-    remoteUserName.value = users.value.find(u => u.id === data.from).name
-  
-    peerConnection.value.ontrack = (event) => {
-      remoteStream.value = event.streams[0]
-    }
-  }
-  
-  const handleAnswer = async (sdp) => {
-    if (peerConnection.value) {
-      await peerConnection.value.setRemoteDescription(sdp)
-    }
-  }
-  
-  const handleIceCandidate = (candidate) => {
-    if (peerConnection.value) {
-      peerConnection.value.addIceCandidate(new RTCIceCandidate(candidate))
-    }
-  }
-  
-  const hangUp = () => {
-    if (peerConnection.value) {
-      peerConnection.value.close()
-      peerConnection.value = null
-    }
-    remoteStream.value = null
-    remoteUserId.value = null
-    users.value.forEach(user => user.connected = false)
-  }
-  
-  onUnmounted(() => {
     if (localStream.value) {
-      localStream.value.getTracks().forEach(track => track.stop())
+        localStream.value.getTracks().forEach(track => {
+            peerConnection.value.addTrack(track, localStream.value);
+        });
     }
-    if (socket) socket.disconnect()
-  })
-  </script>
-  
-  <style scoped>
-  .rtc-container {
-    height: 90vh;
+
+    try {
+        // 创建 Offer
+        const offer = await peerConnection.value.createOffer();
+        await peerConnection.value.setLocalDescription(offer);
+
+        // 发送信令
+        // socket.emit('offer', {
+        //     to: user.id,
+        //     from: 123, // 当前用户ID
+        //     sdp: offer
+        // });
+
+        remoteUserId.value = user.id;
+        remoteUserName.value = user.name;
+        // user.connected = true;
+
+        // 监听 ICE 候选
+        peerConnection.value.onicecandidate = (event) => {
+            handleIceCandidate(event, user.id);
+        };
+
+        // 监听远程流
+        peerConnection.value.ontrack = handleRemoteStream;
+    } catch (err) {
+        console.error('创建 Offer 失败:', err);
+    }
+};
+
+// 处理 Offer
+const handleOffer = async (data) => {
+    if (remoteUserId.value) return; // 已有通话
+
+    createPeerConnection();
+
+    if (localStream.value) {
+        localStream.value.getTracks().forEach(track => {
+            peerConnection.value.addTrack(track, localStream.value);
+        });
+    }
+
+    try {
+        await peerConnection.value.setRemoteDescription(data.sdp);
+        const answer = await peerConnection.value.createAnswer();
+        await peerConnection.value.setLocalDescription(answer);
+
+        // socket.emit('answer', {
+        //     to: data.from,
+        //     sdp: answer
+        // });
+
+        remoteUserId.value = data.from;
+        // remoteUserName.value = users.value.find(u => u.id === data.from).name;
+
+        peerConnection.value.ontrack = handleRemoteStream;
+    } catch (err) {
+        console.error('处理 Offer 失败:', err);
+    }
+};
+
+// 处理 Answer
+const handleAnswer = async (sdp) => {
+    if (peerConnection.value) {
+        try {
+            await peerConnection.value.setRemoteDescription(sdp);
+        } catch (err) {
+            console.error('处理 Answer 失败:', err);
+        }
+    }
+};
+
+// 处理 ICE 候选
+const handleIceCandidateReceived = (candidate) => {
+    if (peerConnection.value) {
+        try {
+            peerConnection.value.addIceCandidate(new RTCIceCandidate(candidate));
+        } catch (err) {
+            console.error('添加 ICE 候选失败:', err);
+        }
+    }
+};
+
+// 挂断电话
+const hangUp = () => {
+    if (peerConnection.value) {
+        peerConnection.value.close();
+        peerConnection.value = null;
+    }
+    remoteStream.value = null;
+    remoteUserId.value = null;
+    // users.value.forEach(user => user.connected = false);
+};
+
+onMounted(async () => {
+    await getLocalMediaStream();
+
+    // 监听信令事件
+    // socket.on('offer', handleOffer);
+    // socket.on('answer', handleAnswer);
+    // socket.on('ice-candidate', handleIceCandidateReceived);
+});
+
+onUnmounted(() => {
+    if (localStream.value) {
+        localStream.value.getTracks().forEach(track => track.stop());
+    }
+    // if (socket) socket.disconnect();
+});
+</script>
+
+<style scoped>
+.rtc-container {
+    width: calc(100% - 20px); /* 确保视频宽度减去内边距 */
+    margin-top: 10px; /* 视频区域顶部间距 */
+    display: flex;
+    flex-direction: column;
+    min-height: 70vh;
+    margin: 0;
+    padding: 0;
     background: #f8f9fa;
-  }
-  
-  .user-list-card {
-    height: 100%;
-    border-radius: 0;
-  }
-  
-  .user-scroll {
-    height: calc(100% - 80px);
-  }
-  
-  .user-item {
-    margin: 12px 0;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  
-  .user-item:hover {
-    transform: translateX(4px);
-    box-shadow: 2px 4px 12px rgba(0,0,0,0.1);
-  }
-  
-  .call-header {
+}
+
+.call-header {
     background: #fff;
-    padding: 16px;
+    padding: 1.5rem;
     border-bottom: 1px solid #ebedf0;
-  }
-  
-  .call-main {
+}
+
+.call-main {
+    /* flex: 1; */
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     background: #fff;
-  }
-  
-  .video-container {
+}
+
+.video-container {
     position: relative;
-    width: 800px;
-    height: 600px;
-  }
-  
-  .local-video {
+    /* display: flex; */
+    /* align-items: center; */
+    justify-content: center;
+    width: 90%;
+    max-width: 100%;
+    min-height: 400px;
+    height: 40%;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
+}
+
+.local-video {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 180px;
-    height: 135px;
-    border: 3px solid #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    top: 2%;
+    right: 2%;
+    width: 20%;
+    max-width: 250px;
+    height: auto;
+    aspect-ratio: 16/9;
+    border: 4px solid #fff;
+    border-radius: 1rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
     object-fit: cover;
-  }
-  
-  .remote-video {
-    width: 100%;
-    height: 100%;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.remote-video {
+    flex: 1;
+    min-width: 300px;
+    height: 80vh;
     object-fit: cover;
-    border-radius: 8px;
-  }
-  </style>
+    border-radius: 1rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .local-video {
+        width: 30%;
+        max-width: 180px;
+        top: 3%;
+        right: 3%;
+    }
+
+    .remote-video {
+        height: 70vh;
+    }
+}
+
+/* 动画效果 */
+.local-video:hover {
+    transform: scale(1.05);
+}
+
+/* 状态提示 */
+.no-remote {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #666;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+</style>

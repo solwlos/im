@@ -5,9 +5,10 @@
           v-model="searchQuery"
           placeholder="搜索群组"
           clearable
-          @input="filterGroups"
+         
           class="search-input"
-      />
+      /> 
+      <!-- @input="filterGroups" -->
       <el-scrollbar height="600px">
           <div class="group-list">
               <div
@@ -41,11 +42,11 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 
-const activeGroupId = ref(null);
-const groupList = ref([
+const activeGroupId = ref<string>();
+const groupList = ref<any>([
   {
       id: 1,
       name: "OA甲方管理员交流群",
@@ -67,12 +68,12 @@ const groupList = ref([
 const searchQuery = ref('');
 
 const filteredGroupList = computed(() => {
-  return groupList.value.filter(group =>
+  return groupList.value.filter((group: any)  =>
       group.name.toLowerCase().includes(searchQuery.value.toLowerCase())
   );
 });
 
-const selectGroup = (groupId) => {
+const selectGroup = (groupId: string) => {
   activeGroupId.value = groupId;
   // 这里可以触发加载群组详细消息
 };
