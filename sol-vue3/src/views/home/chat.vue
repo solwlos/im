@@ -48,7 +48,7 @@ import { FolderOpened,VideoCamera } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { msgStore } from '@/stores/msgStore'
-import { fa } from 'element-plus/es/locales.mjs'
+import type { Msg } from '@/types/msg'
 
 // 接收父组件传递的 worker
 const props  = defineProps({
@@ -74,8 +74,7 @@ const textarea = ref('')
 
 
 function videoClick(){
-    // isShowWebrtc != isShowWebrtc 
-    emits('isShowWebrtc', true);
+    emits('isShow', true);
 }
 
 // 发送消息到 WebSocket
@@ -85,10 +84,10 @@ const sendMessage = () => {
         const sendMsg = {
             msgBody: textarea.value,
             fromId: user.userInfo.id, // 发送
-            destId: 0, // 接受
-            msgType: 1,
-            messageRange: 1
-        }
+            destId: "0", // 接受
+            msgType: "1",
+            messageRange: "1"
+        } as Msg
         console.log(sendMsg)
         props.worker.port.postMessage({ command: 'send', data: JSON.stringify(sendMsg) })
         // 添加消息到历史记录数组

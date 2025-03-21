@@ -1,7 +1,6 @@
 
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import User from '@/types/User'
+import type { User }  from '@/types/user'
 
 /* 用户的仓库 */
 
@@ -10,7 +9,7 @@ export  const useUserStore = defineStore('user', {
     return {
       tokenHead: '',
       token: '',
-      userInfo: User
+      userInfo: {} as User
     };
   },
   
@@ -23,7 +22,7 @@ export  const useUserStore = defineStore('user', {
     setTokenHead(head: string) {
       this.tokenHead = head;
     },
-    setUserInfo(userInfo: {}) {
+    setUserInfo(userInfo: User) {
       this.userInfo = userInfo;
     },
     isAuthenticated(){
@@ -32,7 +31,7 @@ export  const useUserStore = defineStore('user', {
     resetAll() {
       this.tokenHead = '',
       this.token = '',
-      this.userInfo = {} //用户信息
+      this.userInfo = {} as User //用户信息
     }
   },
   persist: {

@@ -8,13 +8,13 @@
       </el-col>
 
       <el-col :span="14">
-        <Chat :worker="worker" />
+        <Chat :worker="worker"  @isShow="isShow"/>
         <el-dialog 
           v-model="isShowWebrtc" 
           center 
           custom-class="webrtc-dialog"
         >
-          <Webrtc :worker="worker" @isShowWebrtc="isShow"/>
+          <Webrtc :worker="worker"/>
         </el-dialog>
       </el-col>
     </el-row>
@@ -32,12 +32,14 @@ import Chat from './chat.vue'
 import UserLink from './userLink.vue'
 import Webrtc from './webrtc.vue'
 
+import type { Message,Msg } from '@/types/msg'
+
 const user = useUserStore()
-const isShowWebrtc = ref(false); 
+const isShowWebrtc = ref<boolean>(false); 
 const msgArray = msgStore().historymsg
 
-function isShow(isShowWebrtc: boolean){
-  isShowWebrtc = isShowWebrtc
+function isShow(isShow: boolean){
+  isShowWebrtc.value = isShow
 }
 
 
@@ -46,15 +48,16 @@ const worker = new SharedWorker()
 // 启动消息通道
 worker.port.start() 
 
-worker.port.onmessage = function (event) {
+worker.port.onmessage = function (event: MessageEvent<Message>) {
     const message = event.data
     if (message.type === 'status') {
         console.log('Status:', message.data)
     } else if (message.type === 'message') {
         // 解析 msg.data 为 JavaScript 对象
-        const msgObj = JSON.parse(message.data)
+        // const msgObj = JSON.parse(message.data)
+        const msgObj = message.data as Msg
         // 添加接收到的消息到历史记录数组
-        msgArray.push({ type: 'received', data: msgObj })
+        msgArray.push({ type: 'received', data: msgObj})
     } else if (message.type === 'error') {
         console.error('WebSocket error:', message.data)
     }
@@ -95,3 +98,7 @@ onUnmounted(() => {
   margin-top: 10px; /* 视频区域顶部间距 */
 }
 </style>    
+
+
+
+

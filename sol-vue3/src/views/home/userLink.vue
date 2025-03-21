@@ -44,11 +44,12 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import type { Reply } from '@/types/msg'
 
 const activeGroupId = ref<string>();
-const groupList = ref<any>([
+const groupList = ref<Reply[]>([
   {
-      id: 1,
+      id: "1",
       name: "OA甲方管理员交流群",
       lastMessage: "AwayFu：@总有刁民想...",
       unread: 3,
@@ -56,14 +57,13 @@ const groupList = ref<any>([
       avatar: "https://example.com/avatar1.png"
   },
   {
-      id: 2,
+      id: "2",
       name: "汉兴经济技术理论群",
       lastMessage: "古青：周期，消费，这...",
       unread: 0,
       time: "09:15",
       avatar: "https://example.com/avatar2.png"
   }
-  // 更多群组...
 ]);
 const searchQuery = ref('');
 

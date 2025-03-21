@@ -36,8 +36,214 @@
         </el-container>
     </el-container>
 </template>
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, watch } from 'vue';
+import type { User } from '@/types/user'
+// WebRTC 相关类型定义
 
-<script setup>
+// 接收父组件传递的 worker
+const props  = defineProps({
+  worker: {
+    type: Object,
+    required: true
+  }
+})
+
+type OfferData = {
+    to: number | string;
+    from: number | string;
+    sdp: RTCSessionDescriptionInit;
+};
+
+type AnswerData = RTCSessionDescriptionInit;
+
+type IceCandidateData = {
+    to: number;
+    candidate: RTCIceCandidateInit;
+};
+
+// WebRTC 相关
+const localStream = ref<MediaStream | null>(null);
+const remoteStream = ref<MediaStream | null>(null);
+const peerConnection = ref<RTCPeerConnection | null>(null);
+// 选中回话消息的 用户 id
+const remoteUserId = ref<number | string | null>("1");
+const remoteUserName = ref<string>('');
+
+// 视频元素引用
+const localVideoRef = ref<HTMLVideoElement | null>(null);
+const remoteVideoRef = ref<HTMLVideoElement | null>(null);
+
+// 获取本地媒体流
+const getLocalMediaStream = async (): Promise<void> => {
+    try {
+        localStream.value = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true
+        });
+        if (localVideoRef.value) {
+            localVideoRef.value.srcObject = localStream.value;
+        }
+    } catch (err) {
+        console.error('媒体设备访问失败:', err);
+    }
+};
+
+// 创建 PeerConnection
+const createPeerConnection = (): void => {
+    peerConnection.value = new RTCPeerConnection({
+        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+    });
+};
+
+// 处理 ICE 候选
+const handleIceCandidate = (event: RTCPeerConnectionIceEvent, userId: number | string): void => {
+    if (event.candidate) {
+        props.worker.emit('ice-candidate', {
+            to: userId,
+            candidate: event.candidate
+        });
+    }
+};
+
+// 处理远程流
+const handleRemoteStream = (event: RTCTrackEvent): void => {
+    remoteStream.value = event.streams[0];
+    if (remoteVideoRef.value) {
+        remoteVideoRef.value.srcObject = remoteStream.value;
+    }
+};
+
+// 连接到用户
+const connectToUser = async (user: User): Promise<void> => {
+    if (remoteUserId.value) return; // 已有通话
+
+    createPeerConnection();
+
+    // 本地流添加到 PeerConnection
+    if (localStream.value) {
+        localStream.value.getTracks().forEach((track: MediaStreamTrack) => {
+            if (peerConnection.value) {
+                peerConnection.value.addTrack(track, localStream.value as any);
+            }
+        });
+    }
+
+    try {
+        // 创建 Offer
+        if (peerConnection.value) {
+            const offer = await peerConnection.value.createOffer();
+            await peerConnection.value.setLocalDescription(offer);
+
+            // 发送信令
+            // socket.emit('offer', {
+            //     to: user.id,
+            //     from: 123, // 当前用户ID
+            //     sdp: offer
+            // });
+
+            remoteUserId.value = user.id;
+            remoteUserName.value = user.username;
+            // user.connected = true;
+
+            // 监听 ICE 候选
+            peerConnection.value.onicecandidate = (event: RTCPeerConnectionIceEvent) => {
+                handleIceCandidate(event, user.id);
+            };
+
+            // 监听远程流
+            peerConnection.value.ontrack = handleRemoteStream;
+        }
+    } catch (err) {
+        console.error('创建 Offer 失败:', err);
+    }
+};
+
+// 处理 Offer
+const handleOffer = async (data: OfferData): Promise<void> => {
+    if (remoteUserId.value) return; // 已有通话
+
+    createPeerConnection();
+
+    if (localStream.value) {
+        localStream.value.getTracks().forEach((track: MediaStreamTrack) => {
+            if (peerConnection.value) {
+                peerConnection.value.addTrack(track, localStream.value as any);
+            }
+        });
+    }
+
+    try {
+        if (peerConnection.value) {
+            await peerConnection.value.setRemoteDescription(data.sdp);
+            const answer = await peerConnection.value.createAnswer();
+            await peerConnection.value.setLocalDescription(answer);
+
+            // socket.emit('answer', {
+            //     to: data.from,
+            //     sdp: answer
+            // });
+
+            remoteUserId.value = data.from;
+            // remoteUserName.value = users.value.find(u => u.id === data.from).name;
+
+            peerConnection.value.ontrack = handleRemoteStream;
+        }
+    } catch (err) {
+        console.error('处理 Offer 失败:', err);
+    }
+};
+
+// 处理 Answer
+const handleAnswer = async (sdp: AnswerData): Promise<void> => {
+    if (peerConnection.value) {
+        try {
+            await peerConnection.value.setRemoteDescription(sdp);
+        } catch (err) {
+            console.error('处理 Answer 失败:', err);
+        }
+    }
+};
+
+// 处理 ICE 候选
+const handleIceCandidateReceived = (candidate: IceCandidateData['candidate']): void => {
+    if (peerConnection.value) {
+        try {
+            peerConnection.value.addIceCandidate(new RTCIceCandidate(candidate));
+        } catch (err) {
+            console.error('添加 ICE 候选失败:', err);
+        }
+    }
+};
+
+// 挂断电话
+const hangUp = (): void => {
+    if (peerConnection.value) {
+        peerConnection.value.close();
+        peerConnection.value = null;
+    }
+    remoteStream.value = null;
+    remoteUserId.value = null;
+    // users.value.forEach(user => user.connected = false);
+};
+
+onMounted(async () => {
+    await getLocalMediaStream();
+
+    // 监听信令事件
+    // socket.on('offer', handleOffer);
+    // socket.on('answer', handleAnswer);
+    // socket.on('ice-candidate', handleIceCandidateReceived);
+});
+
+onUnmounted(() => {
+    if (localStream.value) {
+        localStream.value.getTracks().forEach((track: MediaStreamTrack) => track.stop());
+    }
+    // if (socket) socket.disconnect();
+});
+</script>    
+<!-- <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch } from 'vue';
 // import { io } from 'socket.io-client'; // 信令服务器
 
@@ -215,7 +421,7 @@ onUnmounted(() => {
     }
     // if (socket) socket.disconnect();
 });
-</script>
+</script> -->
 
 <style scoped>
 .rtc-container {

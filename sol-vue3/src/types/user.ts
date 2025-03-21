@@ -16,4 +16,4 @@ interface User {
     description: string
 }
 
-export default User;
+export type { User };

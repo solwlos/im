@@ -1,6 +1,7 @@
 
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import type { Message} from '@/types/msg'
 
 /* 用户的仓库 */
 
@@ -8,7 +9,7 @@ export  const msgStore = defineStore('msgStore', {
   state: () => {
     return {
       replylist: [], // 回话列表
-      historymsg: [] // 历史消息
+      historymsg: [] as Message[]   // 历史消息
 
     };
   },
