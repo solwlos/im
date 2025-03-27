@@ -1,6 +1,7 @@
 package com.sol.admin.modules.system.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.sol.admin.modules.system.entity.SysPermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.swagger.v3.oas.models.tags.Tag;
@@ -27,8 +28,10 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
     }
 
     default void delAll(List<String> list){
-        Map<String, Object> map = Map.of("name", list);
-        deleteByMap(map);
+        UpdateWrapper<SysPermission> queryWrapper = new UpdateWrapper <>();
+        queryWrapper.in("name", list).eq("is_deleted", 0);
+        // 设置要更新的字段和值
+        update(null, queryWrapper.set("is_deleted", 1));
     }
 
     List<SysPermission> getPermissionByRoleId(Long roleId);
