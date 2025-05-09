@@ -22,9 +22,9 @@
                         id="local"
                         ref="localVideoRef" 
                         autoplay 
-                        class="remote-video"
+                        class="local-video"
                     ></video>
-                    <!-- class="local-video" -->
+
                     <!-- 远程视频
                     <video 
                         ref="remoteVideoRef" 
@@ -38,16 +38,18 @@
     </el-container>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watchEffect } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import type { User } from '@/types/user'
+import { useUserStore } from '@/stores/user'
 // WebRTC 相关类型定义
-
+const user  = useUserStore().userInfo
 // 接收父组件传递的 worker
 const props  = defineProps({
   worker: {
     type: Object,
     required: true
-  }
+  },
+  users:[]
 })
 
 type OfferData = {
@@ -83,10 +85,7 @@ const getLocalMediaStream = async (): Promise<void> => {
             audio: true
         });
         if (localVideoRef.value) {
-            console.log("处理成功！");
-            console.log(localVideoRef.value);
             localVideoRef.value.srcObject = localStream.value;
-            console.log(localVideoRef.value.srcObject );
         }
 
 
@@ -94,13 +93,6 @@ const getLocalMediaStream = async (): Promise<void> => {
         console.error('媒体设备访问失败:', err);
     }
 };
-// const getLocalMediaStream = async () => {
-//   localStream.value = await navigator.mediaDevices.getUserMedia({
-//     video: true,
-//     audio: false,
-//   })
-//   document.getElementById('local').srcObject = localStream
-// }
 
 // 创建 PeerConnection
 const createPeerConnection = (): void => {
@@ -237,13 +229,9 @@ const hangUp = (): void => {
     }
     remoteStream.value = null;
     remoteUserId.value = null;
+    localStream.value = null;
     // users.value.forEach(user => user.connected = false);
 };
-watchEffect(() => {
-  if (localStream.value && localVideoRef.value) {
-    localVideoRef.value.srcObject = localStream.value;
-  }
-});
 onMounted(async () => {
     await getLocalMediaStream();
 
@@ -251,6 +239,9 @@ onMounted(async () => {
     // socket.on('offer', handleOffer);
     // socket.on('answer', handleAnswer);
     // socket.on('ice-candidate', handleIceCandidateReceived);
+    // if (localStream.value) {
+    //     localStream.value.getTracks().forEach((track: MediaStreamTrack) => track.stop());
+    // }
 });
 
 onUnmounted(() => {

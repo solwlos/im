@@ -1,6 +1,3 @@
-若要让 `FolderOpened` 和 `VideoCamera` 图标处于同一水平线上，你可以对 `input-section` 类的样式加以调整。当前 `input-section` 类已经使用了 `display: flex`，不过需要确保其内部元素能正确布局。以下是修改后的代码：
-
-```vue
 <template>
     <div class="chat-container">
         <!-- 消息显示区域 -->
