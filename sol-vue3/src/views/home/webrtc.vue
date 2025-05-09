@@ -19,25 +19,26 @@
                 <div class="video-container">
                     <!-- 本地视频 -->
                     <video 
+                        id="local"
                         ref="localVideoRef" 
                         autoplay 
-                        muted 
-                        class="local-video"
+                        class="remote-video"
                     ></video>
-                    <!-- 远程视频 -->
+                    <!-- class="local-video" -->
+                    <!-- 远程视频
                     <video 
                         ref="remoteVideoRef" 
                         autoplay 
                         class="remote-video"
                         v-if="remoteStream"
-                    ></video>
+                    ></video> -->
                 </div>
             </el-main>
         </el-container>
     </el-container>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { ref, onMounted, onUnmounted, watchEffect } from 'vue';
 import type { User } from '@/types/user'
 // WebRTC 相关类型定义
 
@@ -82,12 +83,24 @@ const getLocalMediaStream = async (): Promise<void> => {
             audio: true
         });
         if (localVideoRef.value) {
+            console.log("处理成功！");
+            console.log(localVideoRef.value);
             localVideoRef.value.srcObject = localStream.value;
+            console.log(localVideoRef.value.srcObject );
         }
+
+
     } catch (err) {
         console.error('媒体设备访问失败:', err);
     }
 };
+// const getLocalMediaStream = async () => {
+//   localStream.value = await navigator.mediaDevices.getUserMedia({
+//     video: true,
+//     audio: false,
+//   })
+//   document.getElementById('local').srcObject = localStream
+// }
 
 // 创建 PeerConnection
 const createPeerConnection = (): void => {
@@ -226,7 +239,11 @@ const hangUp = (): void => {
     remoteUserId.value = null;
     // users.value.forEach(user => user.connected = false);
 };
-
+watchEffect(() => {
+  if (localStream.value && localVideoRef.value) {
+    localVideoRef.value.srcObject = localStream.value;
+  }
+});
 onMounted(async () => {
     await getLocalMediaStream();
 
