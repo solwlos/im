@@ -21,7 +21,7 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
 
     default Page<SysLog> searchQuery(EntitySearchQuery<SysLog> query){
 
-        Page<SysLog> page = new Page<>(query.getPage().getPageNum(),query.getPage().getPageSize());
+        Page<SysLog> page = new Page<>(query.getPage().getCurrent(),query.getPage().getSize());
         QueryWrapper<SysLog> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda()
                 .eq(SysLog::getIp,query.getEntity().getIp());

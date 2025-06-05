@@ -1,7 +1,9 @@
 package com.sol.admin.nettyWebsocket;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sol.admin.common.constants.RedisKeys;
 import com.sol.admin.common.util.RequestUriUtils;
@@ -141,16 +143,24 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<WebSocketFr
 //            buffer.readBytes(bytes);
 //            System.out.println(new String(bytes));
         try {
+            log.info("客户端发送文本请求 {}", frame.text());
+
+
             ObjectMapper objectMapper = new ObjectMapper();
             ChatMessage message = objectMapper.readValue(frame.text(), ChatMessage.class);
-
+            // 查找目标用户的 Channel
+            Channel channel = webSocketChannelPool.getChannelByUserId(message.getDestId());
             log.info("发送消息：{}", message);
+            if (message.getMessageRange().equals("offer")){
+                channel.writeAndFlush(new TextWebSocketFrame(frame.text()));
+            }
+
+
             // 判断是单聊、群聊、系统通知
             if (message.getMessageRange().equals(MessageRangeEnum.CHAT.getCode())){ // 单聊
-                // 查找目标用户的 Channel
-                Channel channel = webSocketChannelPool.getChannelByUserId(message.getDestId());
                 if (channel == null){
-                    log.error("目标用户不在线！！！");
+                    log.error("目标用户：{} 不在线！！！",message.getDestId());
+                    // TODO 用户不在线，保存数据到服务器
                 }else {
                     // 数据转发 给目标用户
                     channel.writeAndFlush(new TextWebSocketFrame(frame.text()));

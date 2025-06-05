@@ -1,6 +1,8 @@
 package com.sol.admin.modules.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sol.admin.common.constants.RedisKeys;
+import com.sol.admin.modules.base.EntitySearchQuery;
 import com.sol.admin.modules.security.util.JwtUtil;
 import com.sol.admin.modules.system.dto.UserInfo;
 import com.sol.admin.modules.system.entity.SysUser;
@@ -89,5 +91,10 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public Boolean updateUser(SysUser sysUser) {
         return mapper.updateById(sysUser) == 1;
+    }
+
+    @Override
+    public Page<SysUser> searchQuery(EntitySearchQuery<SysUser> query) {
+        return mapper.searchQuery(query);
     }
 }

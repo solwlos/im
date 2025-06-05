@@ -50,7 +50,11 @@ import type { Msg } from '@/types/msg'
 // 接收父组件传递的 worker
 const props  = defineProps({
   worker: {
-    type: Object,
+    type: SharedWorker,
+    required: true
+  },
+  activeUser:{
+    type: String,
     required: true
   }
 })

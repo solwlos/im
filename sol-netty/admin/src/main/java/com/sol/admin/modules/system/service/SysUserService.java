@@ -1,5 +1,7 @@
 package com.sol.admin.modules.system.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sol.admin.modules.base.EntitySearchQuery;
 import com.sol.admin.modules.system.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 import jakarta.servlet.ServletRequest;
@@ -22,4 +24,6 @@ public interface SysUserService {
     Boolean addUser(SysUser sysUser);
 
     Boolean updateUser(SysUser sysUser);
+
+    Page<SysUser> searchQuery(EntitySearchQuery<SysUser> query);
 }

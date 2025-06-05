@@ -7,13 +7,14 @@ interface Msg {
     destId: string
     fromId: string
     messageRange: string
-    msgBody: string
+    msgBody: any
     msgType: string
 }
 interface Reply{
     id: string,
     name: string,
     lastMessage: string,
+    type: number,
     unread: number,
     time: string | Date,
     avatar: string

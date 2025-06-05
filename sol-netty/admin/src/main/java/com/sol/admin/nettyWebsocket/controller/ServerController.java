@@ -12,8 +12,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.Set;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,5 +37,16 @@ public class ServerController {
     public Integer count(){
         System.out.println("在线人数："+nioWebSocketChannelPool.count());
         return nioWebSocketChannelPool.count();
+    }
+
+//    @GetMapping("/userList")
+//    @Operation(summary ="查看在线人数")
+//    public ResponseEntity<?> userList(){
+//        return new ResponseEntity<>(nioWebSocketChannelPool.userList(), HttpStatus.OK);
+//    }
+    @GetMapping("/userList")
+    @Operation(summary ="查看用户列表")
+    public Set<?> userList(){
+        return nioWebSocketChannelPool.userList();
     }
 }

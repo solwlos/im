@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -51,7 +52,8 @@ public class NioWebSocketChannelPool {
      * @param userId
      */
     public Channel getChannelByUserId(String userId) {
-        return channels.find(map.get(userId));
+        return map.get(userId) == null ? null : channels.find(map.get(userId));
+//        return channels.find(map.get(userId));
     }
 
     /**
@@ -67,6 +69,14 @@ public class NioWebSocketChannelPool {
      */
     public Integer count() {
         return channels.size();
+    }
+
+    /**
+     * 获取用户在线列表
+     */
+    public Set<?> userList() {
+        log.error("用户在线列表：{}", map.entrySet());
+        return map.keySet();
     }
 
 }

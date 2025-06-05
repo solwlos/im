@@ -9,13 +9,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Page {
-    private Integer pageNum;
-    private Integer pageSize;
+    private Integer current;
+    private Integer size;
     private Integer start;
-    public Page(Integer pageNum,Integer pageSize){
-        this.pageNum = pageNum;
-        this.pageSize = pageSize;
-        this.start = (pageNum - 1) * pageSize;
+    public Page(Integer current,Integer size){
+        this.current = current;
+        this.size = size;
+        this.start = (current - 1) * size;
     }
 //    public Integer getStart(){
 //        return (pageNum - 1) * pageSize;

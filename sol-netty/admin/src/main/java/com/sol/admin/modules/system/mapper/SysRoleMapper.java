@@ -18,7 +18,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     default Page<SysRole> searchQuery(EntitySearchQuery<SysRole> query){
-        Page<SysRole> page = new Page<>(query.getPage().getPageNum(),query.getPage().getPageSize());
+        Page<SysRole> page = new Page<>(query.getPage().getCurrent(),query.getPage().getSize());
         QueryWrapper<SysRole> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda()
                 .like(SysRole::getName,query.getEntity().getName());

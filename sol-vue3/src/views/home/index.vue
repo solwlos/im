@@ -1,10 +1,12 @@
 <template>
   <div class="chat-container">
     <el-row>
-      <el-col :span="1"></el-col>
+      <el-col :span="1">
+        <Menu/>
+      </el-col>
 
       <el-col :span="7">
-        <UserLink />
+        <UserLink :activeUser="activeUser"/>
       </el-col>
 
       <el-col :span="14">
@@ -31,12 +33,14 @@ import { msgStore } from '@/stores/msgStore'
 import Chat from './chat.vue'
 import UserLink from './userLink.vue'
 import Webrtc from './webrtc.vue'
+import Menu from './menu.vue'
 
 import type { Message,Msg } from '@/types/msg'
 
 const user = useUserStore()
 const isShowWebrtc = ref<boolean>(false); 
-const msgArray = msgStore().historymsg
+const msgArray = msgStore().historymsg;
+const activeUser = ref<string>(""); 
 
 function isShow(isShow: boolean){
   isShowWebrtc.value = isShow

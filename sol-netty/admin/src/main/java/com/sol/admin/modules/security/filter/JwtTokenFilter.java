@@ -58,6 +58,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 log.info("从redis中获取用户信息 username:"+username);
                 // 从redis中获取用户信息。没有，需要重新登录
                 if (!redisUtil.hHasKey(RedisKeys.SYS_USER_INFO,username)){
+                    log.error("请重新登录 ！！！");
                     throw new ServletException("请重新登录 ！！！");
                 }
                 // 检测时间是否到期
@@ -77,7 +78,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         }catch (Exception e){
-            log.error("========= 登录异常 ========="+e);
+            log.error("========= 登录异常 =========",e);
             response.setContentType(HttpConstants.APPLICATION_JSON_CHARSET_UTF_8);
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getWriter().println(HttpConstants.OBJECT_MAPPER.writeValueAsString(new ResponseEntity<>(e.getMessage(),HttpStatus.UNAUTHORIZED)));

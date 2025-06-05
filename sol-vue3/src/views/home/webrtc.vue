@@ -41,6 +41,8 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import type { User } from '@/types/user'
 import { useUserStore } from '@/stores/user'
+
+import type { Msg } from '@/types/msg'
 // WebRTC 相关类型定义
 const user  = useUserStore().userInfo
 // 接收父组件传递的 worker
@@ -87,8 +89,6 @@ const getLocalMediaStream = async (): Promise<void> => {
         if (localVideoRef.value) {
             localVideoRef.value.srcObject = localStream.value;
         }
-
-
     } catch (err) {
         console.error('媒体设备访问失败:', err);
     }
@@ -121,9 +121,10 @@ const handleRemoteStream = (event: RTCTrackEvent): void => {
 
 // 连接到用户
 const connectToUser = async (user: User): Promise<void> => {
-    if (remoteUserId.value) return; // 已有通话
-
+    console.log("开始==========");
+    // if (remoteUserId.value) return; // 已有通话
     createPeerConnection();
+        
 
     // 本地流添加到 PeerConnection
     if (localStream.value) {
@@ -135,17 +136,22 @@ const connectToUser = async (user: User): Promise<void> => {
     }
 
     try {
+        
         // 创建 Offer
         if (peerConnection.value) {
             const offer = await peerConnection.value.createOffer();
             await peerConnection.value.setLocalDescription(offer);
 
-            // 发送信令
-            // socket.emit('offer', {
-            //     to: user.id,
-            //     from: 123, // 当前用户ID
-            //     sdp: offer
-            // });
+            console.log("user==========",user);
+                    // 组装消息
+            const sendMsg = {
+                msgBody: offer,
+                fromId: user.id, // 发送
+                destId: "0", // 接受
+                msgType: "offer",
+                messageRange: "1"
+            } as Msg
+            props.worker.port.postMessage({ command: 'send', data: JSON.stringify(sendMsg) })
 
             remoteUserId.value = user.id;
             remoteUserName.value = user.username;
@@ -188,6 +194,7 @@ const handleOffer = async (data: OfferData): Promise<void> => {
             //     to: data.from,
             //     sdp: answer
             // });
+            
 
             remoteUserId.value = data.from;
             // remoteUserName.value = users.value.find(u => u.id === data.from).name;
@@ -229,19 +236,21 @@ const hangUp = (): void => {
     }
     remoteStream.value = null;
     remoteUserId.value = null;
+    if (localStream.value) {
+        localStream.value.getTracks().forEach((track: MediaStreamTrack) => track.stop());
+    }
     localStream.value = null;
     // users.value.forEach(user => user.connected = false);
+
 };
 onMounted(async () => {
     await getLocalMediaStream();
-
+    await connectToUser(user);
+    // await handleAnswer();
     // 监听信令事件
     // socket.on('offer', handleOffer);
     // socket.on('answer', handleAnswer);
     // socket.on('ice-candidate', handleIceCandidateReceived);
-    // if (localStream.value) {
-    //     localStream.value.getTracks().forEach((track: MediaStreamTrack) => track.stop());
-    // }
 });
 
 onUnmounted(() => {
