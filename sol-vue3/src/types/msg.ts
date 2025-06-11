@@ -19,5 +19,10 @@ interface Reply{
     time: string | Date,
     avatar: string
 }
+interface ChatObject{
+    type:number,    // 0: 单聊，1：群聊
+    name:string,    
+    status:number   // 0: 离线，1: 在线
+}
 
-export type { Message,Msg,Reply};
+export type { Message,Msg,Reply,ChatObject};

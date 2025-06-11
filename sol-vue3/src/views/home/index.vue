@@ -13,8 +13,9 @@
         <Chat :worker="worker"  @isShow="isShow"/>
         <el-dialog 
           v-model="isShowWebrtc" 
+          :close="handleClose"
           center 
-          custom-class="webrtc-dialog"
+          class="webrtc-dialog"
         >
           <Webrtc :worker="worker"/>
         </el-dialog>
@@ -45,7 +46,9 @@ const activeUser = ref<string>("");
 function isShow(isShow: boolean){
   isShowWebrtc.value = isShow
 }
-
+function handleClose(){
+  console.log("关闭！！！");
+}
 
 // 声明 worker 并初始化
 const worker = new SharedWorker()
@@ -58,8 +61,8 @@ worker.port.onmessage = function (event: MessageEvent<Message>) {
         console.log('Status:', message.data)
     } else if (message.type === 'message') {
         // 解析 msg.data 为 JavaScript 对象
-        // const msgObj = JSON.parse(message.data)
-        const msgObj = message.data as Msg
+        const msgObj = JSON.parse(message.data as any)
+        // const msgObj = message.data as Msg
         // 添加接收到的消息到历史记录数组
         msgArray.push({ type: 'received', data: msgObj})
     } else if (message.type === 'error') {
@@ -87,7 +90,8 @@ onUnmounted(() => {
 
 <style scoped>
 .chat-container {
-  padding: 20px;
+  padding-left: 10px;
+  padding-top: 20px;
   width: 1024px;
   border: 1px solid #ccc;
 }

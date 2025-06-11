@@ -6,7 +6,7 @@
                 <div class="message-bubble">
                     <span v-if="msg.type === 'sent'"> {{ user.userInfo.id }} :: {{ user.userInfo.username }}</span>
                     <span v-if="msg.type === 'received'">From {{ msg.data.fromId }}</span>
-                    <p> 1 {{ msg.data.msgBody }}</p>
+                    <p>{{ msg.data.msgBody }}</p>
                 </div>
             </div>
         </div>

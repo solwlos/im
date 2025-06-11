@@ -152,7 +152,7 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<WebSocketFr
             Channel channel = webSocketChannelPool.getChannelByUserId(message.getDestId());
             log.info("发送消息：{}", message);
             if (message.getMessageRange().equals("offer")){
-                channel.writeAndFlush(new TextWebSocketFrame(frame.text()));
+                channel.writeAndFlush(JSON.toJSONString(message));
             }
 
 

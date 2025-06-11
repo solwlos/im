@@ -114,7 +114,8 @@ onMounted(async () => {
 
 <style scoped>
 .container {
-  padding: 12px;
+  padding-left: 20px;
+  padding-top: 20px;
 }
 
 .group-list {

@@ -1,11 +1,13 @@
 <template>
   <div class="sidebar-container">
     <div class="logo-container">
-      <el-avatar
-        :size="60"
-        :src="logoSrc"
-        class="logo"
-      />
+      <el-button type="text" class="logo-button">
+        <el-avatar
+          :size="40"
+          :src="logoSrc"
+          class="logo"
+        />
+      </el-button>
     </div>
     <div class="icon-container">
       <el-button
@@ -19,13 +21,13 @@
         </el-icon>
       </el-button>
     </div>
-    <div class="more-options-container">
+    <!-- <div class="more-options-container">
       <el-button type="text">
         <el-icon :size="24">
           <More />
         </el-icon>
       </el-button>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -49,24 +51,16 @@ const icons = [
     label: '收藏'
   },
   {
-    icon: 'Hashtag',
-    label: '群聊'
-  },
-  {
-    icon: 'Lightning',
-    label: '游戏'
-  },
-  {
-    icon: 'Cloud',
-    label: '云盘'
-  },
-  {
     icon: 'ArrowRight',
     label: '更多'
   },
   {
     icon: 'Grid',
     label: '应用'
+  },
+  {
+    icon: 'Setting',
+    label: '设置'
   }
 ];
 
@@ -83,25 +77,47 @@ const handleIconClick = (icon) => {
 .sidebar-container {
   width: 60px;
   height: 100vh;
-  background-color: #f5f7fa;
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  padding-top: 5px; /* 减小顶部内边距 */
+  padding-bottom: 5px; /* 减小底部内边距 */
 }
 
 .logo-container {
-/*  */
+  margin-bottom: 5px; /* 减小logo与图标间的间距 */
+  margin-top: 30px;
+}
+
+.logo-button {
+  width: 100%;
+  height: 50px; /* 减小logo按钮高度 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
 
 .icon-container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  /* justify-content: space-between; 替换为space-between减少间距 */
+  width: 100%;
+  
 }
 
 .more-options-container {
+  margin-top: 5px; /* 减小更多选项的顶部间距 */
+}
 
+.el-button {
+  width: 100%;
+  height: 45px; /* 减小按钮高度 */
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
+  padding-bottom: 50px;
+  margin: 0;
 }
 </style>
