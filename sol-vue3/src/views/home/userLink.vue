@@ -1,15 +1,16 @@
 <template>
   <div class="container">
-      搜索框
+    <div class="search-container">
+      <el-button :icon="Search" circle class="search-button" />
       <el-input
-          v-model="searchQuery"
-          placeholder="搜索群组"
-          clearable
-         
-          class="search-input"
-      /> 
-      <!-- @input="filterGroups" -->
-      <el-scrollbar height="600px">
+        v-model="searchQuery"
+        placeholder="搜索"
+        clearable
+        class="search-input"
+      />
+    </div>
+    <!-- @input="filterGroups" -->
+    <el-scrollbar height="600px">
           <div class="group-list">
               <div
                   v-for="group in groupList"
@@ -38,7 +39,7 @@
                   </div>
               </div>
           </div>
-      </el-scrollbar>
+    </el-scrollbar>
   </div>
 </template>
 
@@ -46,6 +47,7 @@
 import { ref, computed ,onMounted, onUnmounted  } from 'vue';
 import type { Reply } from '@/types/msg'
 import api from '@/api'
+import { Search } from '@element-plus/icons-vue'
 const activeGroupId = ref<string>();
 const groupList = ref<Reply[]>([
   {
@@ -113,6 +115,33 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-button {
+  border: none; /* 去除按钮边框 */
+  box-shadow: none; /* 去除按钮阴影 */
+}
+
+.search-input  {
+  border: none; /* 去除输入框边框 */
+  box-shadow: none; /* 去除输入框阴影 */
+  border-radius: 4px; /* 保留圆角 */
+  background-color: #f5f7fa; /* 背景色 */
+  width: 90%;
+    /* 清除按钮样式调整 */
+  color: #909399;
+  outline: none; /* 去除聚焦时的轮廓 */
+  box-shadow: none; /* 去除聚焦时的阴影 */
+}
+
+
+
+
+
 .container {
   padding-left: 20px;
   padding-top: 20px;
@@ -180,7 +209,7 @@ onMounted(async () => {
   }
 }
 
-.search-input {
+/* .search-input {
   width: 100%;
   padding: 12px;
   border-radius: 8px;
@@ -196,5 +225,5 @@ onMounted(async () => {
   &:focus-within {
       border-color: #409eff;
   }
-}
+} */
 </style>    

@@ -10,7 +10,7 @@
       </el-col>
 
       <el-col :span="14">
-        <Chat :worker="worker"  @isShow="isShow"/>
+        <Chat :worker="worker"  @isShow="isShow" v-show="false"/>
         <el-dialog 
           v-model="isShowWebrtc" 
           :close="handleClose"
@@ -40,7 +40,7 @@ import type { Message,Msg } from '@/types/msg'
 
 const user = useUserStore()
 const isShowWebrtc = ref<boolean>(false); 
-const msgArray = msgStore().historymsg;
+const msgArray = msgStore().historymsg; // 历史消息
 const activeUser = ref<string>(""); 
 
 function isShow(isShow: boolean){
@@ -63,6 +63,12 @@ worker.port.onmessage = function (event: MessageEvent<Message>) {
         // 解析 msg.data 为 JavaScript 对象
         const msgObj = JSON.parse(message.data as any)
         // const msgObj = message.data as Msg
+        if(msgObj.msgType == "offer"){ // 处理视频邀请
+          
+        }
+        if(msgObj.msgType == "offer"){ // 处理视频挂断
+
+        }
         // 添加接收到的消息到历史记录数组
         msgArray.push({ type: 'received', data: msgObj})
     } else if (message.type === 'error') {
@@ -91,7 +97,7 @@ onUnmounted(() => {
 <style scoped>
 .chat-container {
   padding-left: 10px;
-  padding-top: 20px;
+  margin-top: 10px;
   width: 1024px;
   border: 1px solid #ccc;
 }

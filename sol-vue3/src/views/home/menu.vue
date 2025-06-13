@@ -1,6 +1,7 @@
 <template>
   <div class="sidebar-container">
     <div class="logo-container">
+      <el-icon><House /></el-icon>
       <el-button type="text" class="logo-button">
         <el-avatar
           :size="40"
@@ -28,6 +29,7 @@
         </el-icon>
       </el-button>
     </div> -->
+    <Setting/>
   </div>
 </template>
 
@@ -35,6 +37,7 @@
 import { ref } from 'vue';
 import { ElAvatar, ElButton, ElIcon } from 'element-plus';
 import { More } from '@element-plus/icons-vue';
+import Setting from './menu/setting.vue'
 
 // 侧边栏图标配置
 const icons = [

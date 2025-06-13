@@ -10,7 +10,7 @@ export  const msgStore = defineStore('msgStore', {
     return {
       replylist: [], // 回话列表
       historymsg: [] as Message[],   // 历史消息
-      chatObject: {} as ChatObject
+      chatObject: {} as ChatObject // 聊天对象
     };
   },
   

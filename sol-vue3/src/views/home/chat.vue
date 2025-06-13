@@ -6,13 +6,12 @@
                 <div class="message-bubble">
                     <span v-if="msg.type === 'sent'"> {{ user.userInfo.id }} :: {{ user.userInfo.username }}</span>
                     <span v-if="msg.type === 'received'">From {{ msg.data.fromId }}</span>
-                    <p>{{ msg.data.msgBody }}</p>
+                    <p class="message-text">{{ msg.data.msgBody }}</p>
                 </div>
             </div>
         </div>
         <!-- 输入框和发送按钮区域 -->
         <div class="input-section" style="padding-left: 20px;">
-
             <el-upload
                 ref="uploadRef"
                 class="upload-demo"
@@ -21,7 +20,6 @@
             >
                 <FolderOpened  style="width: 1.5em; height: 1.5em; margin-right: 8px" />
             </el-upload>
-            
             <VideoCamera @Click="videoClick" style="width: 1.5em; height: 1.5em; margin-right: 8px" />
         </div>
         <!-- 输入框和发送按钮区域 -->
@@ -41,13 +39,12 @@
 </template>
 
 <script setup lang="ts">
-import { FolderOpened,VideoCamera } from '@element-plus/icons-vue'
+import { FolderOpened, VideoCamera } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { msgStore } from '@/stores/msgStore'
 import type { Msg } from '@/types/msg'
 
-// 接收父组件传递的 worker
 const props  = defineProps({
   worker: {
     type: SharedWorker,
@@ -59,41 +56,31 @@ const props  = defineProps({
   }
 })
 
-
-// 直接使用字符串字面量定义事件
-// 定义 sendData 事件，接受一个字符串参数
 const emits = defineEmits<{
     (e: string, data: boolean): void;
 }>();
 
-// const isShowWebrtc = ref<boolean>(false)
-
 const user = useUserStore()
 const msgArray = msgStore().historymsg
 const textarea = ref('')
-// const msgArray = ref([])
-
 
 function videoClick(){
     emits('isShow', true);
 }
 
-// 发送消息到 WebSocket
 const sendMessage = () => {
     if (props.worker && textarea.value) {
-        // 组装消息
         const sendMsg = {
             msgBody: textarea.value,
-            fromId: user.userInfo.id, // 发送
-            destId: "0", // 接受
+            fromId: user.userInfo.id,
+            destId: "0",
             msgType: "1",
             messageRange: "1"
         } as Msg
         console.log(sendMsg)
         props.worker.port.postMessage({ command: 'send', data: JSON.stringify(sendMsg) })
-        // 添加消息到历史记录数组
         msgArray.push({ type: 'sent', data: sendMsg })
-        textarea.value = '' // 清空输入框
+        textarea.value = ''
     }
 }
 </script>
@@ -103,9 +90,9 @@ const sendMessage = () => {
     display: flex;
     flex-direction: column;
     min-height: 90vh;
-    width: 90%; /* 宽度使用百分比，更具弹性 */
-    max-width: 600px; /* 最大宽度限制 */
-    margin: 0 auto; /* 水平居中 */
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
     padding: 20px;
     background-color: #f5f5f5;
     box-sizing: border-box;
@@ -113,7 +100,8 @@ const sendMessage = () => {
 
 .message-display {
     flex: 1;
-    overflow-y: auto;
+    overflow-y: auto; /* 关键：启用垂直滚动 */
+    max-height: 70vh; /* 关键：设置最大高度，超过时出现滚动条 */
     padding: 15px;
     background-color: #fff;
     border-radius: 8px;
@@ -140,6 +128,13 @@ const sendMessage = () => {
     padding: 12px 18px;
     border-radius: 20px;
     position: relative;
+    word-break: break-all; /* 关键：允许单词内换行 */
+    overflow-wrap: break-word; /* 关键：长单词或URL换行 */
+}
+
+.message-text {
+    margin: 0;
+    white-space: normal; /* 关键：允许文本自动换行 */
 }
 
 .sent-message .message-bubble {
@@ -159,20 +154,14 @@ const sendMessage = () => {
     margin-bottom: 5px;
 }
 
-.message-bubble p {
-    margin: 0;
-}
-
 .input-section {
     display: flex;
     align-items: center;
-    gap: 10px; /* 元素之间的间距 */
-    /* 确保内部元素在同一水平线上 */
-    flex-wrap: nowrap; 
+    gap: 10px;
+    flex-wrap: nowrap;
     padding-bottom: 10px;
 }
 
-/* 确保 el-upload 内的图标正确显示 */
 .upload-demo {
     display: flex;
     align-items: center;
